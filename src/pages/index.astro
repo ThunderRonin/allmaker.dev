@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TopologyCanvas from '../components/TopologyCanvas.astro';
+import TelemetryHeader from '../components/TelemetryHeader.astro';
+import HeroConsole from '../components/HeroConsole.astro';
+import SystemsManifest from '../components/SystemsManifest.astro';
+import AboutTerminal from '../components/AboutTerminal.astro';
+import NotesTerminal from '../components/NotesTerminal.astro';
+import ConnectTerminal from '../components/ConnectTerminal.astro';
+import InteractiveCLI from '../components/InteractiveCLI.astro';
+import FooterBar from '../components/FooterBar.astro';
+---
+
+<Layout title="Amirali Daliri (@ThunderRonin) — Systems & Engineering Console">
+  <!-- Subtle 3D Background Topology & Constellation Mesh -->
+  <TopologyCanvas />
+
+  <!-- Fixed Top Telemetry Header -->
+  <TelemetryHeader />
+
+  <!-- Main Workstation Viewport -->
+  <main class="relative z-20 max-w-[1400px] mx-auto px-4 lg:px-8 pt-6 lg:pt-8 space-y-7">
+    <!-- Hero Console: Identity & Architecture -->
+    <HeroConsole />
+
+    <!-- Systems Manifest: Pinned & Public Repositories (@ThunderRonin) -->
+    <SystemsManifest />
+
+    <!-- Modular Trio Row: About, Technical Index, Connect Gateway -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 gap-5" data-purpose="modular-trio-row">
+      <div class="lg:col-span-4">
+        <AboutTerminal />
+      </div>
+      <div class="lg:col-span-4">
+        <NotesTerminal />
+      </div>
+      <div class="lg:col-span-4">
+        <ConnectTerminal />
+      </div>
+    </section>
+
+    <!-- Interactive Terminal CLI Shell -->
+    <InteractiveCLI />
+  </main>
+
+  <!-- Footer -->
+  <FooterBar />
+</Layout>

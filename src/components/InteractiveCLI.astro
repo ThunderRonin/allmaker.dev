@@ -1,0 +1,203 @@
+---
+// Interactive CLI Shell for ThunderRonin Portfolio
+---
+
+<section class="space-y-3 font-mono mt-8" id="cli" data-purpose="interactive-cli">
+  <div class="flex items-center justify-between border-b border-[#141418] pb-2 text-xs">
+    <div class="flex items-center space-x-2">
+      <span class="text-[#e11d48] font-bold">&gt;</span>
+      <h2 class="text-xs md:text-sm font-bold text-zinc-100 uppercase tracking-wider">sh // guest_interactive_console</h2>
+    </div>
+    <span class="text-[10px] text-zinc-600 font-mono">TYPE 'help' FOR COMMANDS</span>
+  </div>
+
+  <div class="border border-[#141418] bg-[#030304] p-4 md:p-6 space-y-3 text-xs min-h-[250px] flex flex-col justify-between">
+    <!-- Terminal History Output -->
+    <div id="cli-output" class="space-y-2 overflow-y-auto max-h-[360px] text-zinc-300 font-mono text-[11px] leading-relaxed">
+      <div class="text-zinc-500">
+        RONIN_OS v2.4 (x86_64-cloudflare-worker-edge)<br />
+        Session: <span class="text-zinc-400">guest@ThunderRonin-node</span><br />
+        Type <span class="text-[#e11d48] font-bold">help</span> to view available system commands.
+      </div>
+    </div>
+
+    <!-- Terminal Input Form -->
+    <form id="cli-form" class="flex items-center space-x-2 border-t border-[#141418] pt-3">
+      <span class="text-zinc-600 font-bold select-none text-[11px]">guest@ronin:~$</span>
+      <input
+        id="cli-input"
+        type="text"
+        autocomplete="off"
+        spellcheck="false"
+        class="flex-1 bg-transparent border-none text-[#d4d4d8] focus:outline-none focus:ring-0 font-mono text-xs px-1 placeholder:text-zinc-700"
+        placeholder="type command (e.g. 'help', 'repos', 'allknower')..."
+      />
+      <button type="submit" class="px-2 py-0.5 bg-[#18181b] hover:bg-[#27272a] border border-[#27272a] text-zinc-300 text-[10px] font-bold uppercase transition-colors">
+        EXEC
+      </button>
+    </form>
+  </div>
+</section>
+
+<script>
+  function initCLI() {
+    const form = document.getElementById('cli-form') as HTMLFormElement;
+    const input = document.getElementById('cli-input') as HTMLInputElement;
+    const output = document.getElementById('cli-output') as HTMLDivElement;
+
+    if (!form || !input || !output) return;
+
+    const commands: Record<string, string | (() => string)> = {
+      help: `Available commands:
+  <span class="text-[#e11d48]">help</span>         - Display this command manual
+  <span class="text-[#e11d48]">about</span>        - Output engineer dossier
+  <span class="text-[#e11d48]">repos</span>        - List featured systems & repositories (@ThunderRonin)
+  <span class="text-[#e11d48]">kasb</span>         - Inspect Kasb Platform ERP & ledger architecture
+  <span class="text-[#e11d48]">allknower</span>    - Inspect AllKnower AI orchestration service
+  <span class="text-[#e11d48]">allcodex</span>     - Inspect AllCodex knowledge base engine
+  <span class="text-[#e11d48]">aryamehr</span>     - Inspect Zepp OS astronomical calendar
+  <span class="text-[#e11d48]">alltracker</span>   - Inspect AllTracker Flutter mobile app
+  <span class="text-[#e11d48]">skills</span>       - List technical proficiencies
+  <span class="text-[#e11d48]">contact</span>      - Output communication endpoints
+  <span class="text-[#e11d48]">resume</span>       - Output resume download endpoint
+  <span class="text-[#e11d48]">uname -a</span>     - Query kernel & edge architecture
+  <span class="text-[#e11d48]">whoami</span>       - Print current authorization status
+  <span class="text-[#e11d48]">date</span>         - Print synchronized UTC timestamp
+  <span class="text-[#e11d48]">clear</span>        - Flush terminal screen`,
+
+      about: `<span class="text-zinc-300 font-bold">Amirali Daliri</span> (@ThunderRonin):
+Full-Stack Software Engineer & Systems Architect.
+Specializing in high-performance .NET 10 backends, cross-platform Flutter applications, AI orchestration pipelines, and Cloudflare Workers edge architecture.`,
+
+      repos: `Featured Systems & Repositories (@ThunderRonin):
+  • <a href="https://github.com/Kasb-Platform" target="_blank" class="text-zinc-200 underline">kasb-platform</a> - Enterprise ERP & double-entry ledger (.NET 10, C# 14, Flutter, Docker Swarm)
+  • <a href="https://github.com/ThunderRonin/allknower" target="_blank" class="text-zinc-200 underline">allknower</a> - AI orchestration service (Elysia, Bun, LanceDB, OpenRouter)
+  • <a href="https://github.com/ThunderRonin/allcodex-core" target="_blank" class="text-zinc-200 underline">allcodex-core</a> - Knowledge base grimoire (Trilium ETAPI fork)
+  • <a href="https://github.com/ThunderRonin/aryamehr-calendar" target="_blank" class="text-zinc-200 underline">aryamehr-calendar</a> - Amazfit GTR 4 Zepp OS astronomical calendar
+  • <a href="https://github.com/ThunderRonin/AllTracker" target="_blank" class="text-zinc-200 underline">AllTracker</a> - Dart/Flutter cross-platform habit tracker`,
+
+      kasb: `[kasb-platform]
+Enterprise ERP & Financial Ledger Architecture.
+Stack: .NET 10 + C# 14 + EF Core + Flutter (Dart) + PostgreSQL/SQL Server + Docker Swarm + Caddy
+Key Highlights:
+  • Ledger Invariants: Double-entry consistency, zero-leak transaction bounds, multi-point balance reconciliation.
+  • Document Service: Headless Syncfusion PDF rendering engine for financial invoices & reports.
+  • Infrastructure: High-availability Linux migration onto Docker Swarm with Caddy reverse proxy.
+  • Mobile: Cross-platform Flutter client integration with offline-first synchronization.
+Org: https://github.com/Kasb-Platform`,
+
+      allknower: `[allknower]
+AI orchestration engine for AllCodex lore trees.
+Stack: Bun + Elysia + LanceDB + Prisma + OpenRouter
+Features: Semantic vector search, native re-ranking, automated entity relation inference, lore consistency checks.
+Repo: https://github.com/ThunderRonin/allknower`,
+
+      allcodex: `[allcodex-core]
+Knowledge base data engine and hierarchical note grimoire.
+Custom fork of Trilium with ETAPI extensions, specialized attributes, and relational lore graphs.
+Repo: https://github.com/ThunderRonin/allcodex-core`,
+
+      aryamehr: `[aryamehr-calendar]
+AryaMehr Persian & Zoroastrian Calendar and prayer computation engine for Amazfit GTR 4.
+Stack: TypeScript, Zepp OS Embedded SDK, Astronomical Algorithms.
+Repo: https://github.com/ThunderRonin/aryamehr-calendar`,
+
+      alltracker: `[AllTracker]
+Cross-platform personal habit and telemetry tracking app.
+Stack: Dart + Flutter + Local-First SQLite Engine.
+Repo: https://github.com/ThunderRonin/AllTracker`,
+
+      skills: `Toolchain & Engineering Proficiencies:
+  • Languages:      C# (.NET 10), Dart (Flutter), TypeScript, JavaScript, SQL, Shell, Python
+  • Frameworks:    ASP.NET Core Web API, EF Core, Flutter, Elysia (Bun), SvelteKit, Astro
+  • Architecture:   Double-Entry Accounting, Microservices, Event Logging, Semantic RAG
+  • Infrastructure: Docker Swarm, Linux Administration, Caddy, Cloudflare Workers & DNS
+  • Databases & AI: PostgreSQL, SQL Server, SQLite, LanceDB (Vector), OpenRouter / LLMs`,
+
+      contact: `Communication Endpoints:
+  • GitHub:   https://github.com/ThunderRonin
+  • Email:    amirali@allmaker.dev
+  • Web:      https://allmaker.dev`,
+
+      resume: `Resume dossier available at:
+  • PDF Download: <a href="/resume.pdf" target="_blank" class="text-[#e11d48] underline">/resume.pdf</a> (Amirali Daliri)`,
+
+      'uname -a': `Linux cf-worker-edge-01 6.8.0-ronin #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux`,
+
+      whoami: `guest (UID: 1000, GID: 1000, Roles: [public_observer, edge_client])`,
+
+      date: () => new Date().toUTCString(),
+    };
+
+    const history: string[] = [];
+    let historyIndex = -1;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const rawCmd = input.value.trim();
+      if (!rawCmd) return;
+
+      history.push(rawCmd);
+      historyIndex = history.length;
+
+      const cmd = rawCmd.toLowerCase();
+
+      const cmdRow = document.createElement('div');
+      cmdRow.innerHTML = `<span class="text-zinc-600 font-bold">guest@ronin:~$</span> <span class="text-zinc-200">${escapeHtml(rawCmd)}</span>`;
+      output.appendChild(cmdRow);
+
+      if (cmd === 'clear') {
+        output.innerHTML = '';
+        input.value = '';
+        return;
+      }
+
+      const res = commands[cmd];
+      const resRow = document.createElement('div');
+      resRow.className = 'text-zinc-400 pl-2 border-l border-[#27272a] py-0.5';
+
+      if (res) {
+        resRow.innerHTML = typeof res === 'function' ? res() : res;
+      } else {
+        resRow.innerHTML = `<span class="text-[#e11d48]">command not found:</span> ${escapeHtml(rawCmd)}. Type <span class="text-[#e11d48]">help</span> for valid commands.`;
+      }
+
+      output.appendChild(resRow);
+      input.value = '';
+      output.scrollTop = output.scrollHeight;
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowUp') {
+        if (historyIndex > 0) {
+          historyIndex--;
+          input.value = history[historyIndex] || '';
+        }
+      } else if (e.key === 'ArrowDown') {
+        if (historyIndex < history.length - 1) {
+          historyIndex++;
+          input.value = history[historyIndex] || '';
+        } else {
+          historyIndex = history.length;
+          input.value = '';
+        }
+      }
+    });
+
+    function escapeHtml(str: string) {
+      return str.replace(/[&<>'"]/g, (tag) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        "'": '&#39;',
+        '"': '&quot;',
+      }[tag] || tag));
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCLI);
+  } else {
+    initCLI();
+  }
+</script>

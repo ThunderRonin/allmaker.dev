@@ -1,0 +1,17 @@
+{
+  "name": "portfolio",
+  "compatibility_date": "2026-09-01",
+  "assets": {
+    "directory": "./dist"
+  },
+  "routes": [
+    {
+      "pattern": "allmaker.dev",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.allmaker.dev",
+      "custom_domain": true
+    }
+  ]
+}

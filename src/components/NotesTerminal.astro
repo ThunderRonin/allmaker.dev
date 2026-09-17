@@ -1,0 +1,49 @@
+---
+// Column 2: Technical Index & System Notes
+interface NoteEntry {
+  permissions: string;
+  name: string;
+  size: string;
+  isDir?: boolean;
+}
+
+const entries: NoteEntry[] = [
+  { permissions: 'drwxr-xr-x', name: 'kasb-enterprise-erp/', size: '[DIR]', isDir: true },
+  { permissions: '-rw-r--r--', name: 'dotnet10-csharp14-architecture.md', size: '24KB' },
+  { permissions: '-rw-r--r--', name: 'double-entry-ledger-invariants.md', size: '19KB' },
+  { permissions: '-rw-r--r--', name: 'docker-swarm-linux-migration.md', size: '15KB' },
+  { permissions: '-rw-r--r--', name: 'flutter-cross-platform-sync.md', size: '17KB' },
+  { permissions: '-rw-r--r--', name: 'allknower-semantic-rag.md', size: '18KB' },
+];
+---
+
+<div class="space-y-3 font-mono" id="notes">
+  <div class="flex items-center justify-between border-b border-[#141418] pb-2">
+    <div class="flex items-center space-x-2">
+      <span class="text-[#e11d48] font-bold">&gt;</span>
+      <h2 class="text-xs md:text-sm font-bold text-zinc-100 uppercase tracking-wider">ls -la notes/</h2>
+    </div>
+    <span class="text-[10px] text-zinc-600">[03] TECHNICAL INDEX</span>
+  </div>
+
+  <div class="border border-[#141418] bg-[#050507] p-5 h-[calc(100%-2.2rem)] font-mono text-xs overflow-x-auto space-y-2">
+    <div class="flex items-center justify-between text-zinc-600 text-[10px] pb-1 border-b border-[#141418]">
+      <span>PERMISSIONS // INODE</span>
+      <span>FILENAME // SIZE</span>
+    </div>
+
+    {entries.map((entry) => (
+      <div class="flex items-center justify-between hover:text-white transition-colors cursor-pointer group py-0.5 border-b border-transparent hover:border-zinc-900">
+        <span class="text-zinc-600 text-[11px] select-none">{entry.permissions}</span>
+        <span class={`transition-colors ${entry.isDir ? 'text-[#e11d48] font-bold' : 'text-zinc-400 group-hover:text-zinc-200'}`}>
+          {entry.name} <span class="text-zinc-600 text-[10px] ml-1">{entry.size}</span>
+        </span>
+      </div>
+    ))}
+
+    <div class="pt-3 border-t border-[#141418] flex items-center justify-between text-[10px] text-zinc-600">
+      <span>6 files indexed</span>
+      <span>total 81KB</span>
+    </div>
+  </div>
+</div>

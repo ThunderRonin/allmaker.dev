@@ -1,0 +1,70 @@
+---
+// Top Telemetry Console Bar (Eye-Friendly Monochrome & Edge Indicators)
+---
+
+<header class="relative z-30 border-b border-[#141418] bg-[#000000]/95 backdrop-blur-md sticky top-0 px-4 lg:px-8 py-2 text-[11px] tracking-wide font-mono" data-purpose="telemetry-bar">
+  <div class="max-w-[1400px] mx-auto flex flex-wrap items-center justify-between gap-y-2">
+    
+    <!-- Node Identifier & Status -->
+    <div class="flex items-center space-x-3">
+      <a href="#hero" class="flex items-center space-x-1.5 font-bold text-zinc-300 hover:text-white transition-colors">
+        <span class="text-[#e11d48] font-black">λ::</span>
+        <span class="tracking-wider">THUNDERRONIN</span>
+        <span class="text-zinc-600 text-[10px] hidden sm:inline">[Amirali Daliri]</span>
+      </a>
+
+      <span class="text-zinc-800 select-none">|</span>
+
+      <!-- Faint, calm status dot -->
+      <div class="flex items-center space-x-1.5">
+        <span class="relative flex h-1.5 w-1.5">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#e11d48] opacity-50"></span>
+          <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#e11d48]"></span>
+        </span>
+        <span class="text-[10px] text-zinc-500 font-medium tracking-wider uppercase">EDGE::ROUTED</span>
+      </div>
+    </div>
+
+    <!-- Navigation Jumpers -->
+    <nav class="hidden md:flex items-center space-x-5 text-[11px]">
+      <a href="#projects" class="text-zinc-400 hover:text-[#e11d48] transition-colors flex items-center gap-1">
+        <span class="text-zinc-600">//01</span> PROJECTS
+      </a>
+      <a href="#about" class="text-zinc-400 hover:text-[#e11d48] transition-colors flex items-center gap-1">
+        <span class="text-zinc-600">//02</span> ABOUT
+      </a>
+      <a href="#notes" class="text-zinc-400 hover:text-[#e11d48] transition-colors flex items-center gap-1">
+        <span class="text-zinc-600">//03</span> INDEX
+      </a>
+      <a href="#connect" class="text-zinc-400 hover:text-[#e11d48] transition-colors flex items-center gap-1">
+        <span class="text-zinc-600">//04</span> CONNECT
+      </a>
+      <a href="#cli" class="text-zinc-300 hover:text-white transition-colors flex items-center gap-1 border border-[#27272a] px-2 py-0.5 bg-[#08080a]">
+        <span class="text-[#e11d48] font-bold">&gt;</span> CLI_SHELL
+      </a>
+    </nav>
+
+    <!-- Telemetry Status & Live UTC Clock -->
+    <div class="flex items-center space-x-3 text-zinc-500 text-[10px]">
+      <span class="hidden sm:inline text-zinc-600">HOST: <span class="text-zinc-400">CF_WORKER</span></span>
+      <span class="hidden sm:inline text-zinc-800">|</span>
+      <span class="text-zinc-400 flex items-center gap-1.5">
+        <span class="inline-block w-1.5 h-1.5 bg-emerald-500/80"></span>
+        <span id="telemetry-clock">--:--:-- UTC</span>
+      </span>
+    </div>
+  </div>
+</header>
+
+<script>
+  function updateClock() {
+    const clockEl = document.getElementById('telemetry-clock');
+    if (clockEl) {
+      const now = new Date();
+      clockEl.textContent = now.toTimeString().split(' ')[0] + ' UTC';
+    }
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>

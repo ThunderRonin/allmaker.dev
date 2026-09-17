@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+
+<html class="dark scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Amirali Daliri — Kernel Console [OLED]</title>
+<!-- Tailwind CSS v3 with Forms & Container-Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            oled: '#000000',
+            panel: '#050507',
+            panelHover: '#08080c',
+            borderRaw: '#16161c',
+            borderSubtle: '#22222c',
+            crimson: {
+              400: '#ff3366',
+              500: '#ff1744',
+              600: '#dc2626',
+              800: '#991b1b',
+              900: '#450a0a',
+              glow: '#ff174444'
+            }
+          },
+          fontFamily: {
+            mono: ['"JetBrains Mono"', '"Hack"', '"Hack Nerd Font Mono"', 'monospace']
+          },
+          animation: {
+            'cursor-blink': 'blink 1.05s infinite step-start',
+            'radar-pulse': 'pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            blink: {
+              '0%, 100%': { opacity: 1 },
+              '50%': { opacity: 0 }
+            }
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="base-typography">
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      background-color: #000000;
+      color: #94a3b8;
+      font-family: 'JetBrains Mono', 'Hack', monospace;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Custom high-definition scrollbar matching OLED aesthetic */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #000000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1c1c24;
+      border-radius: 0px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ff1744;
+    }
+  </style>
+<style data-purpose="crt-effects">
+    /* Subtle CRT raster scanlines to augment hardware kernel feeling */
+    .scanlines {
+      background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.35) 50%
+      ), linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.02),
+        rgba(0, 255, 0, 0.005),
+        rgba(0, 255, 0, 0.02)
+      );
+      background-size: 100% 3px, 4px 100%;
+    }
+  </style>
+</head>
+<body class="bg-oled text-[#a1a1aa] selection:bg-crimson-600 selection:text-white relative min-h-screen flex flex-col justify-between overflow-x-hidden">
+<!-- BEGIN: ThreeJS Background Canvas Component -->
+<!-- STITCH_THREEJS_START:ANIMATION_9 class="fixed inset-0 w-full h-full pointer-events-none z-0 bg-transparent" -->
+<div class="fixed inset-0 w-full h-full pointer-events-none z-0 bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_9" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_9');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Option A (Modified): Dormant Hyper-Toroidal Kernel Reactor & Multi-Ring Bus
+// Calibrated for Desktop OLED 3AM (absolute #000000 true blacks, razor crimson filaments)
+// DORMANT AT REST: Perfectly aligned, ultra-clean concentric geometric containment rings, slow idle breathing, zero messy noise.
+// ERUPTS ON SCROLL: Rings warp, de-synchronize into chaotic non-Euclidean precessions, particle tracers flare into high-velocity turbulent trajectories.
+
+const getWidth = () => container.clientWidth || window.innerWidth || 1440;
+const getHeight = () => container.clientHeight || window.innerHeight || 900;
+
+let width = getWidth();
+let height = getHeight();
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+camera.position.set(0, 0, 150);
+
+const renderer = new THREE.WebGLRenderer({
+  alpha: true,
+  antialias: true,
+  powerPreference: "high-performance"
+});
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+container.appendChild(renderer.domElement);
+
+const reactorGroup = new THREE.Group();
+scene.add(reactorGroup);
+
+// 1. Central Core: High-precision Geodesic Icosahedron Kernel
+const coreGeo = new THREE.IcosahedronGeometry(18, 1);
+const coreWire = new THREE.WireframeGeometry(coreGeo);
+const coreMat = new THREE.LineBasicMaterial({
+  color: 0xff1744,
+  transparent: true,
+  opacity: 0.85,
+  blending: THREE.AdditiveBlending
+});
+const coreMesh = new THREE.LineSegments(coreWire, coreMat);
+reactorGroup.add(coreMesh);
+
+// Core glowing vertex nodes
+const corePointsMat = new THREE.PointsMaterial({
+  color: 0xff3b5c,
+  size: 3.0,
+  transparent: true,
+  opacity: 0.9,
+  blending: THREE.AdditiveBlending
+});
+const corePoints = new THREE.Points(coreGeo, corePointsMat);
+reactorGroup.add(corePoints);
+
+// 2. Primary Toroidal Containment Lattice (Outer magnetic toroid)
+const torusGeo = new THREE.TorusGeometry(38, 7.5, 14, 48);
+const torusWire = new THREE.WireframeGeometry(torusGeo);
+const torusMat = new THREE.LineBasicMaterial({
+  color: 0x4a0a14, // Dark cold ruby in dormant state
+  transparent: true,
+  opacity: 0.45,
+  blending: THREE.AdditiveBlending
+});
+const torusMesh = new THREE.LineSegments(torusWire, torusMat);
+reactorGroup.add(torusMesh);
+
+// 3. Precision Concentric Gyroscopic Rings (Inner and Outer Bus)
+// In dormant state: cleanly oriented, razor thin, symmetrical
+const ring1Geo = new THREE.TorusGeometry(58, 0.5, 6, 72);
+const ring1Mat = new THREE.LineBasicMaterial({
+  color: 0x6b101d,
+  transparent: true,
+  opacity: 0.6,
+  blending: THREE.AdditiveBlending
+});
+const ring1 = new THREE.Line(ring1Geo, ring1Mat);
+reactorGroup.add(ring1);
+
+const ring2Geo = new THREE.TorusGeometry(78, 0.7, 6, 84);
+const ring2Mat = new THREE.LineDashedMaterial({
+  color: 0xff1744,
+  dashSize: 3,
+  gapSize: 5,
+  transparent: true,
+  opacity: 0.55,
+  blending: THREE.AdditiveBlending
+});
+const ring2 = new THREE.Line(ring2Geo, ring2Mat);
+ring2.computeLineDistances();
+reactorGroup.add(ring2);
+
+const ring3Geo = new THREE.TorusGeometry(98, 0.4, 6, 96);
+const ring3Mat = new THREE.LineBasicMaterial({
+  color: 0x24050a,
+  transparent: true,
+  opacity: 0.5,
+  blending: THREE.AdditiveBlending
+});
+const ring3 = new THREE.Line(ring3Geo, ring3Mat);
+reactorGroup.add(ring3);
+
+// 4. Packet Tracer Particles (Dormant: locked in quiet orbital paths. Turbulent: scatter and streak)
+const PACKET_COUNT = 240;
+const packetGeo = new THREE.BufferGeometry();
+const packetPositions = new Float32Array(PACKET_COUNT * 3);
+const packetColors = new Float32Array(PACKET_COUNT * 3);
+const baseRadii = new Float32Array(PACKET_COUNT);
+const packetAngles = new Float32Array(PACKET_COUNT);
+const packetSpeeds = new Float32Array(PACKET_COUNT);
+const packetInclinations = new Float32Array(PACKET_COUNT);
+const packetOffsets = new Float32Array(PACKET_COUNT * 3);
+
+for (let i = 0; i < PACKET_COUNT; i++) {
+  const i3 = i * 3;
+  // Three clean concentric orbital tiers in dormant mode
+  const tier = i % 3;
+  const r = tier === 0 ? 38 + (Math.random() - 0.5) * 4 :
+            tier === 1 ? 58 + (Math.random() - 0.5) * 6 :
+                         78 + (Math.random() - 0.5) * 8;
+
+  baseRadii[i] = r;
+  packetAngles[i] = Math.random() * Math.PI * 2;
+  packetSpeeds[i] = 0.006 + Math.random() * 0.012;
+  packetInclinations[i] = (tier - 1) * 0.35; // clean slight incline per tier
+
+  // Seed chaotic dispersion offsets
+  packetOffsets[i3] = (Math.random() - 0.5) * 45;
+  packetOffsets[i3 + 1] = (Math.random() - 0.5) * 45;
+  packetOffsets[i3 + 2] = (Math.random() - 0.5) * 45;
+
+  // Dormant color: muted slate/obsidian with sparse red nodes
+  if (Math.random() < 0.18) {
+    packetColors[i3] = 0.95; packetColors[i3 + 1] = 0.10; packetColors[i3 + 2] = 0.22;
+  } else {
+    packetColors[i3] = 0.20; packetColors[i3 + 1] = 0.22; packetColors[i3 + 2] = 0.28;
+  }
+}
+
+packetGeo.setAttribute('position', new THREE.BufferAttribute(packetPositions, 3));
+packetGeo.setAttribute('color', new THREE.BufferAttribute(packetColors, 3));
+
+const packetMat = new THREE.PointsMaterial({
+  size: 2.4,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.85,
+  blending: THREE.AdditiveBlending
+});
+const packetCloud = new THREE.Points(packetGeo, packetMat);
+reactorGroup.add(packetCloud);
+
+// Mouse and Scroll tracking
+let mouseX = 0, mouseY = 0;
+let targetMouseX = 0, targetMouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  targetMouseX = (e.clientX / width - 0.5) * 2;
+  targetMouseY = -(e.clientY / height - 0.5) * 2;
+});
+
+let scrollRatio = 0;
+let scrollVelocity = 0;
+let lastScrollY = 0;
+
+function onScroll() {
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  const docHeight = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+  scrollRatio = Math.min(Math.max(scrollY / docHeight, 0), 1);
+  const deltaY = Math.abs(scrollY - lastScrollY);
+  scrollVelocity += deltaY * 0.009;
+  lastScrollY = scrollY;
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+function onResize() {
+  width = getWidth();
+  height = getHeight();
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+window.addEventListener('resize', onResize);
+
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+
+  // Decay scroll velocity smoothly
+  scrollVelocity *= 0.91;
+
+  // Smooth mouse interpolation
+  mouseX += (targetMouseX - mouseX) * 0.04;
+  mouseY += (targetMouseY - mouseY) * 0.04;
+
+  // Turbulence factor:
+  // At scroll = 0 and idle: turbulence = 0 (dormant, clean, razor geometry)
+  // When scrolling: turbulence spikes, tearing rings out of alignment and flaring particles
+  const activeTurbulence = Math.min(scrollRatio * 1.6 + scrollVelocity * 1.8, 3.8);
+
+  // Core rotation: slow dignified pulse at rest, rapid acceleration when scrolling
+  const coreSpin = 0.18 + activeTurbulence * 0.85;
+  coreMesh.rotation.y = time * coreSpin;
+  coreMesh.rotation.x = time * (coreSpin * 0.7);
+  corePoints.rotation.y = coreMesh.rotation.y;
+  corePoints.rotation.x = coreMesh.rotation.x;
+
+  // Core dilation and distortion on turbulence
+  const coreScale = 1.0 + Math.sin(time * 1.5) * 0.03 + activeTurbulence * 0.35;
+  coreMesh.scale.set(coreScale, coreScale, coreScale);
+  corePoints.scale.set(coreScale, coreScale, coreScale);
+
+  // Toroid alignment:
+  // Dormant: clean fixed tilt.
+  // Active scroll: violent gyroscopic precession and twisting
+  torusMesh.rotation.x = (Math.PI / 4) + Math.sin(time * 0.5) * 0.1 + activeTurbulence * Math.sin(time * 3.0) * 0.8;
+  torusMesh.rotation.y = time * (0.12 + activeTurbulence * 0.6);
+  torusMesh.rotation.z = activeTurbulence * Math.cos(time * 2.5) * 0.5;
+
+  // Ring 1, 2, 3:
+  // Dormant: flat concentric planar alignment with subtle tilt
+  // Turbulent: de-sync, warp axes, tilt violently in opposing directions
+  ring1.rotation.x = (Math.PI / 3) + activeTurbulence * Math.sin(time * 2.0) * 0.9;
+  ring1.rotation.y = time * (0.2 + activeTurbulence * 0.8);
+
+  ring2.rotation.x = -(Math.PI / 3.5) - activeTurbulence * Math.cos(time * 2.2) * 1.1;
+  ring2.rotation.y = -time * (0.25 + activeTurbulence * 0.9);
+
+  ring3.rotation.z = time * (0.1 + activeTurbulence * 0.5);
+  ring3.rotation.x = activeTurbulence * Math.sin(time * 1.8) * 0.7;
+
+  // Modulate ring and toroid colors on turbulence: flare into laser crimson
+  torusMat.color.setRGB(
+    0.29 + activeTurbulence * 0.20,
+    0.04,
+    0.08
+  );
+  ring2Mat.color.setRGB(
+    1.0,
+    0.09 * (1.0 + activeTurbulence * 0.4),
+    0.27
+  );
+
+  // Animate particles:
+  // Dormant: orderly orbital lanes, pristine geometric paths.
+  // Active: particles scatter along turbulent displacement vectors and flash vivid red
+  const pArr = packetGeo.attributes.position.array;
+  const cArr = packetGeo.attributes.color.array;
+
+  for (let i = 0; i < PACKET_COUNT; i++) {
+    const i3 = i * 3;
+    const speed = packetSpeeds[i] * (1.0 + activeTurbulence * 3.2);
+    packetAngles[i] += speed;
+
+    const angle = packetAngles[i];
+    const r = baseRadii[i];
+    const inc = packetInclinations[i];
+
+    // Clean base position
+    const baseX = r * Math.cos(angle);
+    const baseY = r * Math.sin(angle) * Math.sin(inc);
+    const baseZ = r * Math.sin(angle) * Math.cos(inc);
+
+    // Chaos offset triggered by scroll turbulence
+    const chaos = activeTurbulence * 0.8;
+    const noiseX = Math.sin(time * 4.0 + i) * chaos * 8.0;
+    const noiseY = Math.cos(time * 3.5 + i) * chaos * 8.0;
+    const noiseZ = Math.sin(time * 5.0 + i) * chaos * 8.0;
+
+    pArr[i3] = baseX + noiseX;
+    pArr[i3 + 1] = baseY + noiseY;
+    pArr[i3 + 2] = baseZ + noiseZ;
+
+    // Color flaring on turbulence
+    if (activeTurbulence > 0.3 && Math.random() < 0.25) {
+      cArr[i3] = 1.0;
+      cArr[i3 + 1] = 0.09;
+      cArr[i3 + 2] = 0.27;
+    } else if (activeTurbulence <= 0.05) {
+      // Revert to calm dormant palette
+      if (i % 5 === 0) {
+        cArr[i3] = 0.90; cArr[i3 + 1] = 0.10; cArr[i3 + 2] = 0.20;
+      } else {
+        cArr[i3] = 0.20; cArr[i3 + 1] = 0.22; cArr[i3 + 2] = 0.26;
+      }
+    }
+  }
+
+  packetGeo.attributes.position.needsUpdate = true;
+  packetGeo.attributes.color.needsUpdate = true;
+
+  // Smooth camera parallax with cursor
+  reactorGroup.rotation.y = mouseX * 0.22;
+  reactorGroup.rotation.x = -mouseY * 0.16;
+  reactorGroup.position.y = -scrollRatio * 20;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_9 -->
+<!-- END: ThreeJS Background Canvas Component -->
+<!-- Subtle CRT overlay screen effect -->
+<div class="fixed inset-0 pointer-events-none z-0 scanlines opacity-60"></div>
+<!-- BEGIN: Top Global Telemetry Header -->
+<header class="relative z-20 border-b border-borderRaw bg-oled/90 backdrop-blur-sm sticky top-0 px-4 lg:px-8 py-2.5 text-[11px] tracking-wide" data-purpose="telemetry-bar">
+<div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-y-2">
+<!-- Node identifier -->
+<div class="flex items-center space-x-3">
+<div class="flex items-center space-x-1.5 font-bold text-slate-200">
+<span class="text-crimson-500 font-black">λ::</span>
+<span class="tracking-wider">AMIRALI_DALIRI</span>
+<span class="text-slate-600 text-[10px]">[14ms]</span>
+</div>
+<span class="text-zinc-700">|</span>
+<div class="flex items-center space-x-1.5">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-crimson-500 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-crimson-500"></span>
+</span>
+<span class="text-crimson-400 font-semibold uppercase tracking-wider text-[10px]">LIVE ::OK</span>
+</div>
+</div>
+<!-- Navigation shortcuts -->
+<nav class="hidden md:flex items-center space-x-6 text-[11px] text-zinc-500 font-medium">
+<a class="hover:text-crimson-400 transition-colors flex items-center gap-1" href="#hero"><span class="text-crimson-600 text-[9px]">01:</span>HERO</a>
+<a class="hover:text-crimson-400 transition-colors flex items-center gap-1" href="#systems"><span class="text-crimson-600 text-[9px]">02:</span>PROJ</a>
+<a class="hover:text-crimson-400 transition-colors flex items-center gap-1" href="#philosophy"><span class="text-crimson-600 text-[9px]">03:</span>ABOUT</a>
+<a class="hover:text-crimson-400 transition-colors flex items-center gap-1" href="#codex"><span class="text-crimson-600 text-[9px]">04:</span>CODEX</a>
+<a class="hover:text-crimson-400 transition-colors flex items-center gap-1" href="#connect"><span class="text-crimson-600 text-[9px]">05:</span>CONN</a>
+</nav>
+<!-- Machine state & cluster flags -->
+<div class="flex items-center space-x-3 text-[10px] text-zinc-500">
+<span class="hidden sm:inline">NODE: <span class="text-zinc-300">TEHRAN_EDGE</span></span>
+<span class="hidden xl:inline text-zinc-800">/</span>
+<span class="hidden xl:inline">ARCH: <span class="text-zinc-300">DISTRIBUTED_64</span></span>
+<span class="hidden sm:inline text-zinc-800">/</span>
+<span>SYS_STATUS: <span class="text-emerald-500 font-mono">ONLINE</span> § <span class="text-crimson-500">3AM_OLED</span></span>
+</div>
+</div>
+</header>
+<!-- END: Top Global Telemetry Header -->
+<!-- Main Content Container -->
+<main class="relative z-10 max-w-[1440px] mx-auto w-full px-4 lg:px-8 py-8 md:py-12 space-y-12">
+<!-- BEGIN: Hero Section -->
+<section class="w-full border border-borderRaw bg-panel/75 backdrop-blur-md p-6 lg:p-10 rounded-none relative overflow-hidden" data-purpose="hero-console" id="hero">
+<!-- Corner diagnostic bracket -->
+<div class="absolute top-2 right-4 text-[10px] text-zinc-600 tracking-wider select-none font-mono">
+        § SYS_AUTH::ROOT@AMIRALI-NODE <span class="text-crimson-600 font-bold ml-2">PID: 29014</span>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+<!-- Hero Primary Identifier -->
+<div class="lg:col-span-7 space-y-5">
+<div class="space-y-2">
+<div class="flex items-center space-x-2">
+<span class="text-crimson-500 font-bold text-2xl lg:text-3xl">&gt;</span>
+<h1 class="text-3xl lg:text-5xl font-bold tracking-tight text-white flex items-center">
+                amirali_daliri<span class="inline-block w-3 lg:w-3.5 h-7 lg:h-9 ml-2 bg-crimson-500 shadow-[0_0_12px_#ff1744] animate-cursor-blink"></span>
+</h1>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<span class="text-sm lg:text-base text-zinc-300 font-medium">Software Engineer / CTO</span>
+<span class="bg-crimson-900/40 text-crimson-400 border border-crimson-800/80 px-2 py-0.5 text-[10px] font-bold rounded-sm">L8</span>
+</div>
+</div>
+<p class="text-sm lg:text-base text-zinc-400 max-w-xl leading-relaxed font-light">
+            Backend, architecture, distributed infrastructure &amp; memory-safe systems. Designing deterministic pipelines that maintain absolute state coherence under zero-trust, high-contention production environments.
+          </p>
+<!-- CTAs -->
+<div class="flex flex-wrap gap-4 pt-2">
+<a class="inline-flex items-center justify-center space-x-2 bg-crimson-600 hover:bg-crimson-500 text-white text-xs font-bold uppercase tracking-wider px-5 py-3 transition-all duration-150 border border-crimson-500 shadow-[0_0_15px_rgba(255,23,68,0.3)]" href="#systems">
+<span>&gt; EXPLORE_SYSTEMS</span>
+</a>
+<a class="inline-flex items-center justify-center space-x-2 bg-panel hover:bg-panelHover text-zinc-300 hover:text-white text-xs font-semibold uppercase tracking-wider px-5 py-3 transition-all duration-150 border border-borderRaw hover:border-zinc-700" href="#notes">
+<span class="text-zinc-600">$</span>
+<span>VIEW_CODEX</span>
+</a>
+</div>
+</div>
+<!-- Hero Diagnostics Card -->
+<div class="lg:col-span-5 bg-oled/90 border border-borderRaw p-5 font-mono text-xs space-y-3 relative shadow-2xl" data-purpose="telemetry-card">
+<div class="flex items-center justify-between border-b border-borderRaw pb-2 text-[10px]">
+<span class="text-zinc-500 tracking-wider">:: HOST_DIAGNOSTICS</span>
+<span class="text-crimson-500 font-bold tracking-widest uppercase">TELEMETRY_STREAM</span>
+</div>
+<div class="space-y-2 text-zinc-400 text-[11px] leading-relaxed">
+<div class="flex justify-between py-1 border-b border-zinc-900/60">
+<span class="text-zinc-500">status:</span>
+<span class="text-emerald-400 flex items-center gap-1.5">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+                online [signal::200_OK]
+              </span>
+</div>
+<div class="flex justify-between py-1 border-b border-zinc-900/60">
+<span class="text-zinc-500">focus:</span>
+<span class="text-zinc-200 text-right">production systems &amp; high-throug...</span>
+</div>
+<div class="flex justify-between py-1 border-b border-zinc-900/60">
+<span class="text-zinc-500">location:</span>
+<span class="text-zinc-200 text-right">tehran, ir [35.6892° N, 51.3890° E]</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-zinc-500">active_cluster:</span>
+<span class="text-crimson-400 font-semibold">k8s-edge-01 (12 nodes)</span>
+</div>
+</div>
+<!-- Micro bar indicator -->
+<div class="pt-2">
+<div class="flex justify-between text-[9px] text-zinc-600 mb-1">
+<span>LOAD_AVG</span>
+<span class="text-crimson-400">0.24, 0.18, 0.12</span>
+</div>
+<div class="w-full bg-zinc-900 h-1 overflow-hidden">
+<div class="bg-crimson-600 h-full w-[24%]"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Hero Section -->
+<!-- BEGIN: Projects Grid Section -->
+<section class="space-y-4" data-purpose="systems-manifest" id="systems">
+<div class="flex items-center justify-between border-b border-borderRaw pb-2">
+<div class="flex items-center space-x-2">
+<span class="text-crimson-500 font-bold">&gt;</span>
+<h2 class="text-sm md:text-base font-bold text-white tracking-wide uppercase">cat systems.manifest</h2>
+</div>
+<div class="text-[10px] text-zinc-500 tracking-wider">
+          [02] PROJECTS // RECENT INFRASTRUCTURE &amp; BACKEND WORK <span class="text-crimson-600 ml-1">SYS_LOG</span>
+</div>
+</div>
+<!-- 3-Column Systems Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+<!-- System [01]: KASB -->
+<article class="border border-borderRaw bg-panel/85 p-5 flex flex-col justify-between hover:border-zinc-700 transition-colors group relative" data-purpose="project-card-kasb">
+<div class="space-y-3">
+<div class="flex items-center justify-between border-b border-zinc-900 pb-2">
+<div class="flex items-center space-x-2">
+<span class="text-crimson-500 font-bold text-xs">[01]</span>
+<h3 class="text-base font-bold text-white group-hover:text-crimson-400 transition-colors">KASB</h3>
+</div>
+<span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 border border-crimson-900/80 bg-crimson-950/40 text-crimson-400">ACTIVE_SCALE</span>
+</div>
+<p class="text-[10px] uppercase text-zinc-500 tracking-wider font-semibold">production ecosystem // fintech &amp; commerce</p>
+<p class="text-xs text-zinc-300 leading-relaxed">
+              High-concurrency core transactional engine handling multi-tenant microservices, state sync, and zero-downtime distributed migration across distributed data stores.
+            </p>
+<div class="flex flex-wrap gap-1.5 pt-2">
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">.NET Core</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">React Native</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">Kafka</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">Redis Cluster</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">PostgreSQL</span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-zinc-900 flex items-center justify-between text-[10px]">
+<span class="text-zinc-500">METRICS: LATENCY p99 &lt; 18ms</span>
+<span class="text-crimson-500 font-semibold tracking-wider">RELIABILITY: 99.98%</span>
+</div>
+</article>
+<!-- System [02]: ALLCODEX -->
+<article class="border border-borderRaw bg-panel/85 p-5 flex flex-col justify-between hover:border-zinc-700 transition-colors group relative" data-purpose="project-card-allcodex">
+<div class="space-y-3">
+<div class="flex items-center justify-between border-b border-zinc-900 pb-2">
+<div class="flex items-center space-x-2">
+<span class="text-crimson-500 font-bold text-xs">[02]</span>
+<h3 class="text-base font-bold text-white group-hover:text-crimson-400 transition-colors">ALLCODEX</h3>
+</div>
+<span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 border border-zinc-800 bg-zinc-900 text-zinc-400">PRODUCTION</span>
+</div>
+<p class="text-[10px] uppercase text-zinc-500 tracking-wider font-semibold">knowledge system // vector retrieval engine</p>
+<p class="text-xs text-zinc-300 leading-relaxed">
+              Low-latency semantic memory pipeline indexer with real-time embedding caches, distributed async ingestion workers, and sub-second multi-modal querying.
+            </p>
+<div class="flex flex-wrap gap-1.5 pt-2">
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">Next.js</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">Bun</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">Vector Search</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">pgvector</span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-zinc-900 flex items-center justify-between text-[10px]">
+<span class="text-zinc-500">THROUGHPUT: 1.4k req/s</span>
+<span class="text-crimson-500 font-semibold tracking-wider">INDEX_CACHE: WARM</span>
+</div>
+</article>
+<!-- System [03]: SENTINEL_STREAM -->
+<article class="border border-borderRaw bg-panel/85 p-5 flex flex-col justify-between hover:border-zinc-700 transition-colors group relative" data-purpose="project-card-sentinel">
+<div class="space-y-3">
+<div class="flex items-center justify-between border-b border-zinc-900 pb-2">
+<div class="flex items-center space-x-2">
+<span class="text-crimson-500 font-bold text-xs">[03]</span>
+<h3 class="text-base font-bold text-white group-hover:text-crimson-400 transition-colors">SENTINEL_STREAM</h3>
+</div>
+<span class="text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 border border-crimson-900/80 bg-crimson-950/40 text-crimson-400">EXPERIMENTAL</span>
+</div>
+<p class="text-[10px] uppercase text-zinc-500 tracking-wider font-semibold">telemetry daemon // distributed log ingestion</p>
+<p class="text-xs text-zinc-300 leading-relaxed">
+              Lightweight kernel-level telemetry agent utilizing eBPF tracing routines for zero-overhead bottleneck identification and real-time anomaly filtering across edge nodes.
+            </p>
+<div class="flex flex-wrap gap-1.5 pt-2">
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">Go</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">ClickHouse</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">eBPF</span>
+<span class="px-2 py-0.5 text-[10px] bg-zinc-900 text-zinc-300 border border-zinc-800">Grafana</span>
+</div>
+</div>
+<div class="pt-4 mt-4 border-t border-zinc-900 flex items-center justify-between text-[10px]">
+<span class="text-zinc-500">MEM_FOOTPRINT: &lt; 12MB</span>
+<span class="text-crimson-500 font-semibold tracking-wider">CPU_OVERHEAD: 0.12%</span>
+</div>
+</article>
+</div>
+</section>
+<!-- END: Projects Grid Section -->
+<!-- BEGIN: Split Bottom Row (Philosophy / Notes / Dispatch) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6" data-purpose="modular-trio-row">
+<!-- Column 1: Philosophy -->
+<div class="lg:col-span-4 space-y-3" id="philosophy">
+<div class="flex items-center space-x-2 border-b border-borderRaw pb-2">
+<span class="text-crimson-500 font-bold">&gt;</span>
+<h2 class="text-xs md:text-sm font-bold text-white uppercase tracking-wider">cat about.txt</h2>
+</div>
+<div class="border border-borderRaw bg-panel/80 p-5 h-[calc(100%-2.2rem)] flex flex-col justify-between space-y-4">
+<p class="text-xs leading-relaxed text-zinc-300 font-light">
+            Specialized in designing, building, maintaining, and investigating high-throughput software systems. Obsessed with mechanical sympathy, zero-cost abstractions, resilient distributed state machines, and reliable infrastructure under adversarial network conditions.
+          </p>
+<div class="pt-4 border-t border-zinc-900 text-[10px] flex items-center justify-between">
+<span class="text-zinc-500 font-mono">PARADIGM: EVENT_DRIVEN // ASYNC</span>
+<span class="text-crimson-500 font-bold tracking-wider">STANCE: UNCOMPROMISING</span>
+</div>
+</div>
+</div>
+<!-- Column 2: Notes / Codex -->
+<div class="lg:col-span-4 space-y-3" id="notes">
+<div class="flex items-center justify-between border-b border-borderRaw pb-2">
+<div class="flex items-center space-x-2">
+<span class="text-crimson-500 font-bold">&gt;</span>
+<h2 class="text-xs md:text-sm font-bold text-white uppercase tracking-wider">ls -la notes/</h2>
+</div>
+<span class="text-[10px] text-zinc-600">[04] TECHNICAL INDEX</span>
+</div>
+<div class="border border-borderRaw bg-panel/80 p-5 h-[calc(100%-2.2rem)] font-mono text-xs overflow-x-auto space-y-2.5">
+<div class="flex items-center justify-between text-zinc-600 text-[10px] pb-1 border-b border-zinc-900">
+<span>PERMISSIONS // INODE</span>
+<span>FILENAME // SIZE</span>
+</div>
+<div class="flex items-center justify-between hover:text-white transition-colors cursor-pointer group py-0.5">
+<span class="text-zinc-500 text-[11px]">drwxr-xr-x</span>
+<span class="text-crimson-400 group-hover:underline">architecture/ <span class="text-zinc-600 text-[10px]">[DIR]</span></span>
+</div>
+<div class="flex items-center justify-between hover:text-white transition-colors cursor-pointer group py-0.5">
+<span class="text-zinc-500 text-[11px]">-rw-r--r--</span>
+<span class="text-zinc-300 group-hover:text-crimson-400 transition-colors">distributed-consensus.md <span class="text-zinc-600 text-[10px]">14KB</span></span>
+</div>
+<div class="flex items-center justify-between hover:text-white transition-colors cursor-pointer group py-0.5">
+<span class="text-zinc-500 text-[11px]">-rw-r--r--</span>
+<span class="text-zinc-300 group-hover:text-crimson-400 transition-colors">high-throughput-kafka.md <span class="text-zinc-600 text-[10px]">22KB</span></span>
+</div>
+<div class="flex items-center justify-between hover:text-white transition-colors cursor-pointer group py-0.5">
+<span class="text-zinc-500 text-[11px]">-rw-r--r--</span>
+<span class="text-zinc-300 group-hover:text-crimson-400 transition-colors">postmortems-database.md <span class="text-zinc-600 text-[10px]">31KB</span></span>
+</div>
+<div class="flex items-center justify-between hover:text-white transition-colors cursor-pointer group py-0.5">
+<span class="text-zinc-500 text-[11px]">-rw-r--r--</span>
+<span class="text-zinc-300 group-hover:text-crimson-400 transition-colors">agentic-engineering.md <span class="text-zinc-600 text-[10px]">18KB</span></span>
+</div>
+</div>
+</div>
+<!-- Column 3: Dispatch Interface -->
+<div class="lg:col-span-4 space-y-3" id="connect">
+<div class="flex items-center justify-between border-b border-borderRaw pb-2">
+<div class="flex items-center space-x-2">
+<span class="text-crimson-500 font-bold">&gt;</span>
+<h2 class="text-xs md:text-sm font-bold text-white uppercase tracking-wider">./connect --direct</h2>
+</div>
+<span class="text-[10px] text-zinc-600">[05] DISPATCH</span>
+</div>
+<div class="border border-borderRaw bg-panel/80 p-5 h-[calc(100%-2.2rem)] flex flex-col justify-between space-y-3 font-mono text-xs">
+<div class="space-y-2">
+<!-- Email -->
+<a class="flex items-center justify-between p-2 rounded-none bg-oled border border-borderRaw hover:border-crimson-600 group transition-all" href="mailto:amirali@daliri.dev">
+<span class="text-zinc-500 flex items-center gap-2">
+<span class="text-crimson-500">@</span> email:
+              </span>
+<span class="text-zinc-200 group-hover:text-crimson-400 transition-colors">amirali@daliri.dev</span>
+</a>
+<!-- GitHub -->
+<a class="flex items-center justify-between p-2 rounded-none bg-oled border border-borderRaw hover:border-crimson-600 group transition-all" href="https://github.com/amiralidaliri" rel="noopener noreferrer" target="_blank">
+<span class="text-zinc-500 flex items-center gap-2">
+<span class="text-crimson-500">&lt;&gt;</span> github:
+              </span>
+<span class="text-zinc-200 group-hover:text-crimson-400 transition-colors">github.com/amiralidaliri</span>
+</a>
+<!-- LinkedIn -->
+<a class="flex items-center justify-between p-2 rounded-none bg-oled border border-borderRaw hover:border-crimson-600 group transition-all" href="https://linkedin.com/in/amiralidaliri" rel="noopener noreferrer" target="_blank">
+<span class="text-zinc-500 flex items-center gap-2">
+<span class="text-crimson-500">::</span> linkedin:
+              </span>
+<span class="text-zinc-200 group-hover:text-crimson-400 transition-colors">in/amiralidaliri</span>
+</a>
+</div>
+<!-- Resume PDF CTA -->
+<div class="pt-2 border-t border-zinc-900">
+<a class="flex items-center justify-between px-3 py-2 bg-crimson-950/30 border border-crimson-900 hover:border-crimson-500 text-crimson-400 hover:text-white transition-all text-xs font-semibold" href="#">
+<span class="flex items-center gap-2">
+<span class="text-zinc-400">📄</span> resume:
+              </span>
+<span class="bg-crimson-600 text-white px-2 py-0.5 text-[10px] tracking-wider uppercase font-bold">FETCH_PDF [240KB]</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- END: Split Bottom Row -->
+<!-- Interactive terminal ping banner -->
+<div class="border border-borderRaw bg-oled px-4 py-2.5 flex items-center justify-between font-mono text-[11px]" data-purpose="ping-terminal">
+<div class="flex items-center space-x-2 text-zinc-500">
+<span class="text-crimson-500 font-bold">&gt;</span>
+<span>ping -c 1 edge.daliri.dev</span>
+</div>
+<div class="text-crimson-400 font-bold tracking-wider flex items-center gap-2">
+<span class="h-1.5 w-1.5 rounded-full bg-crimson-500 animate-radar-pulse"></span>
+        1.04ms (RTT)
+      </div>
+</div>
+</main>
+<!-- BEGIN: Bottom Status Ticker -->
+<footer class="relative z-20 border-t border-borderRaw bg-oled/95 backdrop-blur-sm px-4 lg:px-8 py-3 text-[10px] text-zinc-600" data-purpose="footer-bar">
+<div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-y-2">
+<div class="flex items-center space-x-4">
+<span>© 2025 AMIRALI DALIRI</span>
+<span class="text-zinc-800">/</span>
+<span class="text-zinc-400">HIGH-PERFORMANCE RUNTIME SYSTEM</span>
+<span class="text-zinc-800">/</span>
+<span class="text-crimson-500 font-mono">ARCH: DISTRIBUTED</span>
+</div>
+<div class="flex items-center space-x-3 font-mono">
+<span class="text-zinc-500">ZERO RUNTIME EXCEPTIONS</span>
+<span class="text-zinc-800">|</span>
+<span class="text-emerald-500">TLS 1.3 SECURE</span>
+</div>
+</div>
+</footer>
+<!-- END: Bottom Status Ticker -->
+</body></html>

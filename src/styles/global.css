@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+@theme {
+  --font-mono: 'JetBrains Mono', 'Geist Mono', 'Menlo', 'Consolas', monospace;
+
+  /* Eye-friendly OLED palette */
+  --color-oled: #000000;
+  --color-surface-base: #030303;
+  --color-surface-panel: #060608;
+  --color-surface-card: #09090c;
+  --color-surface-hover: #121216;
+
+  --color-border-raw: #141418;
+  --color-border-subtle: #1c1c22;
+  --color-border-active: #2a2a34;
+
+  /* Disciplined single accent: subdued deep laser crimson */
+  --color-accent-laser: #e11d48;
+  --color-accent-ruby: #9f1239;
+  --color-accent-dark: #4c0519;
+
+  /* Eye-soothing low-glare typography */
+  --color-text-primary: #d4d4d8;
+  --color-text-secondary: #82828e;
+  --color-text-muted: #52525c;
+  --color-text-faint: #3f3f46;
+
+  /* Microscopic status indicator */
+  --color-status-ok: #10b981;
+}
+
+@layer base {
+  * {
+    border-radius: 0px !important;
+  }
+
+  html {
+    background-color: #000000;
+    color: #d4d4d8;
+    font-family: var(--font-mono);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #000000;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: #9f1239;
+    color: #ffffff;
+  }
+}
+
+/* Subtle, low-glare CRT scanlines (softened for eye comfort) */
+.scanlines {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 0.4) 50%
+  ),
+  linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.005),
+    rgba(0, 0, 0, 0.01),
+    rgba(255, 255, 255, 0.005)
+  );
+  background-size: 100% 4px, 4px 100%;
+  pointer-events: none;
+}
+
+/* Eye-friendly scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #18181b;
+  border: 1px solid #141418;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #27272a;
+}
+
+/* Terminal blink cursor */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.animate-cursor {
+  animation: blink 1.1s infinite steps(1);
+}

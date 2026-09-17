@@ -1,0 +1,25 @@
+{
+  "name": "terminal-systems-portfolio",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && yarn wrangler deploy",
+    "deploy:pages": "astro build && yarn wrangler pages deploy dist/client",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.3.2",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/three": "^0.186.0",
+    "astro": "^7.3.3",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.186.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.133.0"
+  }
+}

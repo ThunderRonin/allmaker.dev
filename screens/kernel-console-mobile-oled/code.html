@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://cdnjs.cloudflare.com/ajax/libs/hack-font/3.3.0/web/hack.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#000000;color:#e2e4ea;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-feature-settings:"calt" 1,"liga" 1,"zero" 1;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}
+.font-mono-tech{font-family:'Hack','JetBrains Mono',monospace;}
+.glow-crimson{text-shadow:0 0 10px rgba(255,23,68,0.45);}
+.box-glow-crimson{box-shadow:0 0 18px -4px rgba(255,23,68,0.25);}
+.border-subtle{border-color:#14141a;}
+.border-subtle-hover:hover{border-color:#222430;}
+</style><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "oled-black": "#000000", "obsidian-base": "#040406", "obsidian-card": "#070709", "obsidian-elevated": "#0d0d12", "border-slate": "#14141a", "border-bright": "#1f202b", "phosphor": "#e2e4ea", "slate-dim": "#424552", "slate-ghost": "#272932", "crimson-hot": "#ff1744", "crimson-ruby": "#8b0000", "crimson-dim": "#450a0a", "secondary-fixed-dim": "#c6c6c9", "surface-container": "#070709", "tertiary-fixed-dim": "#c6c5d0", "on-surface-variant": "#9296a6", "on-primary": "#ffffff", "inverse-on-surface": "#313030", "on-primary-fixed": "#410002", "on-primary-container": "#ffffff", "primary-container": "#ff1744", "surface-dim": "#000000", "on-tertiary-fixed-variant": "#45464f", "surface-bright": "#1a1a22", "secondary-fixed": "#e2e2e5", "surface-container-lowest": "#000000", "surface-container-highest": "#13131a", "tertiary-container": "#181822", "on-error-container": "#ffdad6", "on-surface": "#e2e4ea", "inverse-surface": "#e2e4ea", "inverse-primary": "#ff1744", "outline-variant": "#1c1d26", "on-primary-fixed-variant": "#93000b", "surface": "#000000", "error-container": "#8b0000", "surface-container-high": "#0d0d13", "on-error": "#ffffff", "primary-fixed-dim": "#ff8093", "surface-tint": "#ff1744", "on-secondary-fixed-variant": "#454749", "on-secondary": "#2f3033", "error": "#ff1744", "on-tertiary": "#2f3038", "surface-variant": "#0c0d12", "tertiary-fixed": "#e2e1ec", "secondary": "#636878", "on-tertiary-container": "#f9f7ff", "tertiary": "#a0a3b2", "background": "#000000", "secondary-container": "#14141d", "outline": "#2b2d3a", "on-secondary-fixed": "#1a1c1e", "surface-container-low": "#040406", "primary-fixed": "#ffdad6", "on-secondary-container": "#bbbbbe", "primary": "#ff1744", "on-tertiary-fixed": "#1a1b23", "on-background": "#e2e4ea" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin": "2rem", "gutter-mobile": "0.75rem", "space-xs": "0.25rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-2xl": "4rem", "gutter": "1.5rem", "space-md": "1rem" }, fontFamily: { "headline-xl": ["Hack", "JetBrains Mono", "monospace"], "headline-lg-mobile": ["Hack", "JetBrains Mono", "monospace"], "headline-xl-mobile": ["Hack", "JetBrains Mono", "monospace"], "label-md": ["Hack", "JetBrains Mono", "monospace"], "headline-lg": ["Hack", "JetBrains Mono", "monospace"], "body-sm": ["Hack", "JetBrains Mono", "monospace"], "body-lg": ["Hack", "JetBrains Mono", "monospace"], "code-snippet": ["Hack", "JetBrains Mono", "monospace"], "headline-md": ["Hack", "JetBrains Mono", "monospace"], "body-md": ["Hack", "JetBrains Mono", "monospace"], "label-sm": ["Hack", "JetBrains Mono", "monospace"] }, fontSize: { "headline-xl": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.04em", "fontWeight": "600" }], "headline-lg-mobile": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-xl-mobile": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "label-md": ["0.8125rem", { "lineHeight": "1rem", "letterSpacing": "0.04em", "fontWeight": "500" }], "headline-lg": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-sm": ["0.75rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "body-lg": ["0.9375rem", { "lineHeight": "1.625rem", "letterSpacing": "-0.01em", "fontWeight": "400" }], "code-snippet": ["0.8125rem", { "lineHeight": "1.375rem", "letterSpacing": "0em", "fontWeight": "400" }], "headline-md": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.02em", "fontWeight": "500" }], "body-md": ["0.875rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.08em", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+      background-color: #000000;
+    }
+  </style>
+</head><body class="bg-black text-[#e2e4ea] font-mono-tech font-body-md text-body-md antialiased flex flex-col min-h-screen relative selection:bg-crimson-hot/30 selection:text-white"><!-- Full Screen Three.js Canvas Reactor Background Layer -->
+<!-- STITCH_THREEJS_START:ANIMATION_5 class="fixed inset-0 w-full h-full pointer-events-none z-0" -->
+<div class="fixed inset-0 w-full h-full pointer-events-none z-0" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_5" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_5');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Three.js Option A: Hyper-Toroidal Kernel Reactor & Multi-Ring Bus
+// Calibrated for deep OLED blacks, high-concurrency systems aesthetic, and laser-crimson filaments
+
+const getWidth = () => container.clientWidth || window.innerWidth || 390;
+const getHeight = () => container.clientHeight || window.innerHeight || 844;
+
+let width = getWidth();
+let height = getHeight();
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(55, width / height, 0.1, 1000);
+camera.position.set(0, 0, 160);
+
+const renderer = new THREE.WebGLRenderer({
+  alpha: true,
+  antialias: true,
+  powerPreference: "high-performance"
+});
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+container.appendChild(renderer.domElement);
+
+const coreGroup = new THREE.Group();
+scene.add(coreGroup);
+
+// 1. Inner Core: Wireframe Icosahedron / Geodesic Kernel Node
+const coreGeo = new THREE.IcosahedronGeometry(22, 2);
+const coreWire = new THREE.WireframeGeometry(coreGeo);
+const coreMat = new THREE.LineBasicMaterial({
+  color: 0xff1744,
+  transparent: true,
+  opacity: 0.9,
+  blending: THREE.AdditiveBlending,
+  linewidth: 1.5
+});
+const coreMesh = new THREE.LineSegments(coreWire, coreMat);
+coreGroup.add(coreMesh);
+
+// 1b. High-density Core Vertices (Glowing Node Vertices)
+const corePointsMat = new THREE.PointsMaterial({
+  color: 0xff3b5c,
+  size: 3.2,
+  transparent: true,
+  opacity: 0.95,
+  blending: THREE.AdditiveBlending
+});
+const corePoints = new THREE.Points(coreGeo, corePointsMat);
+coreGroup.add(corePoints);
+
+// 2. Toroidal Magnetic Containment Lattice (Wireframe Hyper-Torus)
+const torusGeo = new THREE.TorusGeometry(48, 14, 20, 60);
+const torusWire = new THREE.WireframeGeometry(torusGeo);
+const torusMat = new THREE.LineBasicMaterial({
+  color: 0x991b1b,
+  transparent: true,
+  opacity: 0.45,
+  blending: THREE.AdditiveBlending
+});
+const torusMesh = new THREE.LineSegments(torusWire, torusMat);
+torusMesh.rotation.x = Math.PI / 3;
+coreGroup.add(torusMesh);
+
+// 3. Counter-Rotating Orbital Data Ring 1 (Inner Bus)
+const ring1Geo = new THREE.TorusGeometry(72, 0.8, 8, 80);
+const ring1Mat = new THREE.LineBasicMaterial({
+  color: 0x3b1117,
+  transparent: true,
+  opacity: 0.75,
+  blending: THREE.AdditiveBlending
+});
+const ring1 = new THREE.Line(ring1Geo, ring1Mat);
+ring1.rotation.x = Math.PI / 2.2;
+ring1.rotation.y = Math.PI / 6;
+coreGroup.add(ring1);
+
+// 4. Outer Telemetry Segmented Orbital Bus (Segmented Nodes)
+const ring2Geo = new THREE.TorusGeometry(96, 1.2, 8, 90);
+const ring2Mat = new THREE.LineDashedMaterial({
+  color: 0xff1744,
+  dashSize: 4,
+  gapSize: 6,
+  transparent: true,
+  opacity: 0.65,
+  blending: THREE.AdditiveBlending
+});
+const ring2 = new THREE.Line(ring2Geo, ring2Mat);
+ring2.computeLineDistances();
+ring2.rotation.x = -Math.PI / 2.6;
+ring2.rotation.y = -Math.PI / 8;
+coreGroup.add(ring2);
+
+// 5. High-Velocity High-Throughput Packet Tracer Particles
+const PACKET_COUNT = 160;
+const packetGeo = new THREE.BufferGeometry();
+const packetPositions = new Float32Array(PACKET_COUNT * 3);
+const packetColors = new Float32Array(PACKET_COUNT * 3);
+const packetVelocities = [];
+
+for (let i = 0; i < PACKET_COUNT; i++) {
+  const i3 = i * 3;
+  // Distribute along orbital radii
+  const radius = 30 + Math.random() * 85;
+  const theta = Math.random() * Math.PI * 2;
+  const phi = (Math.random() - 0.5) * Math.PI * 0.8;
+
+  packetPositions[i3] = radius * Math.cos(theta) * Math.cos(phi);
+  packetPositions[i3 + 1] = radius * Math.sin(phi);
+  packetPositions[i3 + 2] = radius * Math.sin(theta) * Math.cos(phi);
+
+  packetVelocities.push({
+    radius: radius,
+    theta: theta,
+    phi: phi,
+    speed: 0.015 + Math.random() * 0.035,
+    wobble: Math.random() * 2
+  });
+
+  // Hot crimson and cold phosphor highlights
+  if (Math.random() < 0.35) {
+    packetColors[i3] = 1.0; packetColors[i3 + 1] = 0.09; packetColors[i3 + 2] = 0.27; // Laser crimson
+  } else if (Math.random() < 0.6) {
+    packetColors[i3] = 0.6; packetColors[i3 + 1] = 0.05; packetColors[i3 + 2] = 0.12; // Dark ruby
+  } else {
+    packetColors[i3] = 0.3; packetColors[i3 + 1] = 0.32; packetColors[i3 + 2] = 0.38; // Cold graphite slate
+  }
+}
+
+packetGeo.setAttribute('position', new THREE.BufferAttribute(packetPositions, 3));
+packetGeo.setAttribute('color', new THREE.BufferAttribute(packetColors, 3));
+
+const packetMat = new THREE.PointsMaterial({
+  size: 2.8,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.95,
+  blending: THREE.AdditiveBlending
+});
+const packetCloud = new THREE.Points(packetGeo, packetMat);
+coreGroup.add(packetCloud);
+
+// Mouse and Touch Interaction
+let mouseX = 0, mouseY = 0;
+let targetMouseX = 0, targetMouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  targetMouseX = (e.clientX / width - 0.5) * 2;
+  targetMouseY = -(e.clientY / height - 0.5) * 2;
+});
+
+window.addEventListener('touchmove', (e) => {
+  if (e.touches.length > 0) {
+    targetMouseX = (e.touches[0].clientX / width - 0.5) * 2;
+    targetMouseY = -(e.touches[0].clientY / height - 0.5) * 2;
+  }
+}, { passive: true });
+
+// Scroll reactivity: Modulates core dilation, rotation spin, and field of depth
+let scrollRatio = 0;
+function onScroll() {
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  const docHeight = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+  scrollRatio = Math.min(Math.max(scrollY / docHeight, 0), 1);
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+// Window resize
+function onResize() {
+  width = getWidth();
+  height = getHeight();
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+window.addEventListener('resize', onResize);
+
+// Render loop
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+  const delta = clock.getDelta();
+
+  // Smooth mouse interpolation
+  mouseX += (targetMouseX - mouseX) * 0.05;
+  mouseY += (targetMouseY - mouseY) * 0.05;
+
+  // Reactivity to scroll & mouse
+  const spinSpeed = 1.0 + scrollRatio * 2.8;
+  coreMesh.rotation.x = time * 0.35 * spinSpeed;
+  coreMesh.rotation.y = time * 0.55 * spinSpeed;
+  corePoints.rotation.x = coreMesh.rotation.x;
+  corePoints.rotation.y = coreMesh.rotation.y;
+
+  // Pulsing scale for the inner reactor
+  const pulse = 1.0 + Math.sin(time * 3.5) * 0.06 + scrollRatio * 0.15;
+  coreMesh.scale.set(pulse, pulse, pulse);
+  corePoints.scale.set(pulse, pulse, pulse);
+
+  // Torus rotation
+  torusMesh.rotation.y = -time * 0.22 * spinSpeed;
+  torusMesh.rotation.z = time * 0.18;
+
+  // Rings counter-rotation
+  ring1.rotation.z = time * 0.45 * spinSpeed;
+  ring2.rotation.z = -time * 0.30 * spinSpeed;
+
+  // Group parallax shift
+  coreGroup.rotation.y = mouseX * 0.45;
+  coreGroup.rotation.x = -mouseY * 0.35;
+  coreGroup.position.y = -scrollRatio * 25;
+
+  // Animate packet tracer particles along orbital vectors
+  const positions = packetGeo.attributes.position.array;
+  for (let i = 0; i < PACKET_COUNT; i++) {
+    const p = packetVelocities[i];
+    p.theta += p.speed * spinSpeed;
+    const r = p.radius + Math.sin(time * 2.0 + p.wobble) * 4.0;
+    const i3 = i * 3;
+    positions[i3] = r * Math.cos(p.theta) * Math.cos(p.phi);
+    positions[i3 + 1] = r * Math.sin(p.phi) + Math.cos(time + p.theta) * 2;
+    positions[i3 + 2] = r * Math.sin(p.theta) * Math.cos(p.phi);
+  }
+  packetGeo.attributes.position.needsUpdate = true;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_5 --><header class="fixed top-0 w-full z-50 pt-safe bg-[#000000]/85 backdrop-blur-xl border-b border-[#14141a]"><div class="h-24 px-margin-mobile flex flex-col justify-center gap-space-xs"><div class="flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="flex h-2 w-2 relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff1744] opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-[#ff1744] shadow-[0_0_8px_#ff1744]"></span></span><span class="font-label-sm text-label-sm tracking-wider text-[#e2e4ea] font-bold">λ::AMIRALI_DALIRI</span><span class="font-label-sm text-label-sm text-[#424552]">[14ms]</span></div><div class="flex items-center gap-space-sm"><div class="flex items-center gap-space-xs px-2 py-0.5 rounded border border-[#181820] bg-[#070709]"><span class="font-label-sm text-label-sm text-[#ff1744] font-semibold glow-crimson">LIVE</span><span class="font-label-sm text-label-sm text-[#424552]">::OK</span></div><div class="w-7 h-7 rounded bg-[#ff1744] flex items-center justify-center shadow-[0_0_10px_rgba(255,23,68,0.4)]"><span class="material-symbols-outlined text-black font-bold text-[16px]">terminal</span></div></div></div><div class="flex items-center justify-between"><h1 class="font-label-md text-label-md uppercase tracking-wider text-[#e2e4ea] flex items-center gap-space-xs"><span class="text-[#ff1744] glow-crimson">❯</span>ROOT_KERNEL</h1><span class="font-label-sm text-label-sm text-[#424552]">SYS_STATUS: ONLINE § 3AM_OLED</span></div></div></header><main class="flex flex-col relative z-10 w-full pt-28 pb-28 px-margin-mobile min-h-screen"><div class="flex flex-col w-full gap-space-xl">
+<!-- Hero Terminal Panel -->
+<div class="relative w-full overflow-hidden rounded-lg bg-[#040406]/95 border border-[#14141a] box-glow-crimson backdrop-blur-md">
+<!-- Hero Overlay Layer -->
+<div class="relative z-10 flex flex-col gap-space-lg p-space-md pt-space-md">
+<!-- Terminal Node Identifier -->
+<div class="flex items-center justify-between text-label-sm font-label-sm text-[#424552] border-b border-[#14141a] pb-2">
+<span class="tracking-widest text-[#424552] flex items-center gap-1.5"><span class="text-[#ff1744]">§</span>SYS_AUTH::ROOT@AMIRALI-NODE</span>
+<span class="text-[#ff1744] tracking-tight font-semibold glow-crimson">PID: 29014</span>
+</div>
+<!-- Identity -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="text-headline-xl-mobile font-headline-xl-mobile text-[#e2e4ea] tracking-tight font-bold">❯ amirali_daliri</span>
+<span class="inline-block w-2.5 h-6 bg-[#ff1744] animate-pulse shadow-[0_0_8px_#ff1744]"></span>
+</div>
+<p class="text-body-lg font-body-lg text-[#e2e4ea] font-medium flex items-center gap-2"><span>Software Engineer / CTO</span><span class="text-xs px-1.5 py-0.5 rounded bg-[#8b0000]/30 text-[#ff1744] border border-[#ff1744]/30">L8</span></p>
+<p class="text-body-md font-body-md text-[#9296a6]">Backend, architecture, distributed infrastructure &amp; memory-safe systems.</p>
+</div>
+<!-- System Diagnostic Panel -->
+<div class="flex flex-col gap-space-xs p-space-md rounded bg-[#070709] border border-[#14141a]">
+<div class="flex items-center justify-between pb-space-xs text-label-sm font-label-sm text-[#424552] border-b border-[#14141a]/60">
+<span class="flex items-center gap-1"><span class="text-[#ff1744]">::</span>HOST_DIAGNOSTICS</span>
+<span class="text-[#ff1744] glow-crimson font-medium">TELEMETRY_STREAM</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm pt-1">
+<span class="text-[#424552] truncate">status:</span>
+<div class="flex items-center gap-space-xs shrink-0">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff1744] opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-[#ff1744]"></span>
+</span>
+<span class="text-[#e2e4ea] font-medium">online [signal::200_OK]</span>
+</div>
+</div>
+<div class="flex items-start justify-between text-body-sm font-body-sm gap-space-sm">
+<span class="text-[#424552] shrink-0">focus:</span>
+<span class="text-[#e2e4ea] text-right truncate">production systems &amp; high-throughput architectures</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-[#424552]">location:</span>
+<span class="text-[#e2e4ea]">tehran, ir [35.6892° N, 51.3890° E]</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-[#424552]">active_cluster:</span>
+<span class="text-[#ff1744] font-medium glow-crimson">k8s-edge-01 (12 nodes)</span>
+</div>
+</div>
+<!-- Micro CTAs -->
+<div class="flex items-center gap-space-sm pt-space-xs">
+<a class="flex-1 flex items-center justify-center gap-space-xs h-10 px-space-md bg-[#ff1744] text-black font-bold font-label-md text-label-md tracking-wider rounded border border-[#ff1744] shadow-[0_0_15px_rgba(255,23,68,0.35)] transition-transform active:scale-[0.98]" href="#systems">
+<span>❯</span>
+<span>EXPLORE_SYSTEMS</span>
+</a>
+<a class="flex-1 flex items-center justify-center gap-space-xs h-10 px-space-md bg-[#070709] text-[#e2e4ea] font-label-md text-label-md tracking-wider rounded border border-[#14141a] hover:border-[#ff1744]/40 hover:text-white transition-colors" href="#codex">
+<span class="text-[#424552]">$</span>
+<span>VIEW_CODEX</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Systems & Infrastructure Manifest -->
+<section class="flex flex-col gap-space-md" id="systems">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-label-sm font-label-sm text-[#424552]">
+<span>[02] PROJECTS // RECENT INFRASTRUCTURE &amp; BACKEND WORK</span>
+<span class="text-[#ff1744] font-bold glow-crimson">SYS_LOG</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="text-[#ff1744] font-bold">❯</span>
+<span class="font-headline-md text-headline-md text-[#e2e4ea] font-bold">cat systems.manifest</span>
+</div>
+</div>
+<!-- Telemetry Project 1 -->
+<article class="flex flex-col rounded bg-[#040406]/95 border border-[#14141a] p-space-md gap-space-sm transition-all hover:border-[#ff1744]/50 hover:bg-[#070709] backdrop-blur-sm">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-[#ff1744] font-bold">[01]</span>
+<h3 class="font-headline-md text-headline-md text-[#e2e4ea] font-bold">KASB</h3>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-[#8b0000]/25 text-label-sm font-label-sm text-[#ff1744] border border-[#ff1744]/30">ACTIVE_SCALE</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-[#636878]">production ecosystem // fintech &amp; commerce</p>
+<p class="font-body-md text-body-md text-[#e2e4ea]/90 leading-relaxed">
+        High-concurrency core transactional engine handling multi-tenant microservices, state sync, and zero-downtime distributed migration across distributed data stores.
+      </p>
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">.NET Core</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">React Native</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">Kafka</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">Redis Cluster</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">PostgreSQL</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-label-sm font-label-sm text-[#424552] border-t border-[#14141a]/60">
+<span>METRICS: LATENCY p99 &lt; 18ms</span>
+<span class="text-[#ff1744] font-medium glow-crimson">RELIABILITY: 99.98%</span>
+</div>
+</article>
+<!-- Telemetry Project 2 -->
+<article class="flex flex-col rounded bg-[#040406]/95 border border-[#14141a] p-space-md gap-space-sm transition-all hover:border-[#ff1744]/50 hover:bg-[#070709] backdrop-blur-sm">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-[#ff1744] font-bold">[02]</span>
+<h3 class="font-headline-md text-headline-md text-[#e2e4ea] font-bold">ALLCODEX</h3>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#e2e4ea]">PRODUCTION</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-[#636878]">knowledge system // vector retrieval engine</p>
+<p class="font-body-md text-body-md text-[#e2e4ea]/90 leading-relaxed">
+        Low-latency semantic memory pipeline indexer with real-time embedding caches, distributed async ingestion workers, and sub-second multi-modal querying.
+      </p>
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">Next.js</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">Bun</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">Vector Search</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">pgvector</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-label-sm font-label-sm text-[#424552] border-t border-[#14141a]/60">
+<span>THROUGHPUT: 1.4k req/s</span>
+<span class="text-[#ff1744] font-medium glow-crimson">INDEX_CACHE: WARM</span>
+</div>
+</article>
+<!-- Telemetry Project 3 -->
+<article class="flex flex-col rounded bg-[#040406]/95 border border-[#14141a] p-space-md gap-space-sm transition-all hover:border-[#ff1744]/50 hover:bg-[#070709] backdrop-blur-sm">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-[#ff1744] font-bold">[03]</span>
+<h3 class="font-headline-md text-headline-md text-[#e2e4ea] font-bold">SENTINEL_STREAM</h3>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 rounded bg-[#8b0000]/25 text-label-sm font-label-sm text-[#ff1744] border border-[#ff1744]/30">EXPERIMENTAL</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-[#636878]">telemetry daemon // distributed log ingestion</p>
+<p class="font-body-md text-body-md text-[#e2e4ea]/90 leading-relaxed">
+        Lightweight kernel-level telemetry agent utilizing eBPF tracing routines for zero-overhead bottleneck identification and real-time anomaly filtering across edge nodes.
+      </p>
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">Go</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">ClickHouse</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">eBPF</span>
+<span class="px-2 py-0.5 rounded bg-[#0d0d13] border border-[#181820] text-label-sm font-label-sm text-[#9296a6]">Grafana</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-label-sm font-label-sm text-[#424552] border-t border-[#14141a]/60">
+<span>MEM_FOOTPRINT: &lt; 12MB</span>
+<span class="text-[#ff1744] font-medium glow-crimson">CPU_OVERHEAD: 0.12%</span>
+</div>
+</article>
+</section>
+<!-- About / Mechanical Philosophy -->
+<section class="flex flex-col gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<span class="text-label-sm font-label-sm text-[#424552]">[03] ARCHITECTURAL PHILOSOPHY</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-[#ff1744] font-bold">❯</span>
+<span class="font-headline-md text-headline-md text-[#e2e4ea] font-bold">cat about.txt</span>
+</div>
+</div>
+<div class="p-space-md rounded bg-[#040406]/95 border border-[#14141a] flex flex-col gap-space-sm backdrop-blur-sm">
+<p class="text-body-md font-body-md text-[#e2e4ea]/90 leading-relaxed">
+        Specialized in designing, building, maintaining, and investigating high-throughput software systems. Obsessed with mechanical sympathy, zero-cost abstractions, resilient distributed state machines, and reliable infrastructure under adversarial network conditions.
+      </p>
+<div class="flex items-center justify-between pt-space-xs text-label-sm font-label-sm text-[#424552] border-t border-[#14141a]/60">
+<span>PARADIGM: EVENT_DRIVEN // ASYNC</span>
+<span class="text-[#ff1744] font-medium">STANCE: UNCOMPROMISING</span>
+</div>
+</div>
+</section>
+<!-- Codex Directory Preview -->
+<section class="flex flex-col gap-space-md" id="codex">
+<div class="flex flex-col gap-space-xs">
+<span class="text-label-sm font-label-sm text-[#424552]">[04] TECHNICAL INDEX &amp; RESEARCH</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-[#ff1744] font-bold">❯</span>
+<span class="font-headline-md text-headline-md text-[#e2e4ea] font-bold">ls -la notes/</span>
+</div>
+</div>
+<div class="flex flex-col rounded bg-[#040406]/95 border border-[#14141a] overflow-hidden backdrop-blur-sm">
+<div class="flex items-center justify-between px-space-md py-space-xs bg-[#070709] border-b border-[#14141a] text-label-sm font-label-sm text-[#424552]">
+<span>PERMISSIONS // INODE</span>
+<span>FILENAME // SIZE</span>
+</div>
+<div class="flex flex-col divide-y divide-[#14141a] font-code-snippet text-code-snippet">
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-[#070709] transition-colors">
+<span class="text-[#424552]">drwxr-xr-x</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-[#ff1744] glow-crimson font-medium">architecture/</span>
+<span class="text-label-sm font-label-sm text-[#424552]">[DIR]</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-[#070709] transition-colors">
+<span class="text-[#424552]">-rw-r--r--</span>
+<div class="flex items-center gap-space-xs truncate max-w-[200px]">
+<span class="text-[#e2e4ea] truncate">distributed-consensus-notes.md</span>
+<span class="text-label-sm font-label-sm text-[#424552]">14KB</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-[#070709] transition-colors">
+<span class="text-[#424552]">-rw-r--r--</span>
+<div class="flex items-center gap-space-xs truncate max-w-[200px]">
+<span class="text-[#e2e4ea] truncate">high-throughput-kafka-pipelines.md</span>
+<span class="text-label-sm font-label-sm text-[#424552]">22KB</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-[#070709] transition-colors">
+<span class="text-[#424552]">-rw-r--r--</span>
+<div class="flex items-center gap-space-xs truncate max-w-[200px]">
+<span class="text-[#e2e4ea] truncate">postmortems-database-deadlocks.md</span>
+<span class="text-label-sm font-label-sm text-[#424552]">31KB</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-[#070709] transition-colors">
+<span class="text-[#424552]">-rw-r--r--</span>
+<div class="flex items-center gap-space-xs truncate max-w-[200px]">
+<span class="text-[#e2e4ea] truncate">agentic-engineering-patterns.md</span>
+<span class="text-label-sm font-label-sm text-[#424552]">18KB</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Connect / Endpoint Dispatch -->
+<section class="flex flex-col gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<span class="text-label-sm font-label-sm text-[#424552]">[05] DISPATCH INTERFACE</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-[#ff1744] font-bold">❯</span>
+<span class="font-headline-md text-headline-md text-[#e2e4ea] font-bold">./connect --direct</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs rounded bg-[#040406]/95 border border-[#14141a] p-space-md backdrop-blur-sm">
+<!-- Email Endpoint -->
+<a class="flex items-center justify-between p-space-sm rounded bg-[#070709] border border-[#14141a] hover:border-[#ff1744]/40 hover:bg-[#0d0d13] transition-colors" href="mailto:amirali@daliri.dev">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-[#ff1744]">alternate_email</span>
+<span class="text-body-sm font-body-sm text-[#424552]">email:</span>
+</div>
+<span class="text-body-sm font-body-sm text-[#e2e4ea] font-medium">amirali@daliri.dev</span>
+</a>
+<!-- GitHub Endpoint -->
+<a class="flex items-center justify-between p-space-sm rounded bg-[#070709] border border-[#14141a] hover:border-[#ff1744]/40 hover:bg-[#0d0d13] transition-colors" href="https://github.com/amiralidaliri" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-[#636878]">code</span>
+<span class="text-body-sm font-body-sm text-[#424552]">github:</span>
+</div>
+<span class="text-body-sm font-body-sm text-[#e2e4ea] font-medium">github.com/amiralidaliri</span>
+</a>
+<!-- LinkedIn Endpoint -->
+<a class="flex items-center justify-between p-space-sm rounded bg-[#070709] border border-[#14141a] hover:border-[#ff1744]/40 hover:bg-[#0d0d13] transition-colors" href="https://linkedin.com/in/amiralidaliri" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-[#636878]">hub</span>
+<span class="text-body-sm font-body-sm text-[#424552]">linkedin:</span>
+</div>
+<span class="text-body-sm font-body-sm text-[#e2e4ea] font-medium truncate max-w-[170px]">in/amiralidaliri</span>
+</a>
+<!-- Resume Fetch Command -->
+<div class="flex items-center justify-between p-space-sm rounded bg-[#070709] border border-[#14141a]">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-[#ff1744]">description</span>
+<span class="text-body-sm font-body-sm text-[#424552]">resume:</span>
+</div>
+<button class="px-space-sm py-0.5 rounded bg-[#ff1744] text-black font-bold text-label-sm font-label-sm hover:opacity-90 active:scale-95 transition-all shadow-[0_0_10px_rgba(255,23,68,0.3)]" type="button">
+          FETCH_PDF [240KB]
+        </button>
+</div>
+</div>
+</section>
+<!-- Interactive Terminal Ping Interactive Widget -->
+<div class="flex items-center justify-between px-space-md py-space-sm rounded bg-[#040406]/95 border border-[#14141a] text-label-sm font-label-sm text-[#424552] backdrop-blur-sm">
+<div class="flex items-center gap-space-xs">
+<span class="text-[#ff1744] font-bold">❯</span>
+<span id="terminal-pulse">ping -c 1 edge.daliri.dev</span>
+</div>
+<span class="text-[#ff1744] tracking-wider font-semibold glow-crimson" id="latency-val">0.82ms</span>
+</div>
+</div>
+<script>
+  (function() {
+    const latencyEl = document.getElementById('latency-val');
+    if (latencyEl) {
+      setInterval(() => {
+        const jitter = (0.75 + Math.random() * 0.35).toFixed(2);
+        latencyEl.textContent = `${jitter}ms`;
+      }, 3200);
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-[#000000]/90 backdrop-blur-xl border-t border-[#14141a] flex flex-col" data-active-classes="text-[#ff1744] font-bold"><div class="flex items-center justify-around h-16 px-space-xs overflow-x-auto"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs transition-colors text-[#ff1744] font-bold glow-crimson" data-path="hero" href="#"><span class="material-symbols-outlined text-[20px]">terminal</span><span class="font-label-sm text-label-sm uppercase tracking-tight">01:HERO</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-[#636878] hover:text-[#e2e4ea] transition-colors" data-path="projects" href="#systems"><span class="material-symbols-outlined text-[20px]">deployed_code</span><span class="font-label-sm text-label-sm uppercase tracking-tight">02:PROJ</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-[#636878] hover:text-[#e2e4ea] transition-colors" data-path="about" href="#codex"><span class="material-symbols-outlined text-[20px]">memory</span><span class="font-label-sm text-label-sm uppercase tracking-tight">03:ABOUT</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-[#636878] hover:text-[#e2e4ea] transition-colors" data-path="codex" href="#codex"><span class="material-symbols-outlined text-[20px]">data_object</span><span class="font-label-sm text-label-sm uppercase tracking-tight">04:CODEX</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-[#636878] hover:text-[#e2e4ea] transition-colors" data-path="connect" href="mailto:amirali@daliri.dev"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-label-sm text-label-sm uppercase tracking-tight">05:CONN</span></a></div><div class="px-margin-mobile py-space-xs flex items-center justify-between bg-[#040406] border-t border-[#14141a]/60"><span class="font-label-sm text-label-sm text-[#424552] truncate">NODE: TEHRAN_EDGE // MEM: OPTIMAL</span><span class="font-label-sm text-label-sm text-[#ff1744] font-medium shrink-0 glow-crimson">ARCH: DISTRIBUTED</span></div></nav></body></html>

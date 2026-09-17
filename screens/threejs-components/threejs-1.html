@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_2 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_2" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_2');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Three.js Interactive Morphing Particle Engine for Amirali Daliri Terminal Portfolio
+// Robust fallback for initial dimensions to prevent 0x0 collapse
+const getWidth = () => container.clientWidth || window.innerWidth || 390;
+const getHeight = () => container.clientHeight || window.innerHeight || 844;
+
+let width = getWidth();
+let height = getHeight();
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+camera.position.z = 240;
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+container.appendChild(renderer.domElement);
+
+const PARTICLE_COUNT = 380;
+const geometry = new THREE.BufferGeometry();
+
+// Target formation arrays for 5 sections:
+// 0: Hero Monogram 'A/>'
+// 1: Projects Distributed Cube / Node Matrix
+// 2: About Network Topology Graph
+// 3: Codex Branching File Tree / Directory
+// 4: Contact Radiating Telemetry Beacon
+
+const formations = {
+  hero: new Float32Array(PARTICLE_COUNT * 3),
+  projects: new Float32Array(PARTICLE_COUNT * 3),
+  about: new Float32Array(PARTICLE_COUNT * 3),
+  codex: new Float32Array(PARTICLE_COUNT * 3),
+  contact: new Float32Array(PARTICLE_COUNT * 3),
+};
+
+// 0. Hero Formation: Monogram `A / >`
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  if (i < 140) {
+    // 'A' glyph
+    const t = i / 140;
+    if (t < 0.4) {
+      // left leg
+      const p = t / 0.4;
+      formations.hero[i3] = -90 + p * 35;
+      formations.hero[i3 + 1] = -50 + p * 100;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 8;
+    } else if (t < 0.8) {
+      // right leg
+      const p = (t - 0.4) / 0.4;
+      formations.hero[i3] = -55 + p * 35;
+      formations.hero[i3 + 1] = 50 - p * 100;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 8;
+    } else {
+      // crossbar
+      const p = (t - 0.8) / 0.2;
+      formations.hero[i3] = -78 + p * 42;
+      formations.hero[i3 + 1] = -5;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 6;
+    }
+  } else if (i < 230) {
+    // Slash '/'
+    const t = (i - 140) / 90;
+    formations.hero[i3] = -15 + t * 30;
+    formations.hero[i3 + 1] = -55 + t * 110;
+    formations.hero[i3 + 2] = (Math.random() - 0.5) * 6;
+  } else if (i < 340) {
+    // Terminal prompt `>`
+    const t = (i - 230) / 110;
+    if (t < 0.5) {
+      const p = t / 0.5;
+      formations.hero[i3] = 30 + p * 45;
+      formations.hero[i3 + 1] = 45 - p * 45;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 6;
+    } else {
+      const p = (t - 0.5) / 0.5;
+      formations.hero[i3] = 75 - p * 45;
+      formations.hero[i3 + 1] = 0 - p * 45;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 6;
+    }
+  } else {
+    // Subtle ambient cursor / prompt dot
+    const t = (i - 340) / (PARTICLE_COUNT - 340);
+    formations.hero[i3] = 95 + (Math.random() - 0.5) * 15;
+    formations.hero[i3 + 1] = -42 + (Math.random() - 0.5) * 12;
+    formations.hero[i3 + 2] = (Math.random() - 0.5) * 15;
+  }
+}
+
+// 1. Projects: Distributed 3D Cube / System Cluster Grid
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  const s = 90;
+  const edge = i % 12;
+  const t = Math.random();
+  let x = 0, y = 0, z = 0;
+  if (edge === 0) { x = (t - 0.5) * s; y = -s / 2; z = -s / 2; }
+  else if (edge === 1) { x = (t - 0.5) * s; y = s / 2; z = -s / 2; }
+  else if (edge === 2) { x = (t - 0.5) * s; y = -s / 2; z = s / 2; }
+  else if (edge === 3) { x = (t - 0.5) * s; y = s / 2; z = s / 2; }
+  else if (edge === 4) { x = -s / 2; y = (t - 0.5) * s; z = -s / 2; }
+  else if (edge === 5) { x = s / 2; y = (t - 0.5) * s; z = -s / 2; }
+  else if (edge === 6) { x = -s / 2; y = (t - 0.5) * s; z = s / 2; }
+  else if (edge === 7) { x = s / 2; y = (t - 0.5) * s; z = s / 2; }
+  else if (edge === 8) { x = -s / 2; y = -s / 2; z = (t - 0.5) * s; }
+  else if (edge === 9) { x = s / 2; y = -s / 2; z = (t - 0.5) * s; }
+  else if (edge === 10) { x = -s / 2; y = s / 2; z = (t - 0.5) * s; }
+  else { x = s / 2; y = s / 2; z = (t - 0.5) * s; }
+  formations.projects[i3] = x + (Math.random() - 0.5) * 4;
+  formations.projects[i3 + 1] = y + (Math.random() - 0.5) * 4;
+  formations.projects[i3 + 2] = z + (Math.random() - 0.5) * 4;
+}
+
+// 2. About: Network Topology Graph (Central nexus + 6 cluster nodes)
+const centers = [
+  [0, 0, 0],
+  [-55, 45, 10],
+  [60, 40, -10],
+  [-65, -35, -5],
+  [55, -40, 15],
+  [0, 65, -15],
+  [0, -65, 5]
+];
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  if (i < 200) {
+    // Cluster around core hubs
+    const c = centers[i % centers.length];
+    const r = Math.random() * 22;
+    const th = Math.random() * Math.PI * 2;
+    const ph = Math.random() * Math.PI;
+    formations.about[i3] = c[0] + r * Math.sin(ph) * Math.cos(th);
+    formations.about[i3 + 1] = c[1] + r * Math.sin(ph) * Math.sin(th);
+    formations.about[i3 + 2] = c[2] + r * Math.cos(ph);
+  } else {
+    // Interconnecting backbone highways
+    const c1 = centers[Math.floor(Math.random() * centers.length)];
+    const c2 = centers[Math.floor(Math.random() * centers.length)];
+    const t = Math.random();
+    formations.about[i3] = c1[0] + (c2[0] - c1[0]) * t + (Math.random() - 0.5) * 4;
+    formations.about[i3 + 1] = c1[1] + (c2[1] - c1[1]) * t + (Math.random() - 0.5) * 4;
+    formations.about[i3 + 2] = c1[2] + (c2[2] - c1[2]) * t + (Math.random() - 0.5) * 4;
+  }
+}
+
+// 3. Codex: Hierarchical Branching File Tree / Schema Structure
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  const branch = i % 5;
+  const t = Math.random();
+  if (branch === 0) {
+    // Trunk spine
+    formations.codex[i3] = -60 + (Math.random() - 0.5) * 4;
+    formations.codex[i3 + 1] = -70 + t * 140;
+    formations.codex[i3 + 2] = (Math.random() - 0.5) * 6;
+  } else {
+    // Horizontal branch levels
+    const yLevel = -50 + branch * 30;
+    formations.codex[i3] = -60 + t * 120;
+    formations.codex[i3 + 1] = yLevel + (Math.random() - 0.5) * 5;
+    formations.codex[i3 + 2] = (Math.random() - 0.5) * 10;
+  }
+}
+
+// 4. Contact: Radial Telemetry Wave / Signal Endpoint
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  const ring = Math.floor(i / (PARTICLE_COUNT / 4));
+  const r = 25 + ring * 25;
+  const angle = Math.random() * Math.PI * 2;
+  formations.contact[i3] = Math.cos(angle) * r;
+  formations.contact[i3 + 1] = Math.sin(angle) * r;
+  formations.contact[i3 + 2] = (Math.random() - 0.5) * 12;
+}
+
+// Particle current positions & velocities
+const currentPos = new Float32Array(PARTICLE_COUNT * 3);
+const basePos = new Float32Array(PARTICLE_COUNT * 3);
+const colors = new Float32Array(PARTICLE_COUNT * 3);
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  currentPos[i3] = formations.hero[i3];
+  currentPos[i3 + 1] = formations.hero[i3 + 1];
+  currentPos[i3 + 2] = formations.hero[i3 + 2];
+
+  basePos[i3] = currentPos[i3];
+  basePos[i3 + 1] = currentPos[i3 + 1];
+  basePos[i3 + 2] = currentPos[i3 + 2];
+
+  // Colors: Muted silver charcoal with crimson accent highlight on 15% of nodes
+  if (Math.random() < 0.18) {
+    colors[i3] = 0.95;     // Red
+    colors[i3 + 1] = 0.15; // Green
+    colors[i3 + 2] = 0.15; // Blue
+  } else {
+    colors[i3] = 0.55;     // Muted silver
+    colors[i3 + 1] = 0.55;
+    colors[i3 + 2] = 0.60;
+  }
+}
+
+geometry.setAttribute('position', new THREE.BufferAttribute(currentPos, 3));
+geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+// Particle point material
+const particleMaterial = new THREE.PointsMaterial({
+  size: 3.5,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.88,
+  blending: THREE.AdditiveBlending
+});
+
+const particleSystem = new THREE.Points(geometry, particleMaterial);
+scene.add(particleSystem);
+
+// Lines geometry connecting close particles
+const MAX_LINES = 180;
+const linePositions = new Float32Array(MAX_LINES * 6);
+const lineColors = new Float32Array(MAX_LINES * 6);
+const lineGeometry = new THREE.BufferGeometry();
+lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+const lineMaterial = new THREE.LineBasicMaterial({
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.28,
+  blending: THREE.AdditiveBlending
+});
+
+const lineSystem = new THREE.LineSegments(lineGeometry, lineMaterial);
+scene.add(lineSystem);
+
+// Interactive mouse / touch coordinates
+let mouseX = 0, mouseY = 0;
+let targetMouseX = 0, targetMouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  targetMouseX = (e.clientX / width - 0.5) * 45;
+  targetMouseY = -(e.clientY / height - 0.5) * 45;
+});
+
+window.addEventListener('touchmove', (e) => {
+  if (e.touches.length > 0) {
+    targetMouseX = (e.touches[0].clientX / width - 0.5) * 45;
+    targetMouseY = -(e.touches[0].clientY / height - 0.5) * 45;
+  }
+}, { passive: true });
+
+// Scroll calculation to smoothly blend formations
+let activeSection = 0;
+const formationKeys = ['hero', 'projects', 'about', 'codex', 'contact'];
+
+function updateScrollProgress() {
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  const docHeight = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+  const progress = Math.min(Math.max(scrollY / docHeight, 0), 1);
+
+  // Map progress to continuous float 0 -> 4
+  const continuousIndex = progress * 4;
+  const fromIdx = Math.floor(continuousIndex);
+  const toIdx = Math.min(fromIdx + 1, 4);
+  const blend = continuousIndex - fromIdx;
+
+  const fromArr = formations[formationKeys[fromIdx]];
+  const toArr = formations[formationKeys[toIdx]];
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const i3 = i * 3;
+    basePos[i3] = fromArr[i3] + (toArr[i3] - fromArr[i3]) * blend;
+    basePos[i3 + 1] = fromArr[i3 + 1] + (toArr[i3 + 1] - fromArr[i3 + 1]) * blend;
+    basePos[i3 + 2] = fromArr[i3 + 2] + (toArr[i3 + 2] - fromArr[i3 + 2]) * blend;
+  }
+}
+
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+updateScrollProgress();
+
+// Responsive resize handler
+function onResize() {
+  width = getWidth();
+  height = getHeight();
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+window.addEventListener('resize', onResize);
+
+// Render loop
+let clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+
+  mouseX += (targetMouseX - mouseX) * 0.05;
+  mouseY += (targetMouseY - mouseY) * 0.05;
+
+  const positions = geometry.attributes.position.array;
+  const posCount = PARTICLE_COUNT;
+
+  // Gentle idle drift & spring toward base targets
+  for (let i = 0; i < posCount; i++) {
+    const i3 = i * 3;
+    const idleNoiseX = Math.sin(time * 0.8 + i * 0.15) * 1.8;
+    const idleNoiseY = Math.cos(time * 0.7 + i * 0.12) * 1.8;
+    const idleNoiseZ = Math.sin(time * 0.9 + i * 0.18) * 1.5;
+
+    const targetX = basePos[i3] + idleNoiseX + mouseX * 0.25;
+    const targetY = basePos[i3 + 1] + idleNoiseY + mouseY * 0.25;
+    const targetZ = basePos[i3 + 2] + idleNoiseZ;
+
+    positions[i3] += (targetX - positions[i3]) * 0.08;
+    positions[i3 + 1] += (targetY - positions[i3 + 1]) * 0.08;
+    positions[i3 + 2] += (targetZ - positions[i3 + 2]) * 0.08;
+  }
+  geometry.attributes.position.needsUpdate = true;
+
+  // Subtle rotation
+  particleSystem.rotation.y = Math.sin(time * 0.2) * 0.12;
+  lineSystem.rotation.y = particleSystem.rotation.y;
+
+  // Dynamic connecting lines between nearby points
+  const linePosArr = lineGeometry.attributes.position.array;
+  const lineColArr = lineGeometry.attributes.color.array;
+  let lineIdx = 0;
+  const maxDist = 24;
+
+  for (let i = 0; i < 90 && lineIdx < MAX_LINES; i++) {
+    const i3 = i * 3;
+    for (let j = i + 1; j < 110 && lineIdx < MAX_LINES; j++) {
+      const j3 = j * 3;
+      const dx = positions[i3] - positions[j3];
+      const dy = positions[i3 + 1] - positions[j3 + 1];
+      const dz = positions[i3 + 2] - positions[j3 + 2];
+      const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+      if (dist < maxDist) {
+        const l6 = lineIdx * 6;
+        linePosArr[l6] = positions[i3];
+        linePosArr[l6 + 1] = positions[i3 + 1];
+        linePosArr[l6 + 2] = positions[i3 + 2];
+        linePosArr[l6 + 3] = positions[j3];
+        linePosArr[l6 + 4] = positions[j3 + 1];
+        linePosArr[l6 + 5] = positions[j3 + 2];
+
+        const alpha = 1.0 - (dist / maxDist);
+        lineColArr[l6] = 0.85 * alpha;
+        lineColArr[l6 + 1] = 0.15 * alpha;
+        lineColArr[l6 + 2] = 0.15 * alpha;
+        lineColArr[l6 + 3] = 0.45 * alpha;
+        lineColArr[l6 + 4] = 0.45 * alpha;
+        lineColArr[l6 + 5] = 0.50 * alpha;
+
+        lineIdx++;
+      }
+    }
+  }
+
+  // Clear remaining lines
+  for (let i = lineIdx; i < MAX_LINES; i++) {
+    const l6 = i * 6;
+    linePosArr[l6] = 0; linePosArr[l6 + 1] = 0; linePosArr[l6 + 2] = 0;
+    linePosArr[l6 + 3] = 0; linePosArr[l6 + 4] = 0; linePosArr[l6 + 5] = 0;
+  }
+  lineGeometry.attributes.position.needsUpdate = true;
+  lineGeometry.attributes.color.needsUpdate = true;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_2 -->
+</body>
+</html>

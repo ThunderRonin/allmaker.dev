@@ -1,0 +1,186 @@
+---
+// Systems Manifest Section (ThunderRonin Real Repositories & Systems)
+
+interface Project {
+  id: string;
+  name: string;
+  category: string;
+  badge: string;
+  isPinned?: boolean;
+  stars?: number;
+  description: string;
+  tech: string[];
+  metrics: { label: string; value: string }[];
+  githubUrl: string;
+}
+
+const projects: Project[] = [
+  {
+    id: '[01]',
+    name: 'kasb-platform',
+    category: 'ENTERPRISE ERP // FINANCIAL COMMERCE & LEDGER',
+    badge: 'FLAGSHIP // PRODUCTION',
+    isPinned: true,
+    description:
+      'High-concurrency enterprise ERP and financial ledger platform. Engineered core backend services in .NET 10 (C# 14) and EF Core, strict double-entry ledger balance invariants, headless Syncfusion document generation, and cross-platform Flutter mobile client integration. Containerized on Linux Docker Swarm behind Caddy.',
+    tech: ['.NET 10', 'C# 14', 'EF Core', 'Flutter', 'Docker Swarm', 'Linux', 'PostgreSQL', 'Caddy'],
+    metrics: [
+      { label: 'BACKEND', value: '.NET 10 / C# 14' },
+      { label: 'MOBILE CLIENT', value: 'Flutter / Dart' },
+      { label: 'INFRASTRUCTURE', value: 'Docker Swarm + Caddy' },
+    ],
+    githubUrl: 'https://github.com/Kasb-Platform',
+  },
+  {
+    id: '[02]',
+    name: 'allknower',
+    category: 'AI ORCHESTRATION // RAG & VECTOR RETRIEVAL',
+    badge: 'PINNED // CORE',
+    isPinned: true,
+    stars: 4,
+    description:
+      'The intelligence engine behind the All Reach grimoire. Implements semantic RAG over LanceDB, OpenRouter multi-model LLM routing with local Ollama fallback, automated entity relationship extraction, and lore gap analysis.',
+    tech: ['TypeScript', 'Bun', 'Elysia', 'LanceDB', 'Prisma', 'OpenRouter'],
+    metrics: [
+      { label: 'RUNTIME', value: 'Bun + Elysia' },
+      { label: 'VECTOR DB', value: 'LanceDB' },
+      { label: 'API DOCS', value: 'Scalar OpenAPI' },
+    ],
+    githubUrl: 'https://github.com/ThunderRonin/allknower',
+  },
+  {
+    id: '[03]',
+    name: 'allcodex-core',
+    category: 'KNOWLEDGE BASE // DATA ENGINE',
+    badge: 'PINNED // DB',
+    isPinned: true,
+    stars: 4,
+    description:
+      'The grimoire that knows. An AI-powered worldbuilding knowledge base, custom-forked from Trilium with ETAPI extensions, specialized attributes, relational lore graphs, and automated note taxonomy.',
+    tech: ['TypeScript', 'JavaScript', 'SQLite', 'ETAPI', 'Trilium'],
+    metrics: [
+      { label: 'STORAGE', value: 'SQLite + ETAPI' },
+      { label: 'MODEL', value: 'Hierarchical Tree' },
+      { label: 'EXTENSIONS', value: 'Custom Lore Schema' },
+    ],
+    githubUrl: 'https://github.com/ThunderRonin/allcodex-core',
+  },
+  {
+    id: '[04]',
+    name: 'aryamehr-calendar',
+    category: 'EMBEDDED SYSTEMS // ZEPP OS',
+    badge: 'PINNED // WEARABLE',
+    isPinned: true,
+    stars: 1,
+    description:
+      'Native AryaMehr Persian & Zoroastrian Astronomical Calendar, Gahs, and solar prayer times developed for the Amazfit GTR 4 smartwatch running Zepp OS. Implements low-power astronomical calculation algorithms.',
+    tech: ['TypeScript', 'Zepp OS SDK', 'Astronomical Math', 'Embedded UI'],
+    metrics: [
+      { label: 'TARGET', value: 'Amazfit GTR 4' },
+      { label: 'PLATFORM', value: 'Zepp OS' },
+      { label: 'COMPUTATION', value: 'Astronomical Gahs' },
+    ],
+    githubUrl: 'https://github.com/ThunderRonin/aryamehr-calendar',
+  },
+  {
+    id: '[05]',
+    name: 'AllTracker',
+    category: 'MOBILE ENGINEERING // CROSS-PLATFORM',
+    badge: 'PINNED // MOBILE',
+    isPinned: true,
+    stars: 2,
+    description:
+      'Cross-platform personal activity and telemetry tracking application engineered in Dart and Flutter. Focuses on local-first offline storage, frictionless event logging, and responsive UI.',
+    tech: ['Dart', 'Flutter', 'Mobile SDK', 'Local Storage'],
+    metrics: [
+      { label: 'SDK', value: 'Flutter / Dart' },
+      { label: 'STORAGE', value: 'Offline-First' },
+      { label: 'PLATFORM', value: 'Android / iOS' },
+    ],
+    githubUrl: 'https://github.com/ThunderRonin/AllTracker',
+  },
+];
+---
+
+<section class="space-y-4 font-mono" data-purpose="systems-manifest" id="projects">
+  <!-- Section Header Strip -->
+  <div class="flex items-center justify-between border-b border-[#141418] pb-2 text-xs">
+    <div class="flex items-center space-x-2">
+      <span class="text-[#e11d48] font-bold">&gt;</span>
+      <h2 class="text-sm font-bold text-zinc-100 tracking-wide uppercase">gh repo list ThunderRonin // FEATURED SYSTEMS</h2>
+    </div>
+    <div class="text-[10px] text-zinc-500 tracking-wider">
+      [01] SYSTEMS MANIFEST // CORE ARCHITECTURES
+    </div>
+  </div>
+
+  <!-- Responsive Projects Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    {projects.map((project) => (
+      <article
+        class="border border-[#141418] bg-[#050507] p-4 flex flex-col justify-between hover:border-zinc-800 transition-all group relative hover:bg-[#08080b]"
+      >
+        <!-- Top Status Bar -->
+        <div class="space-y-2.5">
+          <div class="flex items-center justify-between border-b border-[#141418] pb-1.5 text-[11px]">
+            <div class="flex items-center space-x-1.5">
+              <span class="text-[#e11d48] font-bold text-xs">{project.id}</span>
+              <h3 class="text-sm font-bold text-zinc-100 group-hover:text-white transition-colors">
+                {project.name}
+              </h3>
+            </div>
+            {project.stars !== undefined && project.stars > 0 && (
+              <span class="text-[10px] text-zinc-500 flex items-center gap-0.5">
+                ★ {project.stars}
+              </span>
+            )}
+          </div>
+
+          <div class="flex items-center justify-between text-[9px]">
+            <span class="text-zinc-500 tracking-wider font-semibold uppercase">{project.category}</span>
+            <span class="px-1 py-0.2 border border-[#27272a] bg-[#0c0c10] text-zinc-400 font-mono">
+              {project.badge}
+            </span>
+          </div>
+
+          <p class="text-[11px] text-zinc-400 leading-relaxed font-light">
+            {project.description}
+          </p>
+        </div>
+
+        <!-- Middle Telemetry Metrics -->
+        <div class="my-3 py-2 px-2.5 bg-[#000000] border border-[#141418] space-y-1 text-[10px]">
+          {project.metrics.map((m) => (
+            <div class="flex items-center justify-between">
+              <span class="text-zinc-500">{m.label}:</span>
+              <span class="text-zinc-300 font-medium">{m.value}</span>
+            </div>
+          ))}
+        </div>
+
+        <!-- Bottom Stack Tags & Link -->
+        <div class="space-y-2.5 pt-2 border-t border-[#141418]">
+          <div class="flex flex-wrap gap-1 text-[9px]">
+            {project.tech.map((t) => (
+              <span class="px-1.5 py-0.5 bg-[#08080a] border border-[#18181b] text-zinc-400">
+                {t}
+              </span>
+            ))}
+          </div>
+
+          <div class="flex items-center justify-between text-[10px] pt-1">
+            <span class="text-zinc-600">&gt; source:</span>
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-zinc-400 hover:text-white hover:underline transition-colors flex items-center gap-1"
+            >
+              VIEW_ON_GITHUB <span class="text-[9px]">↗</span>
+            </a>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

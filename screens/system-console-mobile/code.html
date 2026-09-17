@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#131313;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary-fixed-dim": "#c6c6c9", "surface-container": "#201f1f", "tertiary-fixed-dim": "#c6c5d0", "on-surface-variant": "#e6bdb8", "on-primary": "#690005", "inverse-on-surface": "#313030", "on-primary-fixed": "#410002", "on-primary-container": "#fff6f5", "primary-container": "#dc2626", "surface-dim": "#131313", "on-tertiary-fixed-variant": "#45464f", "surface-bright": "#3a3939", "secondary-fixed": "#e2e2e5", "surface-container-lowest": "#0e0e0e", "surface-container-highest": "#353534", "tertiary-container": "#71717b", "on-error-container": "#ffdad6", "on-surface": "#e5e2e1", "inverse-surface": "#e5e2e1", "inverse-primary": "#bf0715", "outline-variant": "#5c403c", "on-primary-fixed-variant": "#93000b", "surface": "#131313", "error-container": "#93000a", "surface-container-high": "#2a2a2a", "on-error": "#690005", "primary-fixed-dim": "#ffb4ab", "surface-tint": "#ffb4ab", "on-secondary-fixed-variant": "#454749", "on-secondary": "#2f3033", "error": "#ffb4ab", "on-tertiary": "#2f3038", "surface-variant": "#353534", "tertiary-fixed": "#e2e1ec", "secondary": "#c6c6c9", "on-tertiary-container": "#f9f7ff", "tertiary": "#c6c5d0", "background": "#131313", "secondary-container": "#4a4b4e", "outline": "#ac8884", "on-secondary-fixed": "#1a1c1e", "surface-container-low": "#1c1b1b", "primary-fixed": "#ffdad6", "on-secondary-container": "#bbbbbe", "primary": "#ffb4ab", "on-tertiary-fixed": "#1a1b23", "on-background": "#e5e2e1" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "margin": "2rem", "gutter-mobile": "0.75rem", "space-xs": "0.25rem", "space-xl": "2.5rem", "margin-mobile": "1rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-2xl": "4rem", "gutter": "1.5rem", "space-md": "1rem" }, fontFamily: { "headline-xl": ["JetBrains Mono"], "headline-lg-mobile": ["JetBrains Mono"], "headline-xl-mobile": ["JetBrains Mono"], "label-md": ["JetBrains Mono"], "headline-lg": ["JetBrains Mono"], "body-sm": ["JetBrains Mono"], "body-lg": ["JetBrains Mono"], "code-snippet": ["JetBrains Mono"], "headline-md": ["JetBrains Mono"], "body-md": ["JetBrains Mono"], "label-sm": ["JetBrains Mono"] }, fontSize: { "headline-xl": ["2.25rem", { "lineHeight": "2.75rem", "letterSpacing": "-0.04em", "fontWeight": "600" }], "headline-lg-mobile": ["1.25rem", { "lineHeight": "1.75rem", "letterSpacing": "-0.02em", "fontWeight": "600" }], "headline-xl-mobile": ["1.75rem", { "lineHeight": "2.25rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "label-md": ["0.8125rem", { "lineHeight": "1rem", "letterSpacing": "0.04em", "fontWeight": "500" }], "headline-lg": ["1.5rem", { "lineHeight": "2rem", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-sm": ["0.75rem", { "lineHeight": "1.25rem", "letterSpacing": "0.01em", "fontWeight": "400" }], "body-lg": ["0.9375rem", { "lineHeight": "1.625rem", "letterSpacing": "-0.01em", "fontWeight": "400" }], "code-snippet": ["0.8125rem", { "lineHeight": "1.375rem", "letterSpacing": "0em", "fontWeight": "400" }], "headline-md": ["1.125rem", { "lineHeight": "1.5rem", "letterSpacing": "-0.02em", "fontWeight": "500" }], "body-md": ["0.875rem", { "lineHeight": "1.5rem", "letterSpacing": "0em", "fontWeight": "400" }], "label-sm": ["0.6875rem", { "lineHeight": "0.875rem", "letterSpacing": "0.08em", "fontWeight": "500" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface text-on-surface font-body-md text-body-md antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/90 backdrop-blur-xl"><div class="h-24 px-margin-mobile flex flex-col justify-center gap-space-xs"><div class="flex items-center justify-between"><div class="flex items-center gap-space-sm"><span class="flex h-2 w-2 relative"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-primary-container"></span></span><span class="font-label-sm text-label-sm tracking-wider text-on-surface font-bold">A/&gt; AMIRALI_DALIRI</span><span class="font-label-sm text-label-sm text-on-surface-variant">[14ms]</span></div><div class="flex items-center gap-space-sm"><div class="flex items-center gap-space-xs px-space-xs py-0.5 rounded bg-surface-container-high"><span class="font-label-sm text-label-sm text-primary">LIVE</span><span class="font-label-sm text-label-sm text-secondary">::OK</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div><div class="flex items-center justify-between"><h1 class="font-label-md text-label-md uppercase tracking-wider text-on-surface flex items-center gap-space-xs"><span class="text-primary-container">&gt;</span>Hero</h1><span class="font-label-sm text-label-sm text-secondary">SYS_STATUS: ONLINE</span></div></div></header><main class="flex flex-col relative w-full pt-24 pb-28 bg-surface px-margin-mobile min-h-screen"><div class="flex flex-col w-full gap-space-xl">
+<!-- Top Background ThreeJS Scene Layer -->
+<div class="relative w-full overflow-hidden rounded-lg bg-surface-container-lowest">
+<!-- STITCH_THREEJS_START:ANIMATION_2 class="absolute inset-0 w-full h-[520px] pointer-events-auto bg-transparent" -->
+<div class="absolute inset-0 w-full h-[520px] pointer-events-auto bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_2" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_2');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Three.js Interactive Morphing Particle Engine for Amirali Daliri Terminal Portfolio
+// Robust fallback for initial dimensions to prevent 0x0 collapse
+const getWidth = () => container.clientWidth || window.innerWidth || 390;
+const getHeight = () => container.clientHeight || window.innerHeight || 844;
+
+let width = getWidth();
+let height = getHeight();
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+camera.position.z = 240;
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+container.appendChild(renderer.domElement);
+
+const PARTICLE_COUNT = 380;
+const geometry = new THREE.BufferGeometry();
+
+// Target formation arrays for 5 sections:
+// 0: Hero Monogram 'A/>'
+// 1: Projects Distributed Cube / Node Matrix
+// 2: About Network Topology Graph
+// 3: Codex Branching File Tree / Directory
+// 4: Contact Radiating Telemetry Beacon
+
+const formations = {
+  hero: new Float32Array(PARTICLE_COUNT * 3),
+  projects: new Float32Array(PARTICLE_COUNT * 3),
+  about: new Float32Array(PARTICLE_COUNT * 3),
+  codex: new Float32Array(PARTICLE_COUNT * 3),
+  contact: new Float32Array(PARTICLE_COUNT * 3),
+};
+
+// 0. Hero Formation: Monogram `A / >`
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  if (i < 140) {
+    // 'A' glyph
+    const t = i / 140;
+    if (t < 0.4) {
+      // left leg
+      const p = t / 0.4;
+      formations.hero[i3] = -90 + p * 35;
+      formations.hero[i3 + 1] = -50 + p * 100;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 8;
+    } else if (t < 0.8) {
+      // right leg
+      const p = (t - 0.4) / 0.4;
+      formations.hero[i3] = -55 + p * 35;
+      formations.hero[i3 + 1] = 50 - p * 100;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 8;
+    } else {
+      // crossbar
+      const p = (t - 0.8) / 0.2;
+      formations.hero[i3] = -78 + p * 42;
+      formations.hero[i3 + 1] = -5;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 6;
+    }
+  } else if (i < 230) {
+    // Slash '/'
+    const t = (i - 140) / 90;
+    formations.hero[i3] = -15 + t * 30;
+    formations.hero[i3 + 1] = -55 + t * 110;
+    formations.hero[i3 + 2] = (Math.random() - 0.5) * 6;
+  } else if (i < 340) {
+    // Terminal prompt `>`
+    const t = (i - 230) / 110;
+    if (t < 0.5) {
+      const p = t / 0.5;
+      formations.hero[i3] = 30 + p * 45;
+      formations.hero[i3 + 1] = 45 - p * 45;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 6;
+    } else {
+      const p = (t - 0.5) / 0.5;
+      formations.hero[i3] = 75 - p * 45;
+      formations.hero[i3 + 1] = 0 - p * 45;
+      formations.hero[i3 + 2] = (Math.random() - 0.5) * 6;
+    }
+  } else {
+    // Subtle ambient cursor / prompt dot
+    const t = (i - 340) / (PARTICLE_COUNT - 340);
+    formations.hero[i3] = 95 + (Math.random() - 0.5) * 15;
+    formations.hero[i3 + 1] = -42 + (Math.random() - 0.5) * 12;
+    formations.hero[i3 + 2] = (Math.random() - 0.5) * 15;
+  }
+}
+
+// 1. Projects: Distributed 3D Cube / System Cluster Grid
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  const s = 90;
+  const edge = i % 12;
+  const t = Math.random();
+  let x = 0, y = 0, z = 0;
+  if (edge === 0) { x = (t - 0.5) * s; y = -s / 2; z = -s / 2; }
+  else if (edge === 1) { x = (t - 0.5) * s; y = s / 2; z = -s / 2; }
+  else if (edge === 2) { x = (t - 0.5) * s; y = -s / 2; z = s / 2; }
+  else if (edge === 3) { x = (t - 0.5) * s; y = s / 2; z = s / 2; }
+  else if (edge === 4) { x = -s / 2; y = (t - 0.5) * s; z = -s / 2; }
+  else if (edge === 5) { x = s / 2; y = (t - 0.5) * s; z = -s / 2; }
+  else if (edge === 6) { x = -s / 2; y = (t - 0.5) * s; z = s / 2; }
+  else if (edge === 7) { x = s / 2; y = (t - 0.5) * s; z = s / 2; }
+  else if (edge === 8) { x = -s / 2; y = -s / 2; z = (t - 0.5) * s; }
+  else if (edge === 9) { x = s / 2; y = -s / 2; z = (t - 0.5) * s; }
+  else if (edge === 10) { x = -s / 2; y = s / 2; z = (t - 0.5) * s; }
+  else { x = s / 2; y = s / 2; z = (t - 0.5) * s; }
+  formations.projects[i3] = x + (Math.random() - 0.5) * 4;
+  formations.projects[i3 + 1] = y + (Math.random() - 0.5) * 4;
+  formations.projects[i3 + 2] = z + (Math.random() - 0.5) * 4;
+}
+
+// 2. About: Network Topology Graph (Central nexus + 6 cluster nodes)
+const centers = [
+  [0, 0, 0],
+  [-55, 45, 10],
+  [60, 40, -10],
+  [-65, -35, -5],
+  [55, -40, 15],
+  [0, 65, -15],
+  [0, -65, 5]
+];
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  if (i < 200) {
+    // Cluster around core hubs
+    const c = centers[i % centers.length];
+    const r = Math.random() * 22;
+    const th = Math.random() * Math.PI * 2;
+    const ph = Math.random() * Math.PI;
+    formations.about[i3] = c[0] + r * Math.sin(ph) * Math.cos(th);
+    formations.about[i3 + 1] = c[1] + r * Math.sin(ph) * Math.sin(th);
+    formations.about[i3 + 2] = c[2] + r * Math.cos(ph);
+  } else {
+    // Interconnecting backbone highways
+    const c1 = centers[Math.floor(Math.random() * centers.length)];
+    const c2 = centers[Math.floor(Math.random() * centers.length)];
+    const t = Math.random();
+    formations.about[i3] = c1[0] + (c2[0] - c1[0]) * t + (Math.random() - 0.5) * 4;
+    formations.about[i3 + 1] = c1[1] + (c2[1] - c1[1]) * t + (Math.random() - 0.5) * 4;
+    formations.about[i3 + 2] = c1[2] + (c2[2] - c1[2]) * t + (Math.random() - 0.5) * 4;
+  }
+}
+
+// 3. Codex: Hierarchical Branching File Tree / Schema Structure
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  const branch = i % 5;
+  const t = Math.random();
+  if (branch === 0) {
+    // Trunk spine
+    formations.codex[i3] = -60 + (Math.random() - 0.5) * 4;
+    formations.codex[i3 + 1] = -70 + t * 140;
+    formations.codex[i3 + 2] = (Math.random() - 0.5) * 6;
+  } else {
+    // Horizontal branch levels
+    const yLevel = -50 + branch * 30;
+    formations.codex[i3] = -60 + t * 120;
+    formations.codex[i3 + 1] = yLevel + (Math.random() - 0.5) * 5;
+    formations.codex[i3 + 2] = (Math.random() - 0.5) * 10;
+  }
+}
+
+// 4. Contact: Radial Telemetry Wave / Signal Endpoint
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  const ring = Math.floor(i / (PARTICLE_COUNT / 4));
+  const r = 25 + ring * 25;
+  const angle = Math.random() * Math.PI * 2;
+  formations.contact[i3] = Math.cos(angle) * r;
+  formations.contact[i3 + 1] = Math.sin(angle) * r;
+  formations.contact[i3 + 2] = (Math.random() - 0.5) * 12;
+}
+
+// Particle current positions & velocities
+const currentPos = new Float32Array(PARTICLE_COUNT * 3);
+const basePos = new Float32Array(PARTICLE_COUNT * 3);
+const colors = new Float32Array(PARTICLE_COUNT * 3);
+
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  const i3 = i * 3;
+  currentPos[i3] = formations.hero[i3];
+  currentPos[i3 + 1] = formations.hero[i3 + 1];
+  currentPos[i3 + 2] = formations.hero[i3 + 2];
+
+  basePos[i3] = currentPos[i3];
+  basePos[i3 + 1] = currentPos[i3 + 1];
+  basePos[i3 + 2] = currentPos[i3 + 2];
+
+  // Colors: Muted silver charcoal with crimson accent highlight on 15% of nodes
+  if (Math.random() < 0.18) {
+    colors[i3] = 0.95;     // Red
+    colors[i3 + 1] = 0.15; // Green
+    colors[i3 + 2] = 0.15; // Blue
+  } else {
+    colors[i3] = 0.55;     // Muted silver
+    colors[i3 + 1] = 0.55;
+    colors[i3 + 2] = 0.60;
+  }
+}
+
+geometry.setAttribute('position', new THREE.BufferAttribute(currentPos, 3));
+geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+// Particle point material
+const particleMaterial = new THREE.PointsMaterial({
+  size: 3.5,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.88,
+  blending: THREE.AdditiveBlending
+});
+
+const particleSystem = new THREE.Points(geometry, particleMaterial);
+scene.add(particleSystem);
+
+// Lines geometry connecting close particles
+const MAX_LINES = 180;
+const linePositions = new Float32Array(MAX_LINES * 6);
+const lineColors = new Float32Array(MAX_LINES * 6);
+const lineGeometry = new THREE.BufferGeometry();
+lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
+
+const lineMaterial = new THREE.LineBasicMaterial({
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.28,
+  blending: THREE.AdditiveBlending
+});
+
+const lineSystem = new THREE.LineSegments(lineGeometry, lineMaterial);
+scene.add(lineSystem);
+
+// Interactive mouse / touch coordinates
+let mouseX = 0, mouseY = 0;
+let targetMouseX = 0, targetMouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  targetMouseX = (e.clientX / width - 0.5) * 45;
+  targetMouseY = -(e.clientY / height - 0.5) * 45;
+});
+
+window.addEventListener('touchmove', (e) => {
+  if (e.touches.length > 0) {
+    targetMouseX = (e.touches[0].clientX / width - 0.5) * 45;
+    targetMouseY = -(e.touches[0].clientY / height - 0.5) * 45;
+  }
+}, { passive: true });
+
+// Scroll calculation to smoothly blend formations
+let activeSection = 0;
+const formationKeys = ['hero', 'projects', 'about', 'codex', 'contact'];
+
+function updateScrollProgress() {
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  const docHeight = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+  const progress = Math.min(Math.max(scrollY / docHeight, 0), 1);
+
+  // Map progress to continuous float 0 -> 4
+  const continuousIndex = progress * 4;
+  const fromIdx = Math.floor(continuousIndex);
+  const toIdx = Math.min(fromIdx + 1, 4);
+  const blend = continuousIndex - fromIdx;
+
+  const fromArr = formations[formationKeys[fromIdx]];
+  const toArr = formations[formationKeys[toIdx]];
+
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    const i3 = i * 3;
+    basePos[i3] = fromArr[i3] + (toArr[i3] - fromArr[i3]) * blend;
+    basePos[i3 + 1] = fromArr[i3 + 1] + (toArr[i3 + 1] - fromArr[i3 + 1]) * blend;
+    basePos[i3 + 2] = fromArr[i3 + 2] + (toArr[i3 + 2] - fromArr[i3 + 2]) * blend;
+  }
+}
+
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+updateScrollProgress();
+
+// Responsive resize handler
+function onResize() {
+  width = getWidth();
+  height = getHeight();
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+window.addEventListener('resize', onResize);
+
+// Render loop
+let clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+
+  mouseX += (targetMouseX - mouseX) * 0.05;
+  mouseY += (targetMouseY - mouseY) * 0.05;
+
+  const positions = geometry.attributes.position.array;
+  const posCount = PARTICLE_COUNT;
+
+  // Gentle idle drift & spring toward base targets
+  for (let i = 0; i < posCount; i++) {
+    const i3 = i * 3;
+    const idleNoiseX = Math.sin(time * 0.8 + i * 0.15) * 1.8;
+    const idleNoiseY = Math.cos(time * 0.7 + i * 0.12) * 1.8;
+    const idleNoiseZ = Math.sin(time * 0.9 + i * 0.18) * 1.5;
+
+    const targetX = basePos[i3] + idleNoiseX + mouseX * 0.25;
+    const targetY = basePos[i3 + 1] + idleNoiseY + mouseY * 0.25;
+    const targetZ = basePos[i3 + 2] + idleNoiseZ;
+
+    positions[i3] += (targetX - positions[i3]) * 0.08;
+    positions[i3 + 1] += (targetY - positions[i3 + 1]) * 0.08;
+    positions[i3 + 2] += (targetZ - positions[i3 + 2]) * 0.08;
+  }
+  geometry.attributes.position.needsUpdate = true;
+
+  // Subtle rotation
+  particleSystem.rotation.y = Math.sin(time * 0.2) * 0.12;
+  lineSystem.rotation.y = particleSystem.rotation.y;
+
+  // Dynamic connecting lines between nearby points
+  const linePosArr = lineGeometry.attributes.position.array;
+  const lineColArr = lineGeometry.attributes.color.array;
+  let lineIdx = 0;
+  const maxDist = 24;
+
+  for (let i = 0; i < 90 && lineIdx < MAX_LINES; i++) {
+    const i3 = i * 3;
+    for (let j = i + 1; j < 110 && lineIdx < MAX_LINES; j++) {
+      const j3 = j * 3;
+      const dx = positions[i3] - positions[j3];
+      const dy = positions[i3 + 1] - positions[j3 + 1];
+      const dz = positions[i3 + 2] - positions[j3 + 2];
+      const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+      if (dist < maxDist) {
+        const l6 = lineIdx * 6;
+        linePosArr[l6] = positions[i3];
+        linePosArr[l6 + 1] = positions[i3 + 1];
+        linePosArr[l6 + 2] = positions[i3 + 2];
+        linePosArr[l6 + 3] = positions[j3];
+        linePosArr[l6 + 4] = positions[j3 + 1];
+        linePosArr[l6 + 5] = positions[j3 + 2];
+
+        const alpha = 1.0 - (dist / maxDist);
+        lineColArr[l6] = 0.85 * alpha;
+        lineColArr[l6 + 1] = 0.15 * alpha;
+        lineColArr[l6 + 2] = 0.15 * alpha;
+        lineColArr[l6 + 3] = 0.45 * alpha;
+        lineColArr[l6 + 4] = 0.45 * alpha;
+        lineColArr[l6 + 5] = 0.50 * alpha;
+
+        lineIdx++;
+      }
+    }
+  }
+
+  // Clear remaining lines
+  for (let i = lineIdx; i < MAX_LINES; i++) {
+    const l6 = i * 6;
+    linePosArr[l6] = 0; linePosArr[l6 + 1] = 0; linePosArr[l6 + 2] = 0;
+    linePosArr[l6 + 3] = 0; linePosArr[l6 + 4] = 0; linePosArr[l6 + 5] = 0;
+  }
+  lineGeometry.attributes.position.needsUpdate = true;
+  lineGeometry.attributes.color.needsUpdate = true;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_2 -->
+<!-- Hero Overlay Layer -->
+<div class="relative z-10 flex flex-col gap-space-lg p-space-md pt-space-xl bg-gradient-to-b from-surface-container-lowest/40 via-surface-container-lowest/80 to-surface-container-lowest">
+<!-- Terminal Node Identifier -->
+<div class="flex items-center justify-between text-label-sm font-label-sm text-secondary">
+<span class="tracking-widest text-secondary-fixed-dim">SYS_AUTH::ROOT@AMIRALI-NODE</span>
+<span class="text-primary tracking-tight">PID: 29014</span>
+</div>
+<!-- Identity -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-1">
+<span class="text-headline-xl-mobile font-headline-xl-mobile text-on-surface tracking-tight">&gt; amirali_daliri</span>
+<span class="inline-block w-2.5 h-6 bg-primary-container animate-pulse"></span>
+</div>
+<p class="text-body-lg font-body-lg text-on-surface font-medium">Software Engineer / CTO</p>
+<p class="text-body-md font-body-md text-on-surface-variant">Backend, architecture, infrastructure, systems.</p>
+</div>
+<!-- System Diagnostic Panel -->
+<div class="flex flex-col gap-space-xs p-space-md rounded bg-surface-container-low/90 backdrop-blur-md">
+<div class="flex items-center justify-between pb-space-xs text-label-sm font-label-sm text-secondary">
+<span>HOST_DIAGNOSTICS</span>
+<span class="text-primary-fixed-dim">TELEMETRY_STREAM</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-secondary truncate">status:</span>
+<div class="flex items-center gap-space-xs shrink-0">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-container opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary-container"></span>
+</span>
+<span class="text-on-surface font-medium">online [signal::200_OK]</span>
+</div>
+</div>
+<div class="flex items-start justify-between text-body-sm font-body-sm gap-space-sm">
+<span class="text-secondary shrink-0">focus:</span>
+<span class="text-on-surface text-right truncate">production systems &amp; high-throughput architectures</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-secondary">location:</span>
+<span class="text-on-surface">tehran, ir [35.6892° N, 51.3890° E]</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-secondary">active_cluster:</span>
+<span class="text-primary-fixed-dim">k8s-edge-01 (12 nodes)</span>
+</div>
+</div>
+<!-- Micro CTAs -->
+<div class="flex items-center gap-space-sm pt-space-xs">
+<a class="flex-1 flex items-center justify-center gap-space-xs h-10 px-space-md bg-primary-container text-on-primary-container font-label-md text-label-md tracking-wider rounded transition-transform active:scale-[0.98]" href="#systems">
+<span>&gt;</span>
+<span>EXPLORE_SYSTEMS</span>
+</a>
+<a class="flex-1 flex items-center justify-center gap-space-xs h-10 px-space-md bg-surface-container-high text-on-surface font-label-md text-label-md tracking-wider rounded hover:bg-surface-container-highest transition-colors" href="#codex">
+<span>$</span>
+<span>VIEW_CODEX</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Systems & Infrastructure Manifest -->
+<section class="flex flex-col gap-space-md" id="systems">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-label-sm font-label-sm text-secondary">
+<span>[02] PROJECTS // RECENT INFRASTRUCTURE &amp; BACKEND WORK</span>
+<span class="text-primary-container">SYS_LOG</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="text-primary-container font-code-snippet">&gt;</span>
+<span class="font-headline-md text-headline-md text-on-surface">cat systems.manifest</span>
+</div>
+</div>
+<!-- Telemetry Project 1 -->
+<article class="flex flex-col rounded bg-surface-container-low p-space-md gap-space-sm transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-primary-container font-bold">[01]</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">KASB</h3>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-label-sm font-label-sm text-primary-fixed-dim">ACTIVE_SCALE</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-secondary">production ecosystem // fintech &amp; commerce</p>
+<p class="font-body-md text-body-md text-on-surface">
+        High-concurrency core transactional engine handling multi-tenant microservices, state sync, and zero-downtime distributed migration across distributed data stores.
+      </p>
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">.NET Core</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">React Native</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">Kafka</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">Redis Cluster</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">PostgreSQL</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-label-sm font-label-sm text-secondary">
+<span>METRICS: LATENCY p99 &lt; 18ms</span>
+<span class="text-primary-fixed-dim">RELIABILITY: 99.98%</span>
+</div>
+</article>
+<!-- Telemetry Project 2 -->
+<article class="flex flex-col rounded bg-surface-container-low p-space-md gap-space-sm transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-primary-container font-bold">[02]</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">ALLCODEX</h3>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-label-sm font-label-sm text-on-surface">PRODUCTION</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-secondary">knowledge system // vector retrieval engine</p>
+<p class="font-body-md text-body-md text-on-surface">
+        Low-latency semantic memory pipeline indexer with real-time embedding caches, distributed async ingestion workers, and sub-second multi-modal querying.
+      </p>
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">Next.js</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">Bun</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">Vector Search</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">pgvector</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-label-sm font-label-sm text-secondary">
+<span>THROUGHPUT: 1.4k req/s</span>
+<span class="text-primary-fixed-dim">INDEX_CACHE: WARM</span>
+</div>
+</article>
+<!-- Telemetry Project 3 -->
+<article class="flex flex-col rounded bg-surface-container-low p-space-md gap-space-sm transition-colors hover:bg-surface-container">
+<div class="flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-md text-label-md text-primary-container font-bold">[03]</span>
+<h3 class="font-headline-md text-headline-md text-on-surface">SENTINEL_STREAM</h3>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-label-sm font-label-sm text-primary">EXPERIMENTAL</span>
+</div>
+</div>
+<p class="font-label-sm text-label-sm text-secondary">telemetry daemon // distributed log ingestion</p>
+<p class="font-body-md text-body-md text-on-surface">
+        Lightweight kernel-level telemetry agent utilizing eBPF tracing routines for zero-overhead bottleneck identification and real-time anomaly filtering across edge nodes.
+      </p>
+<div class="flex flex-wrap gap-space-xs pt-space-xs">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">Go</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">ClickHouse</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">eBPF</span>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-label-sm font-label-sm text-on-surface-variant">Grafana</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-label-sm font-label-sm text-secondary">
+<span>MEM_FOOTPRINT: &lt; 12MB</span>
+<span class="text-primary-fixed-dim">CPU_OVERHEAD: 0.12%</span>
+</div>
+</article>
+</section>
+<!-- About / Mechanical Philosophy -->
+<section class="flex flex-col gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<span class="text-label-sm font-label-sm text-secondary">[03] ARCHITECTURAL PHILOSOPHY</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-primary-container font-code-snippet">&gt;</span>
+<span class="font-headline-md text-headline-md text-on-surface">cat about.txt</span>
+</div>
+</div>
+<div class="p-space-md rounded bg-surface-container-low flex flex-col gap-space-sm">
+<p class="text-body-md font-body-md text-on-surface leading-relaxed">
+        Specialized in designing, building, maintaining, and investigating high-throughput software systems. Obsessed with mechanical sympathy, zero-cost abstractions, resilient distributed state machines, and reliable infrastructure under adversarial network conditions.
+      </p>
+<div class="flex items-center justify-between pt-space-xs text-label-sm font-label-sm text-secondary">
+<span>PARADIGM: EVENT_DRIVEN // ASYNC</span>
+<span class="text-on-surface-variant">STANCE: UNCOMPROMISING</span>
+</div>
+</div>
+</section>
+<!-- Codex Directory Preview -->
+<section class="flex flex-col gap-space-md" id="codex">
+<div class="flex flex-col gap-space-xs">
+<span class="text-label-sm font-label-sm text-secondary">[04] TECHNICAL INDEX &amp; RESEARCH</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-primary-container font-code-snippet">&gt;</span>
+<span class="font-headline-md text-headline-md text-on-surface">ls -la notes/</span>
+</div>
+</div>
+<div class="flex flex-col rounded bg-surface-container-low overflow-hidden">
+<div class="flex items-center justify-between px-space-md py-space-xs bg-surface-container-high text-label-sm font-label-sm text-secondary">
+<span>PERMISSIONS // INODE</span>
+<span>FILENAME // SIZE</span>
+</div>
+<div class="flex flex-col divide-y divide-surface-container-highest/30 font-code-snippet text-code-snippet">
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-surface-container-high transition-colors">
+<span class="text-secondary">drwxr-xr-x</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-primary-fixed-dim">architecture/</span>
+<span class="text-label-sm font-label-sm text-secondary">[DIR]</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-surface-container-high transition-colors">
+<span class="text-secondary">-rw-r--r--</span>
+<div class="flex items-center gap-space-xs truncate max-w-[200px]">
+<span class="text-on-surface truncate">distributed-consensus-notes.md</span>
+<span class="text-label-sm font-label-sm text-secondary">14KB</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-surface-container-high transition-colors">
+<span class="text-secondary">-rw-r--r--</span>
+<div class="flex items-center gap-space-xs truncate max-w-[200px]">
+<span class="text-on-surface truncate">high-throughput-kafka-pipelines.md</span>
+<span class="text-label-sm font-label-sm text-secondary">22KB</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-surface-container-high transition-colors">
+<span class="text-secondary">-rw-r--r--</span>
+<div class="flex items-center gap-space-xs truncate max-w-[200px]">
+<span class="text-on-surface truncate">postmortems-database-deadlocks.md</span>
+<span class="text-label-sm font-label-sm text-secondary">31KB</span>
+</div>
+</div>
+<div class="flex items-center justify-between px-space-md py-space-sm hover:bg-surface-container-high transition-colors">
+<span class="text-secondary">-rw-r--r--</span>
+<div class="flex items-center gap-space-xs truncate max-w-[200px]">
+<span class="text-on-surface truncate">agentic-engineering-patterns.md</span>
+<span class="text-label-sm font-label-sm text-secondary">18KB</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Connect / Endpoint Dispatch -->
+<section class="flex flex-col gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<span class="text-label-sm font-label-sm text-secondary">[05] DISPATCH INTERFACE</span>
+<div class="flex items-center gap-space-xs">
+<span class="text-primary-container font-code-snippet">&gt;</span>
+<span class="font-headline-md text-headline-md text-on-surface">./connect --direct</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs rounded bg-surface-container-low p-space-md">
+<!-- Email Endpoint -->
+<a class="flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors" href="mailto:amirali@daliri.dev">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary-container">alternate_email</span>
+<span class="text-body-sm font-body-sm text-secondary">email:</span>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface font-medium">amirali@daliri.dev</span>
+</a>
+<!-- GitHub Endpoint -->
+<a class="flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors" href="https://github.com/amiralidaliri" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">code</span>
+<span class="text-body-sm font-body-sm text-secondary">github:</span>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface font-medium">github.com/amiralidaliri</span>
+</a>
+<!-- LinkedIn Endpoint -->
+<a class="flex items-center justify-between p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors" href="https://linkedin.com/in/amiralidaliri" rel="noopener noreferrer" target="_blank">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-secondary">hub</span>
+<span class="text-body-sm font-body-sm text-secondary">linkedin:</span>
+</div>
+<span class="text-body-sm font-body-sm text-on-surface font-medium truncate max-w-[170px]">in/amiralidaliri</span>
+</a>
+<!-- Resume Fetch Command -->
+<div class="flex items-center justify-between p-space-sm rounded bg-surface-container">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">description</span>
+<span class="text-body-sm font-body-sm text-secondary">resume:</span>
+</div>
+<button class="px-space-sm py-0.5 rounded bg-primary-container text-on-primary-container text-label-sm font-label-sm hover:opacity-90 active:scale-95 transition-all" type="button">
+          FETCH_PDF [240KB]
+        </button>
+</div>
+</div>
+</section>
+<!-- Interactive Terminal Ping Interactive Widget -->
+<div class="flex items-center justify-between px-space-md py-space-sm rounded bg-surface-container-lowest text-label-sm font-label-sm text-secondary">
+<div class="flex items-center gap-space-xs">
+<span class="text-primary-container">$</span>
+<span id="terminal-pulse">ping -c 1 edge.daliri.dev</span>
+</div>
+<span class="text-primary tracking-wider" id="latency-val">0.82ms</span>
+</div>
+</div>
+<script>
+  (function() {
+    const latencyEl = document.getElementById('latency-val');
+    if (latencyEl) {
+      setInterval(() => {
+        const jitter = (0.75 + Math.random() * 0.35).toFixed(2);
+        latencyEl.textContent = `${jitter}ms`;
+      }, 3200);
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl flex flex-col" data-active-classes="text-primary-container font-bold"><div class="flex items-center justify-around h-16 px-space-xs overflow-x-auto"><a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs transition-colors text-primary-container font-bold" data-path="hero" href="#"><span class="material-symbols-outlined text-[20px]">terminal</span><span class="font-label-sm text-label-sm uppercase tracking-tight">01:HERO</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="projects" href="#"><span class="material-symbols-outlined text-[20px]">deployed_code</span><span class="font-label-sm text-label-sm uppercase tracking-tight">02:PROJ</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="#"><span class="material-symbols-outlined text-[20px]">memory</span><span class="font-label-sm text-label-sm uppercase tracking-tight">03:ABOUT</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="codex" href="#"><span class="material-symbols-outlined text-[20px]">data_object</span><span class="font-label-sm text-label-sm uppercase tracking-tight">04:CODEX</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] px-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="connect" href="#"><span class="material-symbols-outlined text-[20px]">hub</span><span class="font-label-sm text-label-sm uppercase tracking-tight">05:CONN</span></a></div><div class="px-margin-mobile py-space-xs flex items-center justify-between bg-surface-container-lowest/60"><span class="font-label-sm text-label-sm text-secondary truncate">NODE: TEHRAN_EDGE // MEM: OPTIMAL</span><span class="font-label-sm text-label-sm text-primary-fixed-dim shrink-0">ARCH: DISTRIBUTED</span></div></nav></body></html>

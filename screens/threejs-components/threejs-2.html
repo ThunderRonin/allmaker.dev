@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_9 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_9" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_9');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Option A (Modified): Dormant Hyper-Toroidal Kernel Reactor & Multi-Ring Bus
+// Calibrated for Desktop OLED 3AM (absolute #000000 true blacks, razor crimson filaments)
+// DORMANT AT REST: Perfectly aligned, ultra-clean concentric geometric containment rings, slow idle breathing, zero messy noise.
+// ERUPTS ON SCROLL: Rings warp, de-synchronize into chaotic non-Euclidean precessions, particle tracers flare into high-velocity turbulent trajectories.
+
+const getWidth = () => container.clientWidth || window.innerWidth || 1440;
+const getHeight = () => container.clientHeight || window.innerHeight || 900;
+
+let width = getWidth();
+let height = getHeight();
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+camera.position.set(0, 0, 150);
+
+const renderer = new THREE.WebGLRenderer({
+  alpha: true,
+  antialias: true,
+  powerPreference: "high-performance"
+});
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+container.appendChild(renderer.domElement);
+
+const reactorGroup = new THREE.Group();
+scene.add(reactorGroup);
+
+// 1. Central Core: High-precision Geodesic Icosahedron Kernel
+const coreGeo = new THREE.IcosahedronGeometry(18, 1);
+const coreWire = new THREE.WireframeGeometry(coreGeo);
+const coreMat = new THREE.LineBasicMaterial({
+  color: 0xff1744,
+  transparent: true,
+  opacity: 0.85,
+  blending: THREE.AdditiveBlending
+});
+const coreMesh = new THREE.LineSegments(coreWire, coreMat);
+reactorGroup.add(coreMesh);
+
+// Core glowing vertex nodes
+const corePointsMat = new THREE.PointsMaterial({
+  color: 0xff3b5c,
+  size: 3.0,
+  transparent: true,
+  opacity: 0.9,
+  blending: THREE.AdditiveBlending
+});
+const corePoints = new THREE.Points(coreGeo, corePointsMat);
+reactorGroup.add(corePoints);
+
+// 2. Primary Toroidal Containment Lattice (Outer magnetic toroid)
+const torusGeo = new THREE.TorusGeometry(38, 7.5, 14, 48);
+const torusWire = new THREE.WireframeGeometry(torusGeo);
+const torusMat = new THREE.LineBasicMaterial({
+  color: 0x4a0a14, // Dark cold ruby in dormant state
+  transparent: true,
+  opacity: 0.45,
+  blending: THREE.AdditiveBlending
+});
+const torusMesh = new THREE.LineSegments(torusWire, torusMat);
+reactorGroup.add(torusMesh);
+
+// 3. Precision Concentric Gyroscopic Rings (Inner and Outer Bus)
+// In dormant state: cleanly oriented, razor thin, symmetrical
+const ring1Geo = new THREE.TorusGeometry(58, 0.5, 6, 72);
+const ring1Mat = new THREE.LineBasicMaterial({
+  color: 0x6b101d,
+  transparent: true,
+  opacity: 0.6,
+  blending: THREE.AdditiveBlending
+});
+const ring1 = new THREE.Line(ring1Geo, ring1Mat);
+reactorGroup.add(ring1);
+
+const ring2Geo = new THREE.TorusGeometry(78, 0.7, 6, 84);
+const ring2Mat = new THREE.LineDashedMaterial({
+  color: 0xff1744,
+  dashSize: 3,
+  gapSize: 5,
+  transparent: true,
+  opacity: 0.55,
+  blending: THREE.AdditiveBlending
+});
+const ring2 = new THREE.Line(ring2Geo, ring2Mat);
+ring2.computeLineDistances();
+reactorGroup.add(ring2);
+
+const ring3Geo = new THREE.TorusGeometry(98, 0.4, 6, 96);
+const ring3Mat = new THREE.LineBasicMaterial({
+  color: 0x24050a,
+  transparent: true,
+  opacity: 0.5,
+  blending: THREE.AdditiveBlending
+});
+const ring3 = new THREE.Line(ring3Geo, ring3Mat);
+reactorGroup.add(ring3);
+
+// 4. Packet Tracer Particles (Dormant: locked in quiet orbital paths. Turbulent: scatter and streak)
+const PACKET_COUNT = 240;
+const packetGeo = new THREE.BufferGeometry();
+const packetPositions = new Float32Array(PACKET_COUNT * 3);
+const packetColors = new Float32Array(PACKET_COUNT * 3);
+const baseRadii = new Float32Array(PACKET_COUNT);
+const packetAngles = new Float32Array(PACKET_COUNT);
+const packetSpeeds = new Float32Array(PACKET_COUNT);
+const packetInclinations = new Float32Array(PACKET_COUNT);
+const packetOffsets = new Float32Array(PACKET_COUNT * 3);
+
+for (let i = 0; i < PACKET_COUNT; i++) {
+  const i3 = i * 3;
+  // Three clean concentric orbital tiers in dormant mode
+  const tier = i % 3;
+  const r = tier === 0 ? 38 + (Math.random() - 0.5) * 4 :
+            tier === 1 ? 58 + (Math.random() - 0.5) * 6 :
+                         78 + (Math.random() - 0.5) * 8;
+
+  baseRadii[i] = r;
+  packetAngles[i] = Math.random() * Math.PI * 2;
+  packetSpeeds[i] = 0.006 + Math.random() * 0.012;
+  packetInclinations[i] = (tier - 1) * 0.35; // clean slight incline per tier
+
+  // Seed chaotic dispersion offsets
+  packetOffsets[i3] = (Math.random() - 0.5) * 45;
+  packetOffsets[i3 + 1] = (Math.random() - 0.5) * 45;
+  packetOffsets[i3 + 2] = (Math.random() - 0.5) * 45;
+
+  // Dormant color: muted slate/obsidian with sparse red nodes
+  if (Math.random() < 0.18) {
+    packetColors[i3] = 0.95; packetColors[i3 + 1] = 0.10; packetColors[i3 + 2] = 0.22;
+  } else {
+    packetColors[i3] = 0.20; packetColors[i3 + 1] = 0.22; packetColors[i3 + 2] = 0.28;
+  }
+}
+
+packetGeo.setAttribute('position', new THREE.BufferAttribute(packetPositions, 3));
+packetGeo.setAttribute('color', new THREE.BufferAttribute(packetColors, 3));
+
+const packetMat = new THREE.PointsMaterial({
+  size: 2.4,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.85,
+  blending: THREE.AdditiveBlending
+});
+const packetCloud = new THREE.Points(packetGeo, packetMat);
+reactorGroup.add(packetCloud);
+
+// Mouse and Scroll tracking
+let mouseX = 0, mouseY = 0;
+let targetMouseX = 0, targetMouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  targetMouseX = (e.clientX / width - 0.5) * 2;
+  targetMouseY = -(e.clientY / height - 0.5) * 2;
+});
+
+let scrollRatio = 0;
+let scrollVelocity = 0;
+let lastScrollY = 0;
+
+function onScroll() {
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  const docHeight = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+  scrollRatio = Math.min(Math.max(scrollY / docHeight, 0), 1);
+  const deltaY = Math.abs(scrollY - lastScrollY);
+  scrollVelocity += deltaY * 0.009;
+  lastScrollY = scrollY;
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+function onResize() {
+  width = getWidth();
+  height = getHeight();
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+window.addEventListener('resize', onResize);
+
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+
+  // Decay scroll velocity smoothly
+  scrollVelocity *= 0.91;
+
+  // Smooth mouse interpolation
+  mouseX += (targetMouseX - mouseX) * 0.04;
+  mouseY += (targetMouseY - mouseY) * 0.04;
+
+  // Turbulence factor:
+  // At scroll = 0 and idle: turbulence = 0 (dormant, clean, razor geometry)
+  // When scrolling: turbulence spikes, tearing rings out of alignment and flaring particles
+  const activeTurbulence = Math.min(scrollRatio * 1.6 + scrollVelocity * 1.8, 3.8);
+
+  // Core rotation: slow dignified pulse at rest, rapid acceleration when scrolling
+  const coreSpin = 0.18 + activeTurbulence * 0.85;
+  coreMesh.rotation.y = time * coreSpin;
+  coreMesh.rotation.x = time * (coreSpin * 0.7);
+  corePoints.rotation.y = coreMesh.rotation.y;
+  corePoints.rotation.x = coreMesh.rotation.x;
+
+  // Core dilation and distortion on turbulence
+  const coreScale = 1.0 + Math.sin(time * 1.5) * 0.03 + activeTurbulence * 0.35;
+  coreMesh.scale.set(coreScale, coreScale, coreScale);
+  corePoints.scale.set(coreScale, coreScale, coreScale);
+
+  // Toroid alignment:
+  // Dormant: clean fixed tilt.
+  // Active scroll: violent gyroscopic precession and twisting
+  torusMesh.rotation.x = (Math.PI / 4) + Math.sin(time * 0.5) * 0.1 + activeTurbulence * Math.sin(time * 3.0) * 0.8;
+  torusMesh.rotation.y = time * (0.12 + activeTurbulence * 0.6);
+  torusMesh.rotation.z = activeTurbulence * Math.cos(time * 2.5) * 0.5;
+
+  // Ring 1, 2, 3:
+  // Dormant: flat concentric planar alignment with subtle tilt
+  // Turbulent: de-sync, warp axes, tilt violently in opposing directions
+  ring1.rotation.x = (Math.PI / 3) + activeTurbulence * Math.sin(time * 2.0) * 0.9;
+  ring1.rotation.y = time * (0.2 + activeTurbulence * 0.8);
+
+  ring2.rotation.x = -(Math.PI / 3.5) - activeTurbulence * Math.cos(time * 2.2) * 1.1;
+  ring2.rotation.y = -time * (0.25 + activeTurbulence * 0.9);
+
+  ring3.rotation.z = time * (0.1 + activeTurbulence * 0.5);
+  ring3.rotation.x = activeTurbulence * Math.sin(time * 1.8) * 0.7;
+
+  // Modulate ring and toroid colors on turbulence: flare into laser crimson
+  torusMat.color.setRGB(
+    0.29 + activeTurbulence * 0.20,
+    0.04,
+    0.08
+  );
+  ring2Mat.color.setRGB(
+    1.0,
+    0.09 * (1.0 + activeTurbulence * 0.4),
+    0.27
+  );
+
+  // Animate particles:
+  // Dormant: orderly orbital lanes, pristine geometric paths.
+  // Active: particles scatter along turbulent displacement vectors and flash vivid red
+  const pArr = packetGeo.attributes.position.array;
+  const cArr = packetGeo.attributes.color.array;
+
+  for (let i = 0; i < PACKET_COUNT; i++) {
+    const i3 = i * 3;
+    const speed = packetSpeeds[i] * (1.0 + activeTurbulence * 3.2);
+    packetAngles[i] += speed;
+
+    const angle = packetAngles[i];
+    const r = baseRadii[i];
+    const inc = packetInclinations[i];
+
+    // Clean base position
+    const baseX = r * Math.cos(angle);
+    const baseY = r * Math.sin(angle) * Math.sin(inc);
+    const baseZ = r * Math.sin(angle) * Math.cos(inc);
+
+    // Chaos offset triggered by scroll turbulence
+    const chaos = activeTurbulence * 0.8;
+    const noiseX = Math.sin(time * 4.0 + i) * chaos * 8.0;
+    const noiseY = Math.cos(time * 3.5 + i) * chaos * 8.0;
+    const noiseZ = Math.sin(time * 5.0 + i) * chaos * 8.0;
+
+    pArr[i3] = baseX + noiseX;
+    pArr[i3 + 1] = baseY + noiseY;
+    pArr[i3 + 2] = baseZ + noiseZ;
+
+    // Color flaring on turbulence
+    if (activeTurbulence > 0.3 && Math.random() < 0.25) {
+      cArr[i3] = 1.0;
+      cArr[i3 + 1] = 0.09;
+      cArr[i3 + 2] = 0.27;
+    } else if (activeTurbulence <= 0.05) {
+      // Revert to calm dormant palette
+      if (i % 5 === 0) {
+        cArr[i3] = 0.90; cArr[i3 + 1] = 0.10; cArr[i3 + 2] = 0.20;
+      } else {
+        cArr[i3] = 0.20; cArr[i3 + 1] = 0.22; cArr[i3 + 2] = 0.26;
+      }
+    }
+  }
+
+  packetGeo.attributes.position.needsUpdate = true;
+  packetGeo.attributes.color.needsUpdate = true;
+
+  // Smooth camera parallax with cursor
+  reactorGroup.rotation.y = mouseX * 0.22;
+  reactorGroup.rotation.x = -mouseY * 0.16;
+  reactorGroup.position.y = -scrollRatio * 20;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_9 -->
+</body>
+</html>

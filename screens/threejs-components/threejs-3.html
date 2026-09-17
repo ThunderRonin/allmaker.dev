@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+<!-- STITCH_THREEJS_START:ANIMATION_7 class="fixed inset-0 w-full h-full bg-transparent" -->
+<div class="fixed inset-0 w-full h-full bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_7" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_7');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  // Option B: Volumetric Distributed Memory Topography & Tensor Wave Grid
+// Calibrated for Desktop OLED 3AM (absolute #000000 blacks, razor crimson filaments, dormant at rest -> turbulent upon scroll)
+
+const getWidth = () => container.clientWidth || window.innerWidth || 1440;
+const getHeight = () => container.clientHeight || window.innerHeight || 900;
+
+let width = getWidth();
+let height = getHeight();
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+camera.position.set(0, 55, 140);
+camera.lookAt(0, -10, 0);
+
+const renderer = new THREE.WebGLRenderer({
+  alpha: true,
+  antialias: true,
+  powerPreference: "high-performance"
+});
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+container.appendChild(renderer.domElement);
+
+const mainGroup = new THREE.Group();
+scene.add(mainGroup);
+
+// 1. Planar Wireframe Topography Mesh (Sub-pixel tensor grid)
+// At scroll=0, perfectly flat, dormant, cold, geometric obsidian plane with razor grid lines.
+const GRID_X = 64;
+const GRID_Z = 64;
+const PLANE_W = 220;
+const PLANE_D = 220;
+
+const planeGeo = new THREE.PlaneGeometry(PLANE_W, PLANE_D, GRID_X - 1, GRID_Z - 1);
+planeGeo.rotateX(-Math.PI / 2);
+
+// Keep initial dormant vertex positions
+const baseVertices = planeGeo.attributes.position.array.slice();
+
+const planeWireMat = new THREE.MeshBasicMaterial({
+  color: 0x220509, // Cold arterial dark ruby
+  wireframe: true,
+  transparent: true,
+  opacity: 0.35,
+  blending: THREE.AdditiveBlending
+});
+const planeMesh = new THREE.Mesh(planeGeo, planeWireMat);
+mainGroup.add(planeMesh);
+
+// 2. Memory Bus Tensor Points (Nodes at grid intersections)
+const pointGeo = new THREE.BufferGeometry();
+const totalPoints = GRID_X * GRID_Z;
+const pointPositions = new Float32Array(totalPoints * 3);
+const pointColors = new Float32Array(totalPoints * 3);
+
+for (let i = 0; i < totalPoints; i++) {
+  const i3 = i * 3;
+  pointPositions[i3] = baseVertices[i3];
+  pointPositions[i3 + 1] = baseVertices[i3 + 1];
+  pointPositions[i3 + 2] = baseVertices[i3 + 2];
+
+  // Dormant color: muted obsidian slate, with rare dormant crimson nodes
+  if (Math.random() < 0.12) {
+    pointColors[i3] = 0.55; pointColors[i3 + 1] = 0.04; pointColors[i3 + 2] = 0.1;
+  } else {
+    pointColors[i3] = 0.15; pointColors[i3 + 1] = 0.16; pointColors[i3 + 2] = 0.20;
+  }
+}
+
+pointGeo.setAttribute('position', new THREE.BufferAttribute(pointPositions, 3));
+pointGeo.setAttribute('color', new THREE.BufferAttribute(pointColors, 3));
+
+const pointMat = new THREE.PointsMaterial({
+  size: 2.2,
+  vertexColors: true,
+  transparent: true,
+  opacity: 0.65,
+  blending: THREE.AdditiveBlending
+});
+const pointCloud = new THREE.Points(pointGeo, pointMat);
+mainGroup.add(pointCloud);
+
+// 3. Floating Architectural Kernel Core (Suspended high-concurrency monolith)
+const coreGroup = new THREE.Group();
+coreGroup.position.set(0, 15, -10);
+mainGroup.add(coreGroup);
+
+// Geodesic monolithic cage
+const coreWireGeo = new THREE.WireframeGeometry(new THREE.BoxGeometry(20, 20, 20));
+const coreWireMat = new THREE.LineBasicMaterial({
+  color: 0x991b1b,
+  transparent: true,
+  opacity: 0.6,
+  blending: THREE.AdditiveBlending
+});
+const coreCube = new THREE.LineSegments(coreWireGeo, coreWireMat);
+coreGroup.add(coreCube);
+
+// Inner high-density core node
+const innerNodeGeo = new THREE.IcosahedronGeometry(7, 1);
+const innerNodeMat = new THREE.MeshBasicMaterial({
+  color: 0xff1744,
+  wireframe: true,
+  transparent: true,
+  opacity: 0.75,
+  blending: THREE.AdditiveBlending
+});
+const innerNode = new THREE.Mesh(innerNodeGeo, innerNodeMat);
+coreGroup.add(innerNode);
+
+// 4. Memory Bus Ring
+const busGeo = new THREE.RingGeometry(32, 33, 48);
+busGeo.rotateX(-Math.PI / 2);
+const busMat = new THREE.MeshBasicMaterial({
+  color: 0x4a0a14,
+  side: THREE.DoubleSide,
+  transparent: true,
+  opacity: 0.4,
+  blending: THREE.AdditiveBlending
+});
+const busRing = new THREE.Mesh(busGeo, busMat);
+busRing.position.y = 15;
+mainGroup.add(busRing);
+
+// Mouse and Scroll tracking
+let mouseX = 0, mouseY = 0;
+let targetMouseX = 0, targetMouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  targetMouseX = (e.clientX / width - 0.5) * 2;
+  targetMouseY = -(e.clientY / height - 0.5) * 2;
+});
+
+let scrollRatio = 0;
+let scrollVelocity = 0;
+let lastScrollY = 0;
+
+function onScroll() {
+  const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+  const docHeight = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+  scrollRatio = Math.min(Math.max(scrollY / docHeight, 0), 1);
+  const deltaY = Math.abs(scrollY - lastScrollY);
+  scrollVelocity += deltaY * 0.008;
+  lastScrollY = scrollY;
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+
+function onResize() {
+  width = getWidth();
+  height = getHeight();
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+  renderer.setSize(width, height);
+}
+window.addEventListener('resize', onResize);
+
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const time = clock.getElapsedTime();
+
+  // Decay scroll velocity
+  scrollVelocity *= 0.92;
+
+  // Smooth mouse interpolation
+  mouseX += (targetMouseX - mouseX) * 0.04;
+  mouseY += (targetMouseY - mouseY) * 0.04;
+
+  // Turbulence intensity: Dormant when scroll = 0 and idle!
+  // When scrolling or moving deep into pages, the plane erupts into high-frequency tensor ripples
+  const activeTurbulence = Math.min(scrollRatio * 1.8 + scrollVelocity * 1.2, 3.5);
+  const dormantBreathing = Math.sin(time * 0.8) * 0.8; // barely noticeable subtle breath when idle
+
+  const posAttr = planeGeo.attributes.position;
+  const pointPosAttr = pointGeo.attributes.position;
+  const pointColAttr = pointGeo.attributes.color;
+
+  const vArr = posAttr.array;
+  const pArr = pointPosAttr.array;
+  const cArr = pointColAttr.array;
+
+  for (let i = 0; i < totalPoints; i++) {
+    const i3 = i * 3;
+    const bx = baseVertices[i3];
+    const bz = baseVertices[i3 + 2];
+    const distFromCenter = Math.sqrt(bx * bx + bz * bz);
+
+    // Dormant state: near flat zero elevation.
+    // Scroll state: non-linear solitons, standing interference waves, and memory cache spikes
+    let y = dormantBreathing * Math.exp(-distFromCenter * 0.02);
+
+    if (activeTurbulence > 0.01) {
+      const wave1 = Math.sin(bx * 0.08 + time * 2.5) * Math.cos(bz * 0.08 + time * 2.0);
+      const wave2 = Math.sin(distFromCenter * 0.15 - time * 3.5) * 0.5;
+      const spikeNoise = Math.sin(bx * 0.3 + bz * 0.3 + time * 5.0) * (Math.random() > 0.96 ? 4.0 : 0.0);
+
+      y += (wave1 * 7.5 + wave2 * 5.0 + spikeNoise) * activeTurbulence;
+    }
+
+    vArr[i3 + 1] = y;
+    pArr[i3 + 1] = y;
+
+    // Dynamically excite point colors from muted obsidian to vivid laser-crimson on elevation spike
+    if (activeTurbulence > 0.05 && y > 3.0) {
+      cArr[i3] = 1.0; // hot crimson
+      cArr[i3 + 1] = 0.09;
+      cArr[i3 + 2] = 0.27;
+    } else if (activeTurbulence > 0.05 && y < -3.0) {
+      cArr[i3] = 0.45; // deep ruby trough
+      cArr[i3 + 1] = 0.05;
+      cArr[i3 + 2] = 0.12;
+    } else {
+      // Return smoothly to dormant palette
+      cArr[i3] = 0.18;
+      cArr[i3 + 1] = 0.20;
+      cArr[i3 + 2] = 0.24;
+    }
+  }
+
+  posAttr.needsUpdate = true;
+  pointPosAttr.needsUpdate = true;
+  pointColAttr.needsUpdate = true;
+
+  // Reactivity for central architectural core
+  // Dormant: very slow, silent, dignified rotation
+  // Active scroll: spins faster, expands, and shifts elevation
+  const spinFactor = 0.15 + activeTurbulence * 0.7;
+  coreGroup.rotation.y = time * spinFactor;
+  coreGroup.rotation.x = Math.sin(time * 0.4) * 0.2 + mouseX * 0.3;
+  coreGroup.position.y = 15 + Math.sin(time * 1.2) * 2.0 + (activeTurbulence * 6.0);
+
+  innerNode.rotation.y = -time * spinFactor * 1.8;
+  innerNode.rotation.z = time * spinFactor;
+
+  busRing.rotation.z = time * 0.2 * spinFactor;
+
+  // Camera parallax subtly tracks cursor
+  mainGroup.rotation.y = mouseX * 0.18;
+  mainGroup.rotation.x = -mouseY * 0.12;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_7 -->
+</body>
+</html>
