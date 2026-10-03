@@ -1,5 +1,5 @@
 ---
-// Interactive CLI Shell for ThunderRonin Portfolio
+// Interactive CLI Shell for the Allmaker Portfolio
 ---
 
 <section class="space-y-3 font-mono mt-8" id="cli" data-purpose="interactive-cli">
@@ -15,15 +15,15 @@
     <!-- Terminal History Output -->
     <div id="cli-output" class="space-y-2 overflow-y-auto max-h-[360px] text-zinc-300 font-mono text-[11px] leading-relaxed">
       <div class="text-zinc-500">
-        RONIN_OS v2.4 (x86_64-cloudflare-worker-edge)<br />
-        Session: <span class="text-zinc-400">guest@ThunderRonin-node</span><br />
+        AllOS v2.4 (x86_64-baremetal-edge)<br />
+        Session: <span class="text-zinc-400">guest@allmaker-node</span><br />
         Type <span class="text-[#e11d48] font-bold">help</span> to view available system commands.
       </div>
     </div>
 
     <!-- Terminal Input Form -->
     <form id="cli-form" class="flex items-center space-x-2 border-t border-[#141418] pt-3">
-      <span class="text-zinc-600 font-bold select-none text-[11px]">guest@ronin:~$</span>
+      <span class="text-zinc-600 font-bold select-none text-[11px]">guest@allmaker:~$</span>
       <input
         id="cli-input"
         type="text"
@@ -47,12 +47,22 @@
 
     if (!form || !input || !output) return;
 
+    const consulting = `[INDEPENDENT TECH BOUNTY HUNTER & SYSTEMS CONSULTANT]
+Period: April 2021 – Present (5+ Years)
+Focus: Full-Stack Systems, Low-Level Diagnostics, Security Audits & Custom Automation
+Key Highlights:
+  • Autonomous execution across international client codebases and protocols.
+  • Diagnosed and resolved high-impact production bottlenecks and memory leaks.
+  • Architected self-healing microservices and high-throughput automation pipelines.`;
+
     const commands: Record<string, string | (() => string)> = {
-      help: `Available commands:
+      help: `AVAILABLE COMMANDS:
   <span class="text-[#e11d48]">help</span>         - Display this command manual
-  <span class="text-[#e11d48]">about</span>        - Output engineer dossier
-  <span class="text-[#e11d48]">repos</span>        - List featured systems & repositories (@ThunderRonin)
-  <span class="text-[#e11d48]">kasb</span>         - Inspect Kasb Platform ERP & ledger architecture
+  <span class="text-[#e11d48]">about</span>        - Output engineer dossier & 5+ years experience
+  <span class="text-[#e11d48]">repos</span>        - List featured systems & repositories (@allmaker)
+  <span class="text-[#e11d48]">kasb</span>         - Inspect Kasb Platform ERP, ledger & multi-agent architecture
+  <span class="text-[#e11d48]">petaproc</span>     - Inspect PetaProc real-time VoIP & AI platform
+  <span class="text-[#e11d48]">bounty</span>       - Inspect independent tech bounty hunter & consulting history
   <span class="text-[#e11d48]">allknower</span>    - Inspect AllKnower AI orchestration service
   <span class="text-[#e11d48]">allcodex</span>     - Inspect AllCodex knowledge base engine
   <span class="text-[#e11d48]">aryamehr</span>     - Inspect Zepp OS astronomical calendar
@@ -64,68 +74,77 @@
   <span class="text-[#e11d48]">whoami</span>       - Print current authorization status
   <span class="text-[#e11d48]">date</span>         - Print synchronized UTC timestamp
   <span class="text-[#e11d48]">clear</span>        - Flush terminal screen`,
-
-      about: `<span class="text-zinc-300 font-bold">Amirali Daliri</span> (@ThunderRonin):
-Full-Stack Software Engineer & Systems Architect.
-Specializing in high-performance .NET 10 backends, cross-platform Flutter applications, AI orchestration pipelines, and Cloudflare Workers edge architecture.`,
-
-      repos: `Featured Systems & Repositories (@ThunderRonin):
-  • <a href="https://github.com/Kasb-Platform" target="_blank" class="text-zinc-200 underline">kasb-platform</a> - Enterprise ERP & double-entry ledger (.NET 10, C# 14, Flutter, Docker Swarm)
-  • <a href="https://github.com/ThunderRonin/allknower" target="_blank" class="text-zinc-200 underline">allknower</a> - AI orchestration service (Elysia, Bun, LanceDB, OpenRouter)
-  • <a href="https://github.com/ThunderRonin/allcodex-core" target="_blank" class="text-zinc-200 underline">allcodex-core</a> - Knowledge base grimoire (Trilium ETAPI fork)
-  • <a href="https://github.com/ThunderRonin/aryamehr-calendar" target="_blank" class="text-zinc-200 underline">aryamehr-calendar</a> - Amazfit GTR 4 Zepp OS astronomical calendar
-  • <a href="https://github.com/ThunderRonin/AllTracker" target="_blank" class="text-zinc-200 underline">AllTracker</a> - Dart/Flutter cross-platform habit tracker`,
-
-      kasb: `[kasb-platform]
-Enterprise ERP & Financial Ledger Architecture.
-Stack: .NET 10 + C# 14 + EF Core + Flutter (Dart) + PostgreSQL/SQL Server + Docker Swarm + Caddy
+      about: `<span class="text-zinc-200 font-bold">Amirali Daliri</span> (@allmaker):
+Full-Stack Systems Engineer & Tech Bounty Hunter
+Experience: 5+ Years Active Production Engineering (since April 2021)
+Specialization:
+  • High-concurrency .NET 10 (C# 14) and ASP.NET Core services
+  • Solo AI agent fleet orchestration across DevOps, mobile, web, and backend
+  • Strict double-entry ledger balance invariants & transaction guarantees
+  • Lean Linux Docker Swarm topologies engineered under severe hardware constraints
+  • Real-time WebRTC media relays (Go/pion) & distributed OpenTelemetry tracing
+  • Cross-platform React Native &amp; Flutter (Riverpod, SQLite) client applications`,
+      repos: `FEATURED SYSTEMS & REPOSITORIES (@allmaker):
+  • <a href="https://github.com/Kasb-Platform" target="_blank" class="text-zinc-200 underline">kasb-platform</a>    - Enterprise ERP & double-entry ledger (.NET 10, C# 14, React Native, Docker Swarm)
+  • <a href="https://github.com/ThunderRonin/allknower" target="_blank" class="text-zinc-200 underline">allknower</a>        - AI orchestration service (Elysia, Bun, LanceDB, OpenRouter)
+  • <a href="https://github.com/ThunderRonin/allcodex-core" target="_blank" class="text-zinc-200 underline">allcodex-core</a>    - Knowledge base grimoire (Trilium ETAPI fork)
+  • <a href="https://github.com/ThunderRonin/aryamehr-calendar" target="_blank" class="text-zinc-200 underline">aryamehr-calendar</a>- Amazfit GTR 4 Zepp OS astronomical calendar
+  • <a href="https://github.com/ThunderRonin/AllTracker" target="_blank" class="text-zinc-200 underline">AllTracker</a>       - Dart/Flutter cross-platform habit tracker`,
+      kasb: `[KASB PLATFORM]
+Enterprise ERP, Financial Ledger & Multi-Agent Architecture
+Role: Lead Full-Stack Engineer & Systems Lead (2025 – Present)
+Stack: .NET 10 + C# 14 + EF Core + React Native + Docker Swarm + Linux + Syncfusion
 Key Highlights:
+  • AI Multi-Agent Fleet: Directed specialized autonomous AI agents across DevOps, mobile (React Native), web, and backend.
+  • Extreme Infra Optimization: Engineered lean, high-throughput topologies under severe hardware constraints (99.9% uptime).
   • Ledger Invariants: Double-entry consistency, zero-leak transaction bounds, multi-point balance reconciliation.
-  • Document Service: Headless Syncfusion PDF rendering engine for financial invoices & reports.
-  • Infrastructure: High-availability Linux migration onto Docker Swarm with Caddy reverse proxy.
-  • Mobile: Cross-platform Flutter client integration with offline-first synchronization.
+  • Document Service: Headless Syncfusion PDF rendering engine with 100% RTL Persian font fidelity.
+  • Mobile Client: Cross-platform React Native client integration with offline-first synchronization.
 Org: https://github.com/Kasb-Platform`,
-
-      allknower: `[allknower]
+      petaproc: `[PETAPROC]
+Real-Time VoIP & AI Collaboration Platform (Sep 2024 – Apr 2026)
+Role: Full-Stack Engineer (Real-Time Systems & AI Focus)
+Stack: Go + Gin + Flutter (Riverpod) + WebRTC (pion) + NestJS + PostgreSQL + Redis + Elasticsearch + OpenTelemetry
+Key Highlights:
+  • Real-Time Media: Go WebRTC RTP/RTCP media relay with horizontal Redis pub/sub signaling.
+  • Distributed Tracing: OpenTelemetry & Sentry cutting incident MTTR by ~50%.
+  • Search Optimization: Elasticsearch cluster reducing p95 search latency by ~70%.
+  • Client Engineering: Flutter cross-platform client with Riverpod state & VoIP calling.`,
+      bounty: consulting,
+      freelance: consulting,
+      allknower: `[ALLKNOWER]
 AI orchestration engine for AllCodex lore trees.
 Stack: Bun + Elysia + LanceDB + Prisma + OpenRouter
 Features: Semantic vector search, native re-ranking, automated entity relation inference, lore consistency checks.
 Repo: https://github.com/ThunderRonin/allknower`,
-
-      allcodex: `[allcodex-core]
+      allcodex: `[ALLCODEX-CORE]
 Knowledge base data engine and hierarchical note grimoire.
 Custom fork of Trilium with ETAPI extensions, specialized attributes, and relational lore graphs.
 Repo: https://github.com/ThunderRonin/allcodex-core`,
-
-      aryamehr: `[aryamehr-calendar]
+      aryamehr: `[ARYAMEHR-CALENDAR]
 AryaMehr Persian & Zoroastrian Calendar and prayer computation engine for Amazfit GTR 4.
 Stack: TypeScript, Zepp OS Embedded SDK, Astronomical Algorithms.
 Repo: https://github.com/ThunderRonin/aryamehr-calendar`,
-
-      alltracker: `[AllTracker]
+      alltracker: `[ALLTRACKER]
 Cross-platform personal habit and telemetry tracking app.
 Stack: Dart + Flutter + Local-First SQLite Engine.
 Repo: https://github.com/ThunderRonin/AllTracker`,
-
-      skills: `Toolchain & Engineering Proficiencies:
-  • Languages:      C# (.NET 10), Dart (Flutter), TypeScript, JavaScript, SQL, Shell, Python
-  • Frameworks:    ASP.NET Core Web API, EF Core, Flutter, Elysia (Bun), SvelteKit, Astro
-  • Architecture:   Double-Entry Accounting, Microservices, Event Logging, Semantic RAG
-  • Infrastructure: Docker Swarm, Linux Administration, Caddy, Cloudflare Workers & DNS
-  • Databases & AI: PostgreSQL, SQL Server, SQLite, LanceDB (Vector), OpenRouter / LLMs`,
-
-      contact: `Communication Endpoints:
-  • GitHub:   https://github.com/ThunderRonin
-  • Email:    amirali@allmaker.dev
-  • Web:      https://allmaker.dev`,
-
-      resume: `Resume dossier available at:
-  • PDF Download: <a href="/resume.pdf" target="_blank" class="text-[#e11d48] underline">/resume.pdf</a> (Amirali Daliri)`,
-
-      'uname -a': `Linux cf-worker-edge-01 6.8.0-ronin #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux`,
-
+      skills: `TOOLCHAIN & ENGINEERING PROFICIENCIES:
+  • Languages:      C# (.NET 10), TypeScript, Dart (Flutter), Go, JavaScript, SQL, Shell, Python
+  • Systems:        ASP.NET Core, EF Core, Docker Swarm, Linux Kernel Tuning, NGINX
+  • Mobile/Web:     React Native, Flutter + Riverpod, React 19, Next.js 15, SvelteKit, Astro
+  • AI & Agents:    Multi-Agent Workflow Orchestration, MCP, LanceDB, Qdrant, OpenRouter, Semantic RAG
+  • Architecture:   Double-Entry Ledgers, WebRTC Relays (pion), High-Concurrency Microservices`,
+      contact: `COMMUNICATION ENDPOINTS:
+  • Telegram:            <a href="https://t.me/theallmaker" target="_blank" class="text-zinc-200 underline">https://t.me/theallmaker</a> (@theallmaker)
+  • LinkedIn:            <a href="https://www.linkedin.com/in/amirali-daliri" target="_blank" class="text-zinc-200 underline">https://www.linkedin.com/in/amirali-daliri</a>
+  • GitHub:              <a href="https://github.com/ThunderRonin" target="_blank" class="text-zinc-200 underline">https://github.com/ThunderRonin</a>
+  • Email:               <a href="mailto:amirali@allmaker.dev" class="text-zinc-200 underline">amirali@allmaker.dev</a>
+  • Web:                 <a href="https://allmaker.dev" target="_blank" class="text-zinc-200 underline">https://allmaker.dev</a>`,
+      resume: `RESUME DOSSIER:
+  • PDF Download: <a href="/?resume=1" data-resume-gate class="text-[#e11d48] underline font-bold cursor-pointer">amiralidaliri-final.pdf [VERIFY &amp; DOWNLOAD]</a> (Amirali Daliri)`,
+      'uname -a': `Linux allmaker-edge-01 6.8.0-allmaker #1 SMP PREEMPT_DYNAMIC x86_64 GNU/Linux`,
       whoami: `guest (UID: 1000, GID: 1000, Roles: [public_observer, edge_client])`,
-
       date: () => new Date().toUTCString(),
     };
 
@@ -143,7 +162,7 @@ Repo: https://github.com/ThunderRonin/AllTracker`,
       const cmd = rawCmd.toLowerCase();
 
       const cmdRow = document.createElement('div');
-      cmdRow.innerHTML = `<span class="text-zinc-600 font-bold">guest@ronin:~$</span> <span class="text-zinc-200">${escapeHtml(rawCmd)}</span>`;
+      cmdRow.innerHTML = `<span class="text-zinc-600 font-bold">guest@allmaker:~$</span> <span class="text-zinc-200">${escapeHtml(rawCmd)}</span>`;
       output.appendChild(cmdRow);
 
       if (cmd === 'clear') {
@@ -154,7 +173,7 @@ Repo: https://github.com/ThunderRonin/AllTracker`,
 
       const res = commands[cmd];
       const resRow = document.createElement('div');
-      resRow.className = 'text-zinc-400 pl-2 border-l border-[#27272a] py-0.5';
+      resRow.className = 'text-zinc-400 pl-2 border-l border-[#27272a] py-1 whitespace-pre-wrap font-mono leading-relaxed text-[11px]';
 
       if (res) {
         resRow.innerHTML = typeof res === 'function' ? res() : res;

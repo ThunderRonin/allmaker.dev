@@ -13,9 +13,19 @@
 
   <div class="border border-[#141418] bg-[#050507] p-5 h-[calc(100%-2.2rem)] flex flex-col justify-between space-y-4 font-mono text-xs">
     <div class="space-y-2">
+      <!-- Telegram -->
+      <a class="flex items-center justify-between p-2 bg-[#020203] border border-[#141418] hover:border-zinc-700 group transition-all text-xs" href="https://t.me/theallmaker" target="_blank" rel="noopener noreferrer">
+        <span class="text-zinc-500 flex items-center gap-2"><span class="text-[#e11d48]">tg:</span> telegram:</span>
+        <span class="text-zinc-300 group-hover:text-white transition-colors">t.me/theallmaker</span>
+      </a>
+      <!-- LinkedIn -->
+      <a class="flex items-center justify-between p-2 bg-[#020203] border border-[#141418] hover:border-zinc-700 group transition-all text-xs" href="https://www.linkedin.com/in/amirali-daliri" target="_blank" rel="noopener noreferrer">
+        <span class="text-zinc-500 flex items-center gap-2"><span class="text-[#e11d48]">in:</span> linkedin:</span>
+        <span class="text-zinc-300 group-hover:text-white transition-colors">in/amirali-daliri</span>
+      </a>
       <!-- GitHub -->
       <a
-        class="flex items-center justify-between p-2.5 bg-[#020203] border border-[#141418] hover:border-zinc-700 group transition-all"
+        class="flex items-center justify-between p-2 bg-[#020203] border border-[#141418] hover:border-zinc-700 group transition-all text-xs"
         href="https://github.com/ThunderRonin"
         target="_blank"
         rel="noopener noreferrer"
@@ -28,7 +38,7 @@
 
       <!-- Email -->
       <a
-        class="flex items-center justify-between p-2.5 bg-[#020203] border border-[#141418] hover:border-zinc-700 group transition-all"
+        class="flex items-center justify-between p-2 bg-[#020203] border border-[#141418] hover:border-zinc-700 group transition-all text-xs"
         href="mailto:amirali@allmaker.dev"
       >
         <span class="text-zinc-500 flex items-center gap-2">
@@ -37,12 +47,12 @@
         <span class="text-zinc-300 group-hover:text-white transition-colors">amirali@allmaker.dev</span>
       </a>
 
-      <!-- Cloudflare Edge Verification -->
-      <div class="p-2.5 bg-[#020203] border border-[#141418] flex items-center justify-between text-[11px]">
+      <!-- Edge Verification -->
+      <div class="p-2 bg-[#020203] border border-[#141418] flex items-center justify-between text-[11px]">
         <span class="text-zinc-500 flex items-center gap-2">
           <span class="text-emerald-500/80">⚡</span> edge:
         </span>
-        <span class="text-zinc-400">Cloudflare Workers</span>
+        <span class="text-zinc-400">Global Edge Mesh</span>
       </div>
     </div>
 
@@ -50,9 +60,8 @@
     <div class="pt-2 border-t border-[#141418]">
       <a
         class="flex items-center justify-between px-3 py-2 bg-[#0a0a0e] border border-[#1e1e24] hover:border-zinc-600 text-zinc-300 hover:text-white transition-all text-xs font-medium group"
-        href="/resume.pdf"
-        target="_blank"
-        download="amirali_daliri_resume.pdf"
+        href="/?resume=1"
+        data-resume-gate
       >
         <span class="flex items-center gap-2 text-zinc-400">
           <span class="text-[#e11d48]">📄</span> dossier:

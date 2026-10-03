@@ -1,6 +1,5 @@
 ---
-// 3D Background Component: Topological Network Constellation & Geometric Lattice
-// Calibrated for OLED Pure Black (#000000) with Eye-Friendly Muted Luminescence
+// Recovered from the September 21 production build: interactive artifact physics.
 ---
 
 <div class="fixed inset-0 w-full h-full pointer-events-none z-0 bg-[#000000] overflow-hidden" aria-hidden="true">
@@ -10,252 +9,339 @@
 <script>
   import * as THREE from 'three';
 
+  enum Behavior { SEEKER, ORBITER, WANDERER, EVASIVE }
+
+  interface Artifact {
+    mesh: THREE.LineSegments;
+    material: THREE.LineBasicMaterial;
+    baseColor: THREE.Color;
+    position: THREE.Vector3;
+    velocity: THREE.Vector3;
+    rotation: THREE.Vector3;
+    rotationSpeed: THREE.Vector3;
+    orbitCenter: THREE.Vector3;
+    orbitRadius: THREE.Vector3;
+    orbitSpeed: number;
+    orbitPhase: number;
+    mass: number;
+    energy: number;
+  }
+
+  interface Particle {
+    position: THREE.Vector3;
+    velocity: THREE.Vector3;
+    acceleration: THREE.Vector3;
+    home: THREE.Vector3;
+    behavior: Behavior;
+    mass: number;
+    maxSpeed: number;
+    orbitCenter: THREE.Vector3;
+    orbitRadius: THREE.Vector3;
+    orbitSpeed: number;
+    orbitPhase: number;
+    harmonicFrequencies: THREE.Vector3;
+    harmonicPhases: THREE.Vector3;
+    baseColor: THREE.Color;
+    currentColor: THREE.Color;
+    energy: number;
+  }
+
   function initTopology() {
     const container = document.getElementById('threejs-topology-container');
     if (!container) return;
+    container.replaceChildren();
 
-    while (container.firstChild) {
-      container.removeChild(container.firstChild);
-    }
-
-    const getWidth = () => container.clientWidth || window.innerWidth || 1440;
-    const getHeight = () => container.clientHeight || window.innerHeight || 900;
-
-    let width = getWidth();
-    let height = getHeight();
-
+    let width = container.clientWidth || window.innerWidth || 1440;
+    let height = container.clientHeight || window.innerHeight || 900;
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(48, width / height, 0.1, 1000);
     camera.position.set(0, 0, 160);
-
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: 'high-performance',
-    });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setClearColor(0x000000, 1);
     container.appendChild(renderer.domElement);
+    const root = new THREE.Group();
+    scene.add(root);
 
-    const rootGroup = new THREE.Group();
-    scene.add(rootGroup);
-
-    // 1. Subtle Background Wireframe Polyhedron (The Architectural Monolith)
-    // Low-opacity, calm, mathematical wireframe core
-    const monolithGeo = new THREE.OctahedronGeometry(36, 2);
-    const monolithWire = new THREE.WireframeGeometry(monolithGeo);
-    const monolithMat = new THREE.LineBasicMaterial({
-      color: 0x222226, // Ultra-faint slate-zinc
-      transparent: true,
-      opacity: 0.35,
+    const crimson = new THREE.Color(0xe11d48);
+    const energized = new THREE.Color(0xff3366);
+    const zinc = new THREE.Color(0x3f3f46);
+    const slate = new THREE.Color(0x71717a);
+    const silver = new THREE.Color(0xd4d4d8);
+    const artifactColors = [0x40404a, 0x4a1220, 0x3a3a44, 0x40404a, 0x4a1220];
+    const artifactCenters = [
+      new THREE.Vector3(-45, 20, -10), new THREE.Vector3(50, -15, 10),
+      new THREE.Vector3(-30, -35, 15), new THREE.Vector3(40, 30, -20), new THREE.Vector3(0, 0, 5),
+    ];
+    const geometries = [
+      new THREE.IcosahedronGeometry(9, 1), new THREE.OctahedronGeometry(7, 0),
+      new THREE.TetrahedronGeometry(8, 0), new THREE.DodecahedronGeometry(8, 0), new THREE.BoxGeometry(10, 10, 10),
+    ];
+    const artifacts: Artifact[] = geometries.map((geometry, index) => {
+      const baseColor = new THREE.Color(artifactColors[index]);
+      const material = new THREE.LineBasicMaterial({ color: baseColor.clone(), transparent: true, opacity: 0.42 });
+      const mesh = new THREE.LineSegments(new THREE.WireframeGeometry(geometry), material);
+      geometry.dispose();
+      root.add(mesh);
+      return {
+        mesh, material, baseColor,
+        position: artifactCenters[index].clone(), velocity: new THREE.Vector3(),
+        rotation: new THREE.Vector3(Math.random() * Math.PI, Math.random() * Math.PI, 0),
+        rotationSpeed: new THREE.Vector3((Math.random() - 0.5) * 0.005, (Math.random() - 0.5) * 0.006, (Math.random() - 0.5) * 0.004),
+        orbitCenter: artifactCenters[index].clone(),
+        orbitRadius: new THREE.Vector3(14 + Math.random() * 16, 10 + Math.random() * 12, 12 + Math.random() * 14),
+        orbitSpeed: 0.04 + Math.random() * 0.05, orbitPhase: Math.random() * Math.PI * 2,
+        mass: 3.5 + Math.random() * 1.5, energy: 0,
+      };
     });
-    const monolith = new THREE.LineSegments(monolithWire, monolithMat);
-    rootGroup.add(monolith);
 
-    // Inner subtle counter-rotating core
-    const innerCoreGeo = new THREE.IcosahedronGeometry(18, 1);
-    const innerWire = new THREE.WireframeGeometry(innerCoreGeo);
-    const innerMat = new THREE.LineBasicMaterial({
-      color: 0x2a151b, // Very muted deep ruby hue
-      transparent: true,
-      opacity: 0.45,
-    });
-    const innerCore = new THREE.LineSegments(innerWire, innerMat);
-    rootGroup.add(innerCore);
-
-    // 2. Distributed Topological Constellation Nodes
-    const NODE_COUNT = 90;
-    const nodeCoords: THREE.Vector3[] = [];
-    const nodeVelocities: THREE.Vector3[] = [];
-    const spreadX = 220;
-    const spreadY = 140;
-    const spreadZ = 120;
-
-    for (let i = 0; i < NODE_COUNT; i++) {
-      const pos = new THREE.Vector3(
-        (Math.random() - 0.5) * spreadX,
-        (Math.random() - 0.5) * spreadY,
-        (Math.random() - 0.5) * spreadZ
-      );
-      nodeCoords.push(pos);
-      nodeVelocities.push(
-        new THREE.Vector3(
-          (Math.random() - 0.5) * 0.02,
-          (Math.random() - 0.5) * 0.02,
-          (Math.random() - 0.5) * 0.015
-        )
-      );
+    const PARTICLE_COUNT = 160;
+    const MAX_CONNECTIONS = 220;
+    const particles: Particle[] = [];
+    const nodePositions = new Float32Array(PARTICLE_COUNT * 3);
+    const nodeColors = new Float32Array(PARTICLE_COUNT * 3);
+    for (let index = 0; index < PARTICLE_COUNT; index++) {
+      const choice = Math.random();
+      const behavior = choice < 0.28 ? Behavior.SEEKER : choice < 0.55 ? Behavior.ORBITER : choice < 0.82 ? Behavior.WANDERER : Behavior.EVASIVE;
+      const position = new THREE.Vector3((Math.random() - 0.5) * 220, (Math.random() - 0.5) * 150, (Math.random() - 0.5) * 130);
+      const baseColor = index % 6 === 0 ? crimson.clone() : index % 4 === 0 ? silver.clone() : index % 2 === 0 ? slate.clone() : zinc.clone();
+      const particle: Particle = {
+        position, home: position.clone(), behavior,
+        velocity: new THREE.Vector3((Math.random() - 0.5) * 0.05, (Math.random() - 0.5) * 0.05, (Math.random() - 0.5) * 0.05),
+        acceleration: new THREE.Vector3(), mass: 0.8 + Math.random() * 1.6,
+        maxSpeed: behavior === Behavior.EVASIVE ? 0.65 : 0.35 + Math.random() * 0.2,
+        orbitCenter: artifacts[index % artifacts.length].position,
+        orbitRadius: new THREE.Vector3(28 + Math.random() * 40, 20 + Math.random() * 32, 24 + Math.random() * 36),
+        orbitSpeed: (Math.random() > 0.5 ? 1 : -1) * (0.04 + Math.random() * 0.06), orbitPhase: Math.random() * Math.PI * 2,
+        harmonicFrequencies: new THREE.Vector3(0.04 + Math.random() * 0.08, 0.05 + Math.random() * 0.09, 0.03 + Math.random() * 0.07),
+        harmonicPhases: new THREE.Vector3(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2),
+        baseColor, currentColor: baseColor.clone(), energy: 0,
+      };
+      particles.push(particle);
+      position.toArray(nodePositions, index * 3);
+      baseColor.toArray(nodeColors, index * 3);
     }
+    const nodesGeometry = new THREE.BufferGeometry();
+    const positionsAttribute = new THREE.BufferAttribute(nodePositions, 3).setUsage(THREE.DynamicDrawUsage);
+    const colorsAttribute = new THREE.BufferAttribute(nodeColors, 3).setUsage(THREE.DynamicDrawUsage);
+    nodesGeometry.setAttribute('position', positionsAttribute);
+    nodesGeometry.setAttribute('color', colorsAttribute);
+    root.add(new THREE.Points(nodesGeometry, new THREE.PointsMaterial({ size: 2.6, vertexColors: true, transparent: true, opacity: 0.85 })));
 
-    // Node particles
-    const nodesGeo = new THREE.BufferGeometry();
-    const nodePositions = new Float32Array(NODE_COUNT * 3);
-    const nodeColors = new Float32Array(NODE_COUNT * 3);
+    const linePositions = new Float32Array(MAX_CONNECTIONS * 6);
+    const lineColors = new Float32Array(MAX_CONNECTIONS * 6);
+    const linesGeometry = new THREE.BufferGeometry();
+    const linesPositionAttribute = new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage);
+    const linesColorAttribute = new THREE.BufferAttribute(lineColors, 3).setUsage(THREE.DynamicDrawUsage);
+    linesGeometry.setAttribute('position', linesPositionAttribute);
+    linesGeometry.setAttribute('color', linesColorAttribute);
+    linesGeometry.setDrawRange(0, 0);
+    const lines = new THREE.LineSegments(linesGeometry, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.35 }));
+    // Connections change each frame; the initial empty geometry has no useful bound.
+    lines.frustumCulled = false;
+    root.add(lines);
 
-    for (let i = 0; i < NODE_COUNT; i++) {
-      nodePositions[i * 3] = nodeCoords[i].x;
-      nodePositions[i * 3 + 1] = nodeCoords[i].y;
-      nodePositions[i * 3 + 2] = nodeCoords[i].z;
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    const interactionPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+    const cursor = new THREE.Vector3();
+    const clickPoint = new THREE.Vector3();
+    // Reuse scratch vectors: no temporary vector allocations in the animation loop.
+    const force = new THREE.Vector3();
+    const tangent = new THREE.Vector3();
+    const target = new THREE.Vector3();
+    let cursorActive = false;
+    let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
+    let scrollRatio = 0, targetScrollRatio = 0;
 
-      // Soft muted zinc with very rare faint crimson nodes (1 in 8)
-      if (i % 8 === 0) {
-        nodeColors[i * 3] = 0.85;     // R
-        nodeColors[i * 3 + 1] = 0.12; // G
-        nodeColors[i * 3 + 2] = 0.28; // B
-      } else {
-        nodeColors[i * 3] = 0.35;
-        nodeColors[i * 3 + 1] = 0.36;
-        nodeColors[i * 3 + 2] = 0.40;
-      }
+    function projectPointer(clientX: number, clientY: number, destination: THREE.Vector3) {
+      pointer.set(clientX / width * 2 - 1, -(clientY / height) * 2 + 1);
+      raycaster.setFromCamera(pointer, camera);
+      return raycaster.ray.intersectPlane(interactionPlane, destination) !== null;
     }
-
-    nodesGeo.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
-    nodesGeo.setAttribute('color', new THREE.BufferAttribute(nodeColors, 3));
-
-    const nodesMat = new THREE.PointsMaterial({
-      size: 2.2,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.65,
-    });
-    const nodePoints = new THREE.Points(nodesGeo, nodesMat);
-    rootGroup.add(nodePoints);
-
-    // 3. Dynamic Connective Edges (Form lines between nodes that are close)
-    const MAX_CONNECTIONS = 160;
-    const linePositions = new Float32Array(MAX_CONNECTIONS * 2 * 3);
-    const lineColors = new Float32Array(MAX_CONNECTIONS * 2 * 3);
-    const linesGeo = new THREE.BufferGeometry();
-    linesGeo.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
-    linesGeo.setAttribute('color', new THREE.BufferAttribute(lineColors, 3));
-
-    const linesMat = new THREE.LineBasicMaterial({
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.3,
-      blending: THREE.NormalBlending,
-    });
-    const connectionLines = new THREE.LineSegments(linesGeo, linesMat);
-    rootGroup.add(connectionLines);
-
-    // Mouse & Scroll Interactivity
-    let mouseX = 0, mouseY = 0;
-    let targetMouseX = 0, targetMouseY = 0;
-
-    const onMouseMove = (e: MouseEvent) => {
-      targetMouseX = (e.clientX / width - 0.5) * 2;
-      targetMouseY = -(e.clientY / height - 0.5) * 2;
+    window.addEventListener('mousemove', (event) => {
+      targetMouseX = (event.clientX / width - 0.5) * 2;
+      targetMouseY = -(event.clientY / height - 0.5) * 2;
+      cursorActive = projectPointer(event.clientX, event.clientY, cursor);
+    }, { passive: true });
+    const updateScroll = () => {
+      const distance = document.documentElement.scrollHeight - window.innerHeight || 1;
+      targetScrollRatio = Math.min(Math.max(window.scrollY / distance, 0), 1);
     };
-    window.addEventListener('mousemove', onMouseMove, { passive: true });
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    updateScroll();
 
-    let scrollRatio = 0;
-    const onScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight || 1;
-      scrollRatio = Math.min(Math.max(scrollY / docHeight, 0), 1);
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    const onResize = () => {
-      width = getWidth();
-      height = getHeight();
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height);
-    };
-    window.addEventListener('resize', onResize);
-
-    const clock = new THREE.Clock();
-
-    function animate() {
-      requestAnimationFrame(animate);
-      const time = clock.getElapsedTime();
-
-      // Smooth mouse follow
-      mouseX += (targetMouseX - mouseX) * 0.03;
-      mouseY += (targetMouseY - mouseY) * 0.03;
-
-      // Slow, meditative rotation
-      monolith.rotation.y = time * 0.04;
-      monolith.rotation.x = Math.sin(time * 0.03) * 0.15;
-
-      innerCore.rotation.y = -time * 0.06;
-      innerCore.rotation.z = Math.cos(time * 0.04) * 0.2;
-
-      // Drift nodes gently within bounds
-      const posArr = nodesGeo.attributes.position.array as Float32Array;
-      for (let i = 0; i < NODE_COUNT; i++) {
-        const c = nodeCoords[i];
-        const v = nodeVelocities[i];
-        c.add(v);
-
-        if (Math.abs(c.x) > spreadX / 2) v.x *= -1;
-        if (Math.abs(c.y) > spreadY / 2) v.y *= -1;
-        if (Math.abs(c.z) > spreadZ / 2) v.z *= -1;
-
-        posArr[i * 3] = c.x;
-        posArr[i * 3 + 1] = c.y;
-        posArr[i * 3 + 2] = c.z;
-      }
-      nodesGeo.attributes.position.needsUpdate = true;
-
-      // Update connective lines
-      const lPos = linesGeo.attributes.position.array as Float32Array;
-      const lCol = linesGeo.attributes.color.array as Float32Array;
-      let lineIdx = 0;
-      const connectDist = 38;
-
-      for (let i = 0; i < NODE_COUNT && lineIdx < MAX_CONNECTIONS; i++) {
-        for (let j = i + 1; j < NODE_COUNT && lineIdx < MAX_CONNECTIONS; j++) {
-          const dist = nodeCoords[i].distanceTo(nodeCoords[j]);
-          if (dist < connectDist) {
-            const alpha = 1.0 - dist / connectDist;
-            const idx6 = lineIdx * 6;
-
-            lPos[idx6] = nodeCoords[i].x;
-            lPos[idx6 + 1] = nodeCoords[i].y;
-            lPos[idx6 + 2] = nodeCoords[i].z;
-            lPos[idx6 + 3] = nodeCoords[j].x;
-            lPos[idx6 + 4] = nodeCoords[j].y;
-            lPos[idx6 + 5] = nodeCoords[j].z;
-
-            // Faint, eye-friendly connection line color
-            const intensity = 0.15 * alpha;
-            lCol[idx6] = intensity;
-            lCol[idx6 + 1] = intensity;
-            lCol[idx6 + 2] = intensity * 1.1;
-            lCol[idx6 + 3] = intensity;
-            lCol[idx6 + 4] = intensity;
-            lCol[idx6 + 5] = intensity * 1.1;
-
-            lineIdx++;
-          }
+    window.addEventListener('pointerdown', (event) => {
+      if (!projectPointer(event.clientX, event.clientY, clickPoint)) return;
+      for (const particle of particles) {
+        force.subVectors(particle.position, clickPoint);
+        const distance = force.length();
+        if (distance >= 120) continue;
+        force.normalize().multiplyScalar((1 - distance / 120) * (2.8 / particle.mass));
+        switch (particle.behavior) {
+          case Behavior.EVASIVE:
+            particle.velocity.add(force.multiplyScalar(1.6));
+            target.set((Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.5, (Math.random() - 0.5) * 1.5);
+            particle.velocity.add(target);
+            particle.energy = 1;
+            break;
+          case Behavior.SEEKER: particle.velocity.add(force.multiplyScalar(0.7)); particle.energy = 0.9; break;
+          case Behavior.ORBITER: particle.velocity.add(force.multiplyScalar(0.5)); particle.energy = 0.8; break;
+          case Behavior.WANDERER: particle.velocity.add(force.multiplyScalar(0.6)); particle.energy = 0.7; break;
         }
       }
-
-      // Zero out unused connections
-      for (let k = lineIdx * 6; k < MAX_CONNECTIONS * 6; k++) {
-        lPos[k] = 0;
-        lCol[k] = 0;
+      for (const artifact of artifacts) {
+        force.subVectors(artifact.position, clickPoint);
+        const distance = force.length();
+        if (distance >= 130) continue;
+        artifact.velocity.add(force.normalize().multiplyScalar((1 - distance / 130) * (1.2 / artifact.mass)));
+        artifact.rotationSpeed.x += (Math.random() - 0.5) * 0.03;
+        artifact.rotationSpeed.y += (Math.random() - 0.5) * 0.04;
+        artifact.rotationSpeed.z += (Math.random() - 0.5) * 0.03;
+        artifact.energy = 1;
       }
-      linesGeo.attributes.position.needsUpdate = true;
-      linesGeo.attributes.color.needsUpdate = true;
+    }, { passive: true });
+    window.addEventListener('resize', () => {
+      width = container.clientWidth || window.innerWidth || 1440;
+      height = container.clientHeight || window.innerHeight || 900;
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setSize(width, height);
+    });
 
-      // Parallax view tilt
-      rootGroup.rotation.y = mouseX * 0.15;
-      rootGroup.rotation.x = -mouseY * 0.12;
-      rootGroup.position.y = -scrollRatio * 18;
-
-      renderer.render(scene, camera);
+    function connect(start: THREE.Vector3, end: THREE.Vector3, index: number, red: number, green: number, blue: number) {
+      const offset = index * 6;
+      start.toArray(linePositions, offset);
+      end.toArray(linePositions, offset + 3);
+      lineColors[offset] = lineColors[offset + 3] = red;
+      lineColors[offset + 1] = lineColors[offset + 4] = green;
+      lineColors[offset + 2] = lineColors[offset + 5] = blue;
     }
 
+    const startTime = performance.now();
+    let previousTime = startTime;
+    function animate() {
+      requestAnimationFrame(animate);
+      const now = performance.now();
+      const delta = Math.min((now - previousTime) / 1000, 0.05);
+      const elapsed = (now - startTime) / 1000;
+      previousTime = now;
+      mouseX += (targetMouseX - mouseX) * 0.04;
+      mouseY += (targetMouseY - mouseY) * 0.04;
+      scrollRatio += (targetScrollRatio - scrollRatio) * 0.05;
+
+      for (const artifact of artifacts) {
+        const phase = elapsed * artifact.orbitSpeed + artifact.orbitPhase;
+        target.set(artifact.orbitCenter.x + Math.cos(phase) * artifact.orbitRadius.x,
+          artifact.orbitCenter.y + Math.sin(phase * 1.2) * artifact.orbitRadius.y,
+          artifact.orbitCenter.z + Math.sin(phase) * artifact.orbitRadius.z);
+        force.subVectors(target, artifact.position).multiplyScalar(0.02);
+        artifact.velocity.add(force);
+        if (cursorActive) {
+          force.subVectors(artifact.position, cursor);
+          const distance = force.length();
+          if (distance < 45) artifact.velocity.add(force.normalize().multiplyScalar((1 - distance / 45) * 0.18));
+        }
+        artifact.position.add(artifact.velocity);
+        artifact.velocity.multiplyScalar(0.95);
+        artifact.rotation.add(artifact.rotationSpeed);
+        artifact.rotationSpeed.multiplyScalar(0.98);
+        artifact.mesh.position.copy(artifact.position);
+        artifact.mesh.rotation.set(artifact.rotation.x, artifact.rotation.y, artifact.rotation.z);
+        artifact.energy *= 0.94;
+        artifact.material.color.copy(artifact.baseColor).lerp(energized, artifact.energy);
+        artifact.material.opacity = 0.38 + artifact.energy * 0.45;
+      }
+
+      for (let index = 0; index < PARTICLE_COUNT; index++) {
+        const particle = particles[index];
+        particle.acceleration.set(0, 0, 0);
+        switch (particle.behavior) {
+          case Behavior.SEEKER:
+            if (cursorActive) {
+              force.subVectors(cursor, particle.position);
+              if (force.length() < 90) {
+                tangent.set(-force.y, force.x, force.z * 0.1).normalize().multiplyScalar(0.005);
+                particle.acceleration.add(force.normalize().multiplyScalar(0.012)).add(tangent);
+              } else {
+                particle.acceleration.add(force.subVectors(particle.home, particle.position).multiplyScalar(0.0015));
+              }
+            }
+            break;
+          case Behavior.ORBITER:
+            particle.orbitPhase += particle.orbitSpeed * delta * 0.45;
+            target.set(particle.orbitCenter.x + Math.cos(particle.orbitPhase) * particle.orbitRadius.x,
+              particle.orbitCenter.y + Math.sin(particle.orbitPhase * 1.1) * particle.orbitRadius.y,
+              particle.orbitCenter.z + Math.sin(particle.orbitPhase) * particle.orbitRadius.z);
+            particle.acceleration.add(force.subVectors(target, particle.position).multiplyScalar(0.008));
+            break;
+          case Behavior.WANDERER:
+            force.set(Math.sin(elapsed * particle.harmonicFrequencies.x + particle.harmonicPhases.x) * 0.012,
+              Math.cos(elapsed * particle.harmonicFrequencies.y + particle.harmonicPhases.y) * 0.012,
+              Math.sin(elapsed * particle.harmonicFrequencies.z + particle.harmonicPhases.z) * 0.012);
+            particle.acceleration.add(force);
+            particle.acceleration.add(force.subVectors(particle.home, particle.position).multiplyScalar(0.0015));
+            break;
+          case Behavior.EVASIVE:
+            if (cursorActive) {
+              force.subVectors(particle.position, cursor);
+              const distance = force.length();
+              if (distance < 45) particle.acceleration.add(force.normalize().multiplyScalar((1 - distance / 45) * 0.035));
+            }
+            force.set(Math.sin(elapsed * 0.4 + particle.harmonicPhases.x) * 0.006,
+              Math.cos(elapsed * 0.4 + particle.harmonicPhases.y) * 0.006, 0);
+            particle.acceleration.add(force);
+            particle.acceleration.add(force.subVectors(particle.home, particle.position).multiplyScalar(0.0015));
+            break;
+        }
+        particle.velocity.add(particle.acceleration).clampLength(0, particle.maxSpeed).multiplyScalar(0.965);
+        particle.position.add(particle.velocity);
+        if (Math.abs(particle.position.x) > 125) { particle.position.x = Math.sign(particle.position.x) * 125; particle.velocity.x *= -0.8; }
+        if (Math.abs(particle.position.y) > 90) { particle.position.y = Math.sign(particle.position.y) * 90; particle.velocity.y *= -0.8; }
+        if (Math.abs(particle.position.z) > 80) { particle.position.z = Math.sign(particle.position.z) * 80; particle.velocity.z *= -0.8; }
+        particle.energy *= 0.95;
+        particle.currentColor.copy(particle.baseColor).lerp(energized, particle.energy);
+        particle.position.toArray(nodePositions, index * 3);
+        particle.currentColor.toArray(nodeColors, index * 3);
+      }
+      positionsAttribute.needsUpdate = true;
+      colorsAttribute.needsUpdate = true;
+
+      let connectionCount = 0;
+      for (let first = 0; first < PARTICLE_COUNT && connectionCount < 200; first++) {
+        for (let second = first + 1; second < PARTICLE_COUNT && connectionCount < 200; second++) {
+          const start = particles[first], end = particles[second];
+          const distance = start.position.distanceTo(end.position);
+          if (distance >= 34) continue;
+          const energy = Math.max(start.energy, end.energy);
+          const intensity = (0.14 + energy * 0.4) * (1 - distance / 34);
+          connect(start.position, end.position, connectionCount++, intensity * (1 + energy * 2.2), intensity * (1 - energy * 0.4), intensity * (1.1 - energy * 0.2));
+        }
+      }
+      for (const artifact of artifacts) {
+        if (connectionCount >= MAX_CONNECTIONS) break;
+        for (const particle of particles) {
+          if (connectionCount >= MAX_CONNECTIONS) break;
+          const distance = artifact.position.distanceTo(particle.position);
+          if (distance >= 38) continue;
+          const intensity = 0.22 * (1 - distance / 38);
+          connect(artifact.position, particle.position, connectionCount++, intensity * 1.5, intensity * 0.8, intensity * 1.1);
+        }
+      }
+      linesGeometry.setDrawRange(0, connectionCount * 2);
+      linesPositionAttribute.needsUpdate = true;
+      linesColorAttribute.needsUpdate = true;
+      root.rotation.y = mouseX * 0.22 + (scrollRatio - 0.5) * 0.6;
+      root.rotation.x = -mouseY * 0.18 + Math.sin(scrollRatio * Math.PI) * 0.2;
+      root.position.y = (scrollRatio - 0.5) * -90;
+      root.position.z = Math.sin(scrollRatio * Math.PI) * 35;
+      renderer.render(scene, camera);
+    }
     animate();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTopology);
-  } else {
-    initTopology();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initTopology);
+  else initTopology();
 </script>

@@ -1,0 +1,322 @@
+---
+const sitekey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '0x4AAAAAAE-xKM6EwqGl8voy';
+---
+
+<dialog id="resume-gate" class="resume-gate" aria-labelledby="resume-gate-title" aria-describedby="resume-gate-description" data-sitekey={sitekey}>
+  <header class="gate-header">
+    <h2 id="resume-gate-title">ACCESS_CONTROL <span>// RESUME_GATE</span></h2>
+    <button type="button" id="resume-gate-close" aria-label="Close resume download" autofocus>CLOSE <span aria-hidden="true">×</span></button>
+  </header>
+  <div class="gate-body">
+    <dl class="gate-target">
+      <div><dt>TARGET</dt><dd>amiralidaliri-final.pdf</dd></div>
+      <div><dt>SERVICE</dt><dd>Cloudflare Turnstile</dd></div>
+    </dl>
+    <p id="resume-gate-description">Complete the security check. Your resume download will start automatically after verification.</p>
+    <div id="resume-gate-widget" class="gate-widget"></div>
+    <p id="resume-gate-status" class="gate-status" role="status" aria-live="polite" aria-atomic="true">Waiting for verification.</p>
+    <button type="button" id="resume-gate-retry" hidden>RETRY VERIFICATION</button>
+    <noscript><p>JavaScript is required to verify and download the resume. Enable JavaScript and reopen this page.</p></noscript>
+  </div>
+</dialog>
+
+<script>
+  interface ResumeTurnstile {
+    render(container: HTMLElement, options: {
+      sitekey: string;
+      action: string;
+      theme: 'dark';
+      size: 'flexible';
+      retry: 'never';
+      'refresh-expired': 'never';
+      'refresh-timeout': 'never';
+      'response-field': false;
+      callback(token: string): void;
+      'error-callback'(code: string): boolean;
+      'expired-callback'(): void;
+      'timeout-callback'(): void;
+    }): string;
+    remove(widgetId: string): void;
+  }
+
+  declare global {
+    interface Window {
+      turnstile?: ResumeTurnstile;
+    }
+  }
+
+  const dialog = document.getElementById('resume-gate') as HTMLDialogElement;
+  const widgetContainer = document.getElementById('resume-gate-widget') as HTMLDivElement;
+  const status = document.getElementById('resume-gate-status') as HTMLParagraphElement;
+  const closeButton = document.getElementById('resume-gate-close') as HTMLButtonElement;
+  const retryButton = document.getElementById('resume-gate-retry') as HTMLButtonElement;
+  const filename = 'amiralidaliri-final.pdf';
+
+  type Session = {
+    phase: 'loading' | 'challenge' | 'submitting' | 'error' | 'success';
+    widgetId?: string;
+    controller: AbortController;
+  };
+
+  let session: Session | null = null;
+  let returnFocus: HTMLElement | null = null;
+  let scriptReady: Promise<ResumeTurnstile> | null = null;
+  const downloadUrls = new Set<string>();
+
+  function loadTurnstile(): Promise<ResumeTurnstile> {
+    if (scriptReady) return scriptReady;
+
+    scriptReady = new Promise<ResumeTurnstile>((resolve, reject) => {
+      const script = document.createElement('script');
+      let settled = false;
+      const timeout = window.setTimeout(() => fail(), 15000);
+
+      function fail() {
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timeout);
+        script.remove();
+        reject(new Error('Verification service could not load. Check your connection or content blocker, then select Retry.'));
+      }
+
+      function ready() {
+        const api = window.turnstile;
+        if (!api) {
+          fail();
+          return;
+        }
+        if (settled) return;
+        settled = true;
+        window.clearTimeout(timeout);
+        resolve(api);
+      }
+
+      if (window.turnstile) {
+        ready();
+      } else {
+        script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+        script.async = true;
+        script.addEventListener('load', ready, { once: true });
+        script.addEventListener('error', fail, { once: true });
+        document.head.appendChild(script);
+      }
+    });
+
+    // A rejected loader must be replaceable by the user's explicit Retry.
+    scriptReady.catch(() => { scriptReady = null; });
+    return scriptReady;
+  }
+
+  function isCurrent(candidate: Session) {
+    return session === candidate && dialog.open;
+  }
+
+  function showStatus(message: string, error = false) {
+    status.textContent = message;
+    status.dataset.error = String(error);
+  }
+
+  function failSession(candidate: Session, message: string) {
+    if (!isCurrent(candidate) || candidate.phase === 'success' || candidate.phase === 'error') return;
+    candidate.phase = 'error';
+    candidate.controller.abort();
+    showStatus(message, true);
+    retryButton.hidden = false;
+  }
+
+  function removeSession() {
+    const previous = session;
+    session = null;
+    previous?.controller.abort();
+    if (previous?.widgetId !== undefined) {
+      window.turnstile?.remove(previous.widgetId);
+    }
+    widgetContainer.replaceChildren();
+  }
+
+  function closeGate() {
+    // Hide first: successful Turnstile state stays intact until the modal closes.
+    dialog.close();
+    removeSession();
+    if (returnFocus?.isConnected) returnFocus.focus();
+    returnFocus = null;
+  }
+
+  async function download(candidate: Session, token: string) {
+    if (!isCurrent(candidate) || candidate.phase !== 'challenge') return;
+    candidate.phase = 'submitting';
+    showStatus('VERIFYING // Authorizing resume download…');
+
+    try {
+      const response = await fetch('/resume', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+        signal: candidate.controller.signal,
+      });
+      if (!isCurrent(candidate)) return;
+      if (!response.ok) {
+        let message = 'Resume verification failed. Select Retry to try again.';
+        try {
+          const result: unknown = await response.json();
+          if (typeof result === 'object' && result !== null && 'error' in result && typeof result.error === 'string') {
+            message = result.error;
+          }
+        } catch {
+          // Keep the actionable fallback when the server returns a non-JSON error.
+        }
+        throw new Error(message);
+      }
+      if (response.headers.get('Content-Type')?.split(';')[0].trim().toLowerCase() !== 'application/pdf') {
+        throw new Error('The server did not return a PDF. Select Retry to try again.');
+      }
+      const blob = await response.blob();
+      if (!isCurrent(candidate) || candidate.phase !== 'submitting') return;
+      if (!blob.size) throw new Error('The resume response was empty. Select Retry to try again.');
+
+      const url = URL.createObjectURL(blob);
+      downloadUrls.add(url);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      // This anchor deliberately has no data-resume-gate attribute.
+      document.body.appendChild(link);
+      try {
+        link.click();
+      } finally {
+        link.remove();
+      }
+      candidate.phase = 'success';
+      showStatus('ACCESS_GRANTED // Starting download.');
+      closeGate();
+      // Let the browser consume the URL before releasing it; the download is immediate.
+      window.setTimeout(() => {
+        URL.revokeObjectURL(url);
+        downloadUrls.delete(url);
+      }, 60000);
+    } catch (error) {
+      if (!isCurrent(candidate)) return;
+      failSession(candidate, error instanceof Error ? error.message : 'Download failed. Select Retry to try again.');
+    }
+  }
+
+  async function startChallenge() {
+    const candidate: Session = { phase: 'loading', controller: new AbortController() };
+    session = candidate;
+    retryButton.hidden = true;
+    showStatus('LOADING // Connecting to verification service…');
+
+    try {
+      const api = await loadTurnstile();
+      if (!isCurrent(candidate)) return;
+      candidate.phase = 'challenge';
+      showStatus('AWAITING_VERIFICATION // Complete the security check below.');
+      const widgetId = api.render(widgetContainer, {
+        sitekey: dialog.dataset.sitekey!,
+        action: 'resume-download',
+        theme: 'dark',
+        size: 'flexible',
+        retry: 'never',
+        'refresh-expired': 'never',
+        'refresh-timeout': 'never',
+        'response-field': false,
+        callback: (token) => { void download(candidate, token); },
+        'error-callback': () => {
+          if (candidate.phase === 'challenge') {
+            failSession(candidate, 'Verification could not complete. Check your connection, then select Retry.');
+          }
+          return true;
+        },
+        'expired-callback': () => {
+          if (candidate.phase === 'challenge') failSession(candidate, 'Verification expired. Select Retry for a new security check.');
+        },
+        'timeout-callback': () => {
+          if (candidate.phase === 'challenge') failSession(candidate, 'Verification timed out. Select Retry for a new security check.');
+        },
+      });
+      if (isCurrent(candidate)) candidate.widgetId = widgetId;
+      else api.remove(widgetId);
+    } catch (error) {
+      failSession(candidate, error instanceof Error ? error.message : 'Verification service is unavailable. Select Retry to try again.');
+    }
+  }
+
+  function openGate(trigger: HTMLElement | null = null) {
+    if (dialog.open) return;
+    returnFocus = trigger ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
+    dialog.showModal();
+    void startChallenge();
+  }
+
+  document.addEventListener('click', (event) => {
+    const target = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>('a[data-resume-gate]') : null;
+    if (!target) return;
+    event.preventDefault();
+    openGate(target);
+  });
+  closeButton.addEventListener('click', closeGate);
+  dialog.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeGate();
+  });
+  dialog.addEventListener('click', (event) => {
+    if (event.target !== dialog) return;
+    const bounds = dialog.getBoundingClientRect();
+    if (event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom) {
+      closeGate();
+    }
+  });
+  retryButton.addEventListener('click', () => {
+    if (!dialog.open || session?.phase !== 'error') return;
+    removeSession();
+    void startChallenge();
+  });
+  window.addEventListener('pagehide', () => {
+    closeGate();
+    for (const url of downloadUrls) URL.revokeObjectURL(url);
+    downloadUrls.clear();
+  });
+
+  const query = new URLSearchParams(window.location.search);
+  if (query.has('resume') && (query.get('resume') === '' || query.get('resume') === '1')) openGate();
+</script>
+
+<style>
+  .resume-gate {
+    width: min(36rem, calc(100% - 2rem));
+    max-height: calc(100dvh - 2rem);
+    margin: auto;
+    padding: 0;
+    overflow: auto;
+    border: 1px solid #27272a;
+    background: #050507;
+    color: #d4d4d8;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+  }
+  .resume-gate::backdrop { background: rgb(0 0 0 / 85%); backdrop-filter: blur(4px); }
+  .gate-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem; border-bottom: 1px solid #18181b; }
+  .gate-header h2 { margin: 0; color: #e11d48; font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.05em; }
+  .gate-header h2 span { color: #a1a1aa; }
+  .gate-body { padding: 1.25rem; }
+  .gate-target { margin: 0 0 1.25rem; }
+  .gate-target div { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-bottom: 0.5rem; }
+  .gate-target dt { min-width: 4rem; color: #71717a; font-size: 0.625rem; letter-spacing: 0.08em; }
+  .gate-target dd { margin: 0; overflow-wrap: anywhere; }
+  #resume-gate-description { margin: 0 0 1.25rem; color: #a1a1aa; line-height: 1.8; }
+  .gate-widget { min-width: 0; }
+  .gate-status { margin: 1.25rem 0 0; color: #a1a1aa; line-height: 1.8; overflow-wrap: anywhere; }
+  .gate-status[data-error='true'] { color: #fda4af; }
+  button { border: 1px solid #27272a; background: #0d0d12; color: #d4d4d8; padding: 0.5rem 0.75rem; font: inherit; font-size: 0.625rem; cursor: pointer; }
+  button:hover { background: #18181b; color: #fff; }
+  button:focus-visible { outline: 2px solid #e11d48; outline-offset: 3px; }
+  #resume-gate-close { flex-shrink: 0; }
+  #resume-gate-close span { margin-left: 0.5rem; color: #e11d48; }
+  #resume-gate-retry { margin-top: 1rem; }
+  @media (max-width: 380px) {
+    .resume-gate { width: calc(100% - 0.5rem); }
+    .gate-header { gap: 0.5rem; padding: 0.75rem; }
+    .gate-header h2 { font-size: 0.5625rem; }
+    .gate-body { padding: 1rem 0.25rem; }
+  }
+</style>

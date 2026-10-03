@@ -21,6 +21,8 @@ Thumbs.db
 
 # Cloudflare Wrangler
 .wrangler/
+.dev.vars
+.dev.vars.*
 
 # Beads / Dolt files (added by bd init)
 .dolt/
