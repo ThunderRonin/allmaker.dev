@@ -47,94 +47,114 @@
 
     if (!form || !input || !output) return;
 
-    const consulting = `[INDEPENDENT TECH BOUNTY HUNTER & SYSTEMS CONSULTANT]
-Period: April 2021 – Present (5+ Years)
-Focus: Full-Stack Systems, Low-Level Diagnostics, Security Audits & Custom Automation
+    const consulting = `[INDEPENDENT SOFTWARE ENGINEER]
+Period: Apr 2021 – Present
+Engagement: Freelance | Remote
 Key Highlights:
-  • Autonomous execution across international client codebases and protocols.
-  • Diagnosed and resolved high-impact production bottlenecks and memory leaks.
-  • Architected self-healing microservices and high-throughput automation pipelines.`;
+  • Delivered technical bounties addressing production bottlenecks, protocol security, and custom automation across diverse codebases.
+  • Built full-stack systems and microservices for international clients, focusing on reliability and low operational overhead.`;
 
     const commands: Record<string, string | (() => string)> = {
       help: `AVAILABLE COMMANDS:
   <span class="text-[#e11d48]">help</span>         - Display this command manual
   <span class="text-[#e11d48]">about</span>        - Output engineer dossier & 5+ years experience
   <span class="text-[#e11d48]">repos</span>        - List featured systems & repositories (@allmaker)
-  <span class="text-[#e11d48]">kasb</span>         - Inspect Kasb Platform ERP, ledger & multi-agent architecture
+  <span class="text-[#e11d48]">kasb</span>         - Inspect Kasb Platform commerce, ledger & infrastructure work
   <span class="text-[#e11d48]">petaproc</span>     - Inspect PetaProc real-time VoIP & AI platform
-  <span class="text-[#e11d48]">bounty</span>       - Inspect independent tech bounty hunter & consulting history
+  <span class="text-[#e11d48]">dorj</span>         - Inspect Dorj Wallet backend & hardware signing work
+  <span class="text-[#e11d48]">bounty</span>       - Inspect independent software engineering & technical bounties
   <span class="text-[#e11d48]">allknower</span>    - Inspect AllKnower AI orchestration service
-  <span class="text-[#e11d48]">allcodex</span>     - Inspect AllCodex knowledge base engine
+  <span class="text-[#e11d48]">allcodex</span>     - Inspect the AllCodex ecosystem & portal
   <span class="text-[#e11d48]">aryamehr</span>     - Inspect Zepp OS astronomical calendar
-  <span class="text-[#e11d48]">alltracker</span>   - Inspect AllTracker Flutter mobile app
+  <span class="text-[#e11d48]">alltracker</span>   - Inspect AllTracker desktop & mobile telemetry tracker
   <span class="text-[#e11d48]">skills</span>       - List technical proficiencies
+  <span class="text-[#e11d48]">education</span>    - Output education & qualifications
   <span class="text-[#e11d48]">contact</span>      - Output communication endpoints
   <span class="text-[#e11d48]">resume</span>       - Output resume download endpoint
   <span class="text-[#e11d48]">uname -a</span>     - Query kernel & edge architecture
   <span class="text-[#e11d48]">whoami</span>       - Print current authorization status
   <span class="text-[#e11d48]">date</span>         - Print synchronized UTC timestamp
   <span class="text-[#e11d48]">clear</span>        - Flush terminal screen`,
-      about: `<span class="text-zinc-200 font-bold">Amirali Daliri</span> (@allmaker):
-Full-Stack Systems Engineer & Tech Bounty Hunter
-Experience: 5+ Years Active Production Engineering (since April 2021)
-Specialization:
-  • High-concurrency .NET 10 (C# 14) and ASP.NET Core services
-  • Solo AI agent fleet orchestration across DevOps, mobile, web, and backend
-  • Strict double-entry ledger balance invariants & transaction guarantees
-  • Lean Linux Docker Swarm topologies engineered under severe hardware constraints
-  • Real-time WebRTC media relays (Go/pion) & distributed OpenTelemetry tracing
-  • Cross-platform React Native &amp; Flutter (Riverpod, SQLite) client applications`,
+      about: `<span class="text-zinc-200 font-bold">Amirali Daliri</span> (@theAllmaker):
+Full-Stack Software Engineer | Backend &amp; AI
+Location: Tehran, Iran
+Experience: 5+ years across freelance and in-house roles
+Profile:
+  • Specializes in backend engineering and AI systems.
+  • Builds .NET commerce services, Go real-time communications, and AI applications with RAG, vector search, and LLM routing.
+  • Sole technical lead at Kasb, owning backend, web, mobile, and infrastructure delivery.`,
       repos: `FEATURED SYSTEMS & REPOSITORIES (@allmaker):
-  • <a href="https://github.com/Kasb-Platform" target="_blank" class="text-zinc-200 underline">kasb-platform</a>    - Enterprise ERP & double-entry ledger (.NET 10, C# 14, React Native, Docker Swarm)
-  • <a href="https://github.com/ThunderRonin/allknower" target="_blank" class="text-zinc-200 underline">allknower</a>        - AI orchestration service (Elysia, Bun, LanceDB, OpenRouter)
-  • <a href="https://github.com/ThunderRonin/allcodex-core" target="_blank" class="text-zinc-200 underline">allcodex-core</a>    - Knowledge base grimoire (Trilium ETAPI fork)
-  • <a href="https://github.com/ThunderRonin/aryamehr-calendar" target="_blank" class="text-zinc-200 underline">aryamehr-calendar</a>- Amazfit GTR 4 Zepp OS astronomical calendar
-  • <a href="https://github.com/ThunderRonin/AllTracker" target="_blank" class="text-zinc-200 underline">AllTracker</a>       - Dart/Flutter cross-platform habit tracker`,
+  • <a href="https://github.com/Kasb-Platform" target="_blank" class="text-zinc-200 underline">Kasb Platform</a>     - Financial ledger & B2B commerce (ASP.NET Core, EF Core, Docker Swarm, Linux)
+  • <a href="https://github.com/PetaProc" target="_blank" class="text-zinc-200 underline">PetaProc</a>          - Real-time communications & AI (Go/Pion WebRTC, NestJS, Flutter, Riverpod)
+  • <a href="https://github.com/ThunderRonin/allknower" target="_blank" class="text-zinc-200 underline">AllKnower</a>         - AI orchestration (Bun/Elysia, RAG, LanceDB, OpenRouter, MCP)
+  • <a href="https://github.com/ThunderRonin/allcodex-core" target="_blank" class="text-zinc-200 underline">AllCodex Ecosystem</a> - Portal built with Next.js & SvelteKit
+  • <a href="https://github.com/ThunderRonin/aryamehr-calendar" target="_blank" class="text-zinc-200 underline">AryaMehr Calendar</a>  - Amazfit GTR 4 astronomical calendar, traditional Gahs & solar prayer times
+  • <a href="https://github.com/ThunderRonin/AllTracker" target="_blank" class="text-zinc-200 underline">AllTracker</a>        - Desktop & mobile habit/telemetry tracker (Flutter, Riverpod, SQLite)`,
       kasb: `[KASB PLATFORM]
-Enterprise ERP, Financial Ledger & Multi-Agent Architecture
-Role: Lead Full-Stack Engineer & Systems Lead (2025 – Present)
-Stack: .NET 10 + C# 14 + EF Core + React Native + Docker Swarm + Linux + Syncfusion
+Financial Ledger, B2B Commerce & Systems Infrastructure
+Role: Lead Full-Stack &amp; Systems Infrastructure Engineer
+Period: 2025 – Present | Tehran, Iran
+Stack: ASP.NET Core + EF Core + SQL Server + PostgreSQL + Docker Swarm + Linux + Syncfusion Blink
 Key Highlights:
-  • AI Multi-Agent Fleet: Directed specialized autonomous AI agents across DevOps, mobile (React Native), web, and backend.
-  • Extreme Infra Optimization: Engineered lean, high-throughput topologies under severe hardware constraints (99.9% uptime).
-  • Ledger Invariants: Double-entry consistency, zero-leak transaction bounds, multi-point balance reconciliation.
-  • Document Service: Headless Syncfusion PDF rendering engine with 100% RTL Persian font fidelity.
-  • Mobile Client: Cross-platform React Native client integration with offline-first synchronization.
+  • Owned backend, web, mobile, and DevOps as the sole technical lead, using specialized AI agents to support implementation.
+  • Resolved double-entry reconciliation discrepancies and enforced transactional invariants.
+  • Migrated Windows/IIS to Linux containers with Docker Swarm, isolated overlay networks, and self-hosted CI runners.
+  • Optimized constrained infrastructure using container resource limits, memory-efficient services, and caching without increasing the budget.
+  • Built financial document rendering with Persian typography and RTL invoices in Linux containers using Syncfusion Blink.
+  • Prepared the SQL Server-to-PostgreSQL migration through EF Core multi-provider abstractions and migration validation test suites.
 Org: https://github.com/Kasb-Platform`,
       petaproc: `[PETAPROC]
-Real-Time VoIP & AI Collaboration Platform (Sep 2024 – Apr 2026)
-Role: Full-Stack Engineer (Real-Time Systems & AI Focus)
-Stack: Go + Gin + Flutter (Riverpod) + WebRTC (pion) + NestJS + PostgreSQL + Redis + Elasticsearch + OpenTelemetry
+Real-Time Communications & AI
+Role: Full-Stack Engineer | Real-Time Systems &amp; AI
+Period: Sep 2024 – Apr 2026 | Tehran | London
+Stack: Go/Gin + Pion WebRTC + WebSocket + Socket.IO + NestJS + Flutter/Riverpod + Redis + LanceDB + Qdrant + Asynq + MinIO + Elasticsearch
 Key Highlights:
-  • Real-Time Media: Go WebRTC RTP/RTCP media relay with horizontal Redis pub/sub signaling.
-  • Distributed Tracing: OpenTelemetry & Sentry cutting incident MTTR by ~50%.
-  • Search Optimization: Elasticsearch cluster reducing p95 search latency by ~70%.
-  • Client Engineering: Flutter cross-platform client with Riverpod state & VoIP calling.`,
+  • Built Go voice/video services with Pion WebRTC media relays and WebSocket signaling; used Socket.IO and Redis pub/sub for horizontal scaling.
+  • Implemented AI vector search with LanceDB and Qdrant.
+  • Instrumented services with OpenTelemetry distributed tracing and Sentry error monitoring.
+  • Integrated asynchronous media processing with Asynq, Redis job queues, and MinIO object storage.
+  • Maintained NestJS and Go/Gin REST APIs; replaced PostgreSQL full-text search with Elasticsearch.
+  • Delivered Flutter clients for iOS, Android, and desktop with Riverpod, call UI, threaded replies, file uploads, and widget tests.`,
+      dorj: `[DORJ WALLET]
+Role: Back-End Developer
+Period: Apr 2024 – Aug 2024 | Tehran, Iran
+Stack: NestJS + Ethers.js + Ledger SDK
+Key Highlights:
+  • Built cryptocurrency-platform APIs with wallet connectivity, transaction signing, and smart-contract interactions.
+  • Integrated the Ledger SDK for hardware-based transaction signing.`,
       bounty: consulting,
       freelance: consulting,
       allknower: `[ALLKNOWER]
-AI orchestration engine for AllCodex lore trees.
-Stack: Bun + Elysia + LanceDB + Prisma + OpenRouter
-Features: Semantic vector search, native re-ranking, automated entity relation inference, lore consistency checks.
+AI orchestration service for the AllCodex ecosystem.
+Stack: Bun/Elysia + RAG + LanceDB + Local Embeddings + OpenRouter + MCP
+Features: Retrieval-augmented generation, vector search, multi-model LLM routing, and MCP server connectivity.
 Repo: https://github.com/ThunderRonin/allknower`,
-      allcodex: `[ALLCODEX-CORE]
-Knowledge base data engine and hierarchical note grimoire.
-Custom fork of Trilium with ETAPI extensions, specialized attributes, and relational lore graphs.
+      allcodex: `[ALLCODEX ECOSYSTEM]
+AllCodex portal built with Next.js and SvelteKit.
+Integrates AllKnower AI orchestration, RAG, OpenRouter multi-model routing, and MCP server connectivity.
 Repo: https://github.com/ThunderRonin/allcodex-core`,
       aryamehr: `[ARYAMEHR-CALENDAR]
 AryaMehr Persian & Zoroastrian Calendar and prayer computation engine for Amazfit GTR 4.
-Stack: TypeScript, Zepp OS Embedded SDK, Astronomical Algorithms.
+Platform: Zepp OS on Amazfit GTR 4; traditional Gahs and solar prayer-time computation.
 Repo: https://github.com/ThunderRonin/aryamehr-calendar`,
       alltracker: `[ALLTRACKER]
-Cross-platform personal habit and telemetry tracking app.
-Stack: Dart + Flutter + Local-First SQLite Engine.
+Released habit and telemetry tracker for desktop and mobile.
+Stack: Flutter + Riverpod + Offline-First SQLite + System Tray Integration.
 Repo: https://github.com/ThunderRonin/AllTracker`,
       skills: `TOOLCHAIN & ENGINEERING PROFICIENCIES:
-  • Languages:      C# (.NET 10), TypeScript, Dart (Flutter), Go, JavaScript, SQL, Shell, Python
-  • Systems:        ASP.NET Core, EF Core, Docker Swarm, Linux Kernel Tuning, NGINX
-  • Mobile/Web:     React Native, Flutter + Riverpod, React 19, Next.js 15, SvelteKit, Astro
-  • AI & Agents:    Multi-Agent Workflow Orchestration, MCP, LanceDB, Qdrant, OpenRouter, Semantic RAG
-  • Architecture:   Double-Entry Ledgers, WebRTC Relays (pion), High-Concurrency Microservices`,
+  • Languages:              TypeScript, C#, Go, Dart, JavaScript, Python, SQL, Shell
+  • Backend:                ASP.NET Core, EF Core, Node.js, NestJS, Bun/Elysia, Go/Gin
+  • AI systems:             Agent orchestration, RAG, MCP, LanceDB, Qdrant, OpenRouter
+  • Data &amp; storage:         PostgreSQL, SQL Server, Redis, Elasticsearch, Prisma, SQLite, MinIO, S3
+  • Infrastructure:         Docker Swarm, Linux, NGINX, CI/CD, Cloudflare Workers, Asynq
+  • Observability &amp; testing: OpenTelemetry, Sentry, Serilog, Grafana Loki, Jest, Vitest, Playwright
+  • Web &amp; mobile:           React, Next.js, SvelteKit, React Native, Flutter, Riverpod`,
+      education: `EDUCATION:
+  • Bachelor's in Computer Engineering (in progress) | 2023 – Present
+    Iran University of Industries, Tehran
+  • Allameh Helli High School | NODET | 2020 – 2023
+    Diploma in Mathematics &amp; Physics | Tehran, Iran
+    National Organization for Development of Exceptional Talents`,
       contact: `COMMUNICATION ENDPOINTS:
   • Telegram:            <a href="https://t.me/theallmaker" target="_blank" class="text-zinc-200 underline">https://t.me/theallmaker</a> (@theallmaker)
   • LinkedIn:            <a href="https://www.linkedin.com/in/amirali-daliri" target="_blank" class="text-zinc-200 underline">https://www.linkedin.com/in/amirali-daliri</a>

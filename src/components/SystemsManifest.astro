@@ -1,5 +1,5 @@
 ---
-// Systems Manifest Section (ThunderRonin Real Repositories & Systems)
+// Professional experience and selected projects from the final résumé.
 
 interface Project {
   id: string;
@@ -11,85 +11,113 @@ interface Project {
   description: string;
   tech: string[];
   metrics: { label: string; value: string }[];
-  githubUrl: string;
+  githubUrl?: string;
 }
 
 const projects: Project[] = [
   {
     id: '[01]',
-    name: 'kasb-platform',
+    name: 'Kasb Platform',
     category: 'ENTERPRISE ERP // FINANCIAL COMMERCE & LEDGER',
-    badge: 'FLAGSHIP // PRODUCTION',
+    badge: 'EXPERIENCE // CURRENT',
     isPinned: true,
     description:
-      'High-concurrency enterprise ERP & financial ledger. Operated as solo full-stack engineering lead directing an autonomous fleet of AI agents across DevOps, mobile (React Native), web, and backend. Engineered .NET 10 (C# 14) core services, strict double-entry balance invariants, headless Syncfusion document rendering, and resilient Docker Swarm topologies engineered under severe infrastructure resource constraints.',
-    tech: ['.NET 10', 'C# 14', 'EF Core', 'React Native', 'Docker Swarm', 'Linux', 'PostgreSQL'],
+      'Lead Full-Stack & Systems Infrastructure Engineer, Tehran. Sole technical lead owning backend, web, mobile, and DevOps delivery with specialized AI agents supporting implementation. Developed financial ledger and B2B commerce services, resolved double-entry reconciliation discrepancies, and enforced transactional invariants. Migrated Windows/IIS to Linux containers with Docker Swarm, isolated overlay networks, and self-hosted CI runners. Optimized resource limits, services, and caching without increasing the infrastructure budget. Built Persian RTL invoices with Syncfusion Blink; prepared the SQL Server-to-PostgreSQL migration through EF Core multi-provider abstractions and validation test suites.',
+    tech: ['ASP.NET Core', 'EF Core', 'SQL Server', 'PostgreSQL', 'Docker Swarm', 'Linux', 'Syncfusion Blink', 'CI/CD'],
     metrics: [
-      { label: 'BACKEND', value: '.NET 10 / C# 14' },
-      { label: 'MOBILE CLIENT', value: 'React Native' },
-      { label: 'INFRASTRUCTURE', value: 'Docker Swarm (Linux)' },
+      { label: 'PERIOD', value: '2025 – Present' },
+      { label: 'OWNERSHIP', value: 'Sole Technical Lead' },
+      { label: 'INFRASTRUCTURE', value: 'Docker Swarm / Linux' },
     ],
     githubUrl: 'https://github.com/Kasb-Platform',
   },
   {
     id: '[02]',
-    name: 'petaproc',
+    name: 'PetaProc',
     category: 'REAL-TIME SYSTEMS // WEBRTC VOIP & AI ORCHESTRATION',
-    badge: 'FLAGSHIP // PRODUCTION',
+    badge: 'EXPERIENCE',
     description:
-      'High-throughput real-time VoIP & video media infrastructure with AI orchestration. Engineered Go WebRTC media pipelines (RTP/RTCP via pion), Redis pub/sub horizontal signaling, OpenTelemetry distributed tracing, Elasticsearch cluster (~70% latency cut), and cross-platform Flutter client with Riverpod state architecture.',
-    tech: ['Go', 'Gin', 'WebRTC (pion)', 'Flutter (Riverpod)', 'NestJS', 'PostgreSQL', 'Redis', 'Elasticsearch', 'OpenTelemetry'],
+      'Full-Stack Engineer | Real-Time Systems & AI, Tehran | London. Built Go voice/video services with Pion WebRTC media relays, WebSocket signaling, Socket.IO, and Redis pub/sub for horizontal scaling. Implemented LanceDB/Qdrant AI vector search, OpenTelemetry tracing, and Sentry monitoring. Integrated Asynq media-processing queues and MinIO storage, maintained NestJS and Go/Gin APIs, and replaced PostgreSQL full-text search with Elasticsearch. Delivered Flutter clients for iOS, Android, and desktop with Riverpod, call UI, threaded replies, file uploads, and widget tests.',
+    tech: ['Go/Gin', 'Pion WebRTC', 'WebSocket', 'Socket.IO', 'NestJS', 'Flutter', 'Riverpod', 'Redis', 'LanceDB', 'Qdrant', 'Asynq', 'MinIO', 'Elasticsearch', 'OpenTelemetry', 'Sentry'],
     metrics: [
-      { label: 'MEDIA RELAY', value: 'Go WebRTC (pion)' },
-      { label: 'MOBILE CLIENT', value: 'Flutter + Riverpod' },
-      { label: 'OBSERVABILITY', value: 'OTel + Sentry' },
+      { label: 'PERIOD', value: 'Sep 2024 – Apr 2026' },
+      { label: 'MEDIA RELAY', value: 'Go / Pion WebRTC' },
+      { label: 'CLIENTS', value: 'iOS / Android / Desktop' },
     ],
     githubUrl: 'https://github.com/PetaProc',
   },
   {
     id: '[03]',
-    name: 'allknower',
+    name: 'Dorj Wallet',
+    category: 'BACKEND ENGINEERING // CRYPTOCURRENCY',
+    badge: 'EXPERIENCE',
+    description:
+      'Back-End Developer, Tehran. Built NestJS APIs for a cryptocurrency platform with Ethers.js wallet connectivity, transaction signing, and smart-contract interactions. Integrated the Ledger SDK for hardware-based transaction signing.',
+    tech: ['NestJS', 'Ethers.js', 'Ledger SDK'],
+    metrics: [
+      { label: 'PERIOD', value: 'Apr 2024 – Aug 2024' },
+      { label: 'ROLE', value: 'Back-End Developer' },
+      { label: 'SIGNING', value: 'Ledger Hardware Wallet' },
+    ],
+  },
+  {
+    id: '[04]',
+    name: 'Independent Software Engineer',
+    category: 'FREELANCE // TECHNICAL BOUNTIES',
+    badge: 'EXPERIENCE // CURRENT',
+    description:
+      'Freelance, remote. Delivered engagements and technical bounties addressing production bottlenecks, protocol security, and custom automation across diverse codebases. Built full-stack systems and microservices for international clients, focusing on reliability and low operational overhead.',
+    tech: ['Full-Stack Systems', 'Microservices', 'Protocol Security', 'Automation'],
+    metrics: [
+      { label: 'PERIOD', value: 'Apr 2021 – Present' },
+      { label: 'ENGAGEMENT', value: 'Freelance' },
+      { label: 'LOCATION', value: 'Remote' },
+    ],
+  },
+  {
+    id: '[05]',
+    name: 'AllKnower',
     category: 'AI ORCHESTRATION // RAG & VECTOR RETRIEVAL',
-    badge: 'PINNED // CORE',
+    badge: 'SELECTED PROJECT',
     isPinned: true,
     stars: 4,
     description:
-      'The intelligence engine behind the All Reach grimoire. Implements semantic RAG over LanceDB, OpenRouter multi-model LLM routing with local Ollama fallback, automated entity relationship extraction, and lore gap analysis.',
-    tech: ['TypeScript', 'Bun', 'Elysia', 'LanceDB', 'Prisma', 'OpenRouter'],
+      'AI orchestration service for the AllCodex ecosystem, built in Bun/Elysia with retrieval-augmented generation, LanceDB vector search, and local embeddings. Integrated multi-model LLM routing through OpenRouter and MCP server connectivity.',
+    tech: ['Bun', 'Elysia', 'RAG', 'LanceDB', 'Local Embeddings', 'OpenRouter', 'MCP'],
     metrics: [
       { label: 'RUNTIME', value: 'Bun + Elysia' },
       { label: 'VECTOR DB', value: 'LanceDB' },
-      { label: 'API DOCS', value: 'Scalar OpenAPI' },
+      { label: 'MODEL ROUTING', value: 'OpenRouter' },
     ],
     githubUrl: 'https://github.com/ThunderRonin/allknower',
   },
   {
-    id: '[04]',
-    name: 'allcodex-core',
-    category: 'KNOWLEDGE BASE // DATA ENGINE',
-    badge: 'PINNED // DB',
+    id: '[06]',
+    name: 'AllCodex Ecosystem',
+    category: 'AI ECOSYSTEM // WEB PORTAL',
+    badge: 'SELECTED PROJECT',
     isPinned: true,
     stars: 4,
     description:
-      'The grimoire that knows. An AI-powered worldbuilding knowledge base, custom-forked from Trilium with ETAPI extensions, specialized attributes, relational lore graphs, and automated note taxonomy.',
-    tech: ['TypeScript', 'JavaScript', 'SQLite', 'ETAPI', 'Trilium'],
+      'AllCodex ecosystem and portal, built with Next.js and SvelteKit. Integrates AllKnower AI orchestration, retrieval-augmented generation, multi-model LLM routing, and MCP server connectivity.',
+    tech: ['Next.js', 'SvelteKit', 'RAG', 'OpenRouter', 'MCP'],
     metrics: [
-      { label: 'STORAGE', value: 'SQLite + ETAPI' },
-      { label: 'MODEL', value: 'Hierarchical Tree' },
-      { label: 'EXTENSIONS', value: 'Custom Lore Schema' },
+      { label: 'WEB', value: 'Next.js / SvelteKit' },
+      { label: 'AI SERVICE', value: 'AllKnower' },
+      { label: 'INTEGRATIONS', value: 'OpenRouter / MCP' },
     ],
     githubUrl: 'https://github.com/ThunderRonin/allcodex-core',
   },
   {
-    id: '[05]',
-    name: 'aryamehr-calendar',
+    id: '[07]',
+    name: 'AryaMehr Calendar',
     category: 'EMBEDDED SYSTEMS // ZEPP OS',
-    badge: 'PINNED // WEARABLE',
+    badge: 'SELECTED PROJECT',
     isPinned: true,
     stars: 1,
     description:
-      'Native AryaMehr Persian & Zoroastrian Astronomical Calendar, Gahs, and solar prayer times developed for the Amazfit GTR 4 smartwatch running Zepp OS. Implements low-power astronomical calculation algorithms.',
-    tech: ['TypeScript', 'Zepp OS SDK', 'Astronomical Math', 'Embedded UI'],
+      'Persian and Zoroastrian astronomical calendar for the Amazfit GTR 4 smartwatch running Zepp OS, including traditional Gahs and solar prayer-time computation.',
+    tech: ['Zepp OS', 'Astronomical Calendar', 'Gahs', 'Solar Prayer Times'],
     metrics: [
       { label: 'TARGET', value: 'Amazfit GTR 4' },
       { label: 'PLATFORM', value: 'Zepp OS' },
@@ -98,19 +126,19 @@ const projects: Project[] = [
     githubUrl: 'https://github.com/ThunderRonin/aryamehr-calendar',
   },
   {
-    id: '[06]',
+    id: '[08]',
     name: 'AllTracker',
-    category: 'MOBILE ENGINEERING // CROSS-PLATFORM',
-    badge: 'PINNED // MOBILE',
+    category: 'DESKTOP & MOBILE // TELEMETRY TRACKER',
+    badge: 'SELECTED PROJECT',
     isPinned: true,
     stars: 2,
     description:
-      'Cross-platform personal activity and telemetry tracking application engineered in Dart and Flutter. Focuses on local-first offline storage, frictionless event logging, and responsive UI.',
-    tech: ['Dart', 'Flutter', 'Mobile SDK', 'Local Storage'],
+      'Released a Flutter habit and telemetry tracker for desktop and mobile with Riverpod, system tray integration, and offline-first SQLite storage.',
+    tech: ['Flutter', 'Riverpod', 'SQLite', 'System Tray', 'Offline-First'],
     metrics: [
-      { label: 'SDK', value: 'Flutter / Dart' },
-      { label: 'STORAGE', value: 'Offline-First' },
-      { label: 'PLATFORM', value: 'Android / iOS' },
+      { label: 'STATE', value: 'Riverpod' },
+      { label: 'STORAGE', value: 'Offline-First SQLite' },
+      { label: 'PLATFORM', value: 'Desktop / Mobile' },
     ],
     githubUrl: 'https://github.com/ThunderRonin/AllTracker',
   },
@@ -183,17 +211,19 @@ const projects: Project[] = [
             ))}
           </div>
 
-          <div class="flex items-center justify-between text-[10px] pt-1">
-            <span class="text-zinc-600">&gt; source:</span>
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="font-medium text-zinc-400 hover:text-white hover:underline transition-colors flex items-center gap-1"
-            >
-              VIEW_ON_GITHUB <span class="text-[9px]">↗</span>
-            </a>
-          </div>
+          {project.githubUrl && (
+            <div class="flex items-center justify-between text-[10px] pt-1">
+              <span class="text-zinc-600">&gt; source:</span>
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="font-medium text-zinc-400 hover:text-white hover:underline transition-colors flex items-center gap-1"
+              >
+                VIEW_ON_GITHUB <span class="text-[9px]">↗</span>
+              </a>
+            </div>
+          )}
         </div>
       </article>
     ))}

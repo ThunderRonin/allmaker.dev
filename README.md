@@ -44,12 +44,14 @@ Run `npm test` for authorization regressions. Server validation follows the [Tur
 
 ## 🌐 Featured Systems ([@ThunderRonin](https://github.com/ThunderRonin))
 
-- **[`kasb-platform`](https://github.com/Kasb-Platform)**: High-concurrency enterprise ERP & double-entry financial ledger platform (.NET 10, C# 14, EF Core, React Native, Docker Swarm, Linux).
-- **[`petaproc`](https://github.com/PetaProc)**: Real-time VoIP and AI collaboration platform (Go/pion WebRTC, Flutter/Riverpod, NestJS, Redis, Elasticsearch, OpenTelemetry).
-- **[`allknower`](https://github.com/ThunderRonin/allknower)**: AI orchestration service for semantic RAG over vector trees (Elysia, Bun, Prisma, LanceDB, OpenRouter).
-- **[`allcodex-core`](https://github.com/ThunderRonin/allcodex-core)**: Knowledge base grimoire data engine (custom Trilium ETAPI fork).
-- **[`aryamehr-calendar`](https://github.com/ThunderRonin/aryamehr-calendar)**: Zepp OS Persian & Zoroastrian Astronomical Calendar for Amazfit GTR 4.
-- **[`AllTracker`](https://github.com/ThunderRonin/AllTracker)**: Cross-platform habit and activity telemetry in Dart & Flutter.
+- **[`Kasb Platform`](https://github.com/Kasb-Platform)**: Financial ledger and B2B commerce services, ASP.NET Core/EF Core, Linux/Docker Swarm migration, Syncfusion Blink Persian RTL invoices, and preparation for SQL Server-to-PostgreSQL migration.
+- **[`PetaProc`](https://github.com/PetaProc)**: Go/Pion WebRTC communications, LanceDB/Qdrant AI search, Asynq/Redis media processing, MinIO storage, OpenTelemetry/Sentry, and Flutter/Riverpod clients.
+- **Dorj Wallet**: NestJS cryptocurrency APIs, Ethers.js wallet connectivity and smart-contract interactions, and Ledger SDK hardware signing.
+- **Independent Software Engineer**: Freelance systems, technical bounties, protocol security, and custom automation for international clients.
+- **[`AllKnower`](https://github.com/ThunderRonin/allknower)**: Bun/Elysia AI orchestration with RAG, LanceDB, local embeddings, OpenRouter routing, and MCP connectivity.
+- **[`AllCodex Ecosystem`](https://github.com/ThunderRonin/allcodex-core)**: Portal built with Next.js and SvelteKit, integrated with AllKnower.
+- **[`AryaMehr Calendar`](https://github.com/ThunderRonin/aryamehr-calendar)**: Zepp OS Persian and Zoroastrian astronomical calendar for Amazfit GTR 4.
+- **[`AllTracker`](https://github.com/ThunderRonin/AllTracker)**: Desktop and mobile habit/telemetry tracker with Flutter, Riverpod, system tray integration, and offline-first SQLite.
 
 ---
 
@@ -57,6 +59,10 @@ Run `npm test` for authorization regressions. Server validation follows the [Tur
 
 - **Eye-Friendly Pure OLED Background (`#000000`):** Hardware pixel shutoff on OLED panels, preventing ocular fatigue.
 - **Interactive 3D Artifact Simulation ([`TopologyCanvas.astro`](src/components/TopologyCanvas.astro)):** Five orbiting polyhedra and seeker/orbiter/wanderer/evasive particles. Pointer movement attracts or repels particles, clicks inject impulses, and scrolling moves the scene. Geometry buffers and vector scratch space are reused during animation.
-- **Interactive CLI Shell ([`InteractiveCLI.astro`](src/components/InteractiveCLI.astro)):** Supports `help`, `about`, `repos`, `kasb`, `petaproc`, `bounty`, `freelance`, `allknower`, `allcodex`, `aryamehr`, `alltracker`, `skills`, `contact`, `resume`, `uname -a`, `whoami`, `date`, and `clear`.
+- **Interactive CLI Shell ([`InteractiveCLI.astro`](src/components/InteractiveCLI.astro)):** Supports `help`, `about`, `repos`, `kasb`, `petaproc`, `dorj`, `bounty`, `freelance`, `allknower`, `allcodex`, `aryamehr`, `alltracker`, `skills`, `education`, `contact`, `resume`, `uname -a`, `whoami`, `date`, and `clear`.
 
 The interactive scene, expanded project/profile/CLI content, contact links, and Allmaker identity were recovered from the September 21 Cloudflare deployment, which contained changes absent from the original GitHub checkout. The recovered source retains the private final PDF and server-verified CAPTCHA flow.
+
+### Content source
+
+The final résumé at `src/assets/resume.pdf` is the source of truth for the profile, role dates and titles, project descriptions, technical skills, education, metadata, and CLI copy. Update those existing Astro components when replacing the résumé. Professional experience is displayed alongside selected projects; education appears in the About panel, and the technical index lists the résumé's skills. Do not reintroduce unsupported performance percentages, technology versions, or production guarantees from the recovered older deployment.
