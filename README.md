@@ -48,6 +48,7 @@ Run `npm test` for authorization regressions. Server validation follows the [Tur
 - **[`PetaProc`](https://github.com/PetaProc)**: Go/Pion WebRTC communications, LanceDB/Qdrant AI search, Asynq/Redis media processing, MinIO storage, OpenTelemetry/Sentry, and Flutter/Riverpod clients.
 - **Dorj Wallet**: NestJS cryptocurrency APIs, Ethers.js wallet connectivity and smart-contract interactions, and Ledger SDK hardware signing.
 - **Independent Software Engineer**: Freelance systems, technical bounties, protocol security, and custom automation for international clients.
+- **[`Simurgh`](https://github.com/ThunderRonin/simurgh)**: Early-stage Grafana context inspector with browser-based selection, confirmed snapshots, and an experimental local investigation workspace.
 - **[`AllKnower`](https://github.com/ThunderRonin/allknower)**: Bun/Elysia AI orchestration with RAG, LanceDB, local embeddings, OpenRouter routing, and MCP connectivity.
 - **[`AllCodex Ecosystem`](https://github.com/ThunderRonin/allcodex-core)**: Portal built with Next.js and SvelteKit, integrated with AllKnower.
 - **[`AryaMehr Calendar`](https://github.com/ThunderRonin/aryamehr-calendar)**: Zepp OS Persian and Zoroastrian astronomical calendar for Amazfit GTR 4.
@@ -59,7 +60,7 @@ Run `npm test` for authorization regressions. Server validation follows the [Tur
 
 - **Eye-Friendly Pure OLED Background (`#000000`):** Hardware pixel shutoff on OLED panels, preventing ocular fatigue.
 - **Interactive 3D Artifact Simulation ([`TopologyCanvas.astro`](src/components/TopologyCanvas.astro)):** Five orbiting polyhedra and seeker/orbiter/wanderer/evasive particles. Pointer movement attracts or repels particles, clicks inject impulses, and scrolling moves the scene. Geometry buffers and vector scratch space are reused during animation.
-- **Interactive CLI Shell ([`InteractiveCLI.astro`](src/components/InteractiveCLI.astro)):** Supports `help`, `about`, `repos`, `kasb`, `petaproc`, `dorj`, `bounty`, `freelance`, `allknower`, `allcodex`, `aryamehr`, `alltracker`, `skills`, `education`, `contact`, `resume`, `uname -a`, `whoami`, `date`, and `clear`.
+- **Interactive CLI Shell ([`InteractiveCLI.astro`](src/components/InteractiveCLI.astro)):** Supports `help`, `about`, `repos`, `kasb`, `petaproc`, `dorj`, `bounty`, `freelance`, `simurgh`, `allknower`, `allcodex`, `aryamehr`, `alltracker`, `skills`, `education`, `contact`, `resume`, `uname -a`, `whoami`, `date`, and `clear`.
 
 The interactive scene, expanded project/profile/CLI content, contact links, and Allmaker identity were recovered from the September 21 Cloudflare deployment, which contained changes absent from the original GitHub checkout. The recovered source retains the private final PDF and server-verified CAPTCHA flow.
 
