@@ -44,7 +44,7 @@ Run `npm test` for authorization regressions. Server validation follows the [Tur
 
 ## 🌐 Featured Systems ([@ThunderRonin](https://github.com/ThunderRonin))
 
-- **[`Kasb Platform`](https://github.com/Kasb-Platform)**: Financial ledger and B2B commerce services, ASP.NET Core/EF Core, Linux/Docker Swarm migration, Syncfusion Blink Persian RTL invoices, and preparation for SQL Server-to-PostgreSQL migration.
+- **Independent Backend & AI Engineer**: Independent work since 2025, including the **[`Kasb Platform`](https://github.com/Kasb-Platform)** client engagement on financial ledger and B2B commerce services, Linux/Docker Swarm infrastructure, Persian RTL invoices, and database migration preparation.
 - **[`PetaProc`](https://github.com/PetaProc)**: Go/Pion WebRTC communications, LanceDB/Qdrant AI search, Asynq/Redis media processing, MinIO storage, OpenTelemetry/Sentry, and Flutter/Riverpod clients.
 - **Dorj Wallet**: NestJS cryptocurrency APIs, Ethers.js wallet connectivity and smart-contract interactions, and Ledger SDK hardware signing.
 - **Independent Software Engineer**: Freelance systems, technical bounties, protocol security, and custom automation for international clients.
